@@ -1,0 +1,79 @@
+[
+    {
+        "ProvinceID": 204,
+        "ProvinceName": "Đồng Nai",
+        "CountryID": 1,
+        "Code": "61",
+        "NameExtension": [
+            "Đồng Nai",
+            "Tỉnh Đồng Nai",
+            "T. Đồng Nai",
+            "T Đồng Nai",
+            "dongnai"
+        ],
+        "IsEnable": 1,
+        "RegionID": 4,
+        "RegionCPN": 1,
+        "UpdatedBy": 1718600,
+        "CreatedAt": "2019-12-05 15:41:26.891224 +0700 +07 m=+0.010288345",
+        "UpdatedAt": "2019-12-05 15:41:26.891225 +0700 +07 m=+0.010289304",
+        "CanUpdateCOD": false,
+        "Status": 1
+    },
+    {
+        "ProvinceID": 202,
+        "ProvinceName": "Hồ Chí Minh",
+        "CountryID": 1,
+        "Code": "8",
+        "NameExtension": [
+            "Hồ Chí Minh",
+            "TP.Hồ Chí Minh",
+            "TP. Hồ Chí Minh",
+            "TP Hồ Chí Minh",
+            "Thành phố Hồ Chí Minh",
+            "HCM",
+            "hochiminh",
+            "saigon",
+            "sg",
+            "Ho Chi Minh",
+            "ho chi minh"
+        ],
+        "IsEnable": 1,
+        "RegionID": 1,
+        "RegionCPN": 6,
+        "UpdatedBy": 1718600,
+        "CreatedAt": "2019-12-05 15:41:26.891217 +0700 +07 m=+0.010281821",
+        "UpdatedAt": "2019-12-05 15:41:26.891218 +0700 +07 m=+0.010283065",
+        "CanUpdateCOD": false,
+        "Status": 1,
+        "UpdatedIP": "35.247.155.234",
+        "UpdatedEmployee": 242614,
+        "UpdatedSource": "internal",
+        "UpdatedDate": "2021-12-13T10:08:17.434Z"
+    },
+    {
+        "ProvinceID": 205,
+        "ProvinceName": "Bình Dương",
+        "CountryID": 1,
+        "Code": "65",
+        "NameExtension": [
+            "Bình Dương",
+            "Tỉnh Bình Dương",
+            "T.Bình Dương",
+            "T Bình Dương",
+            "binhduong"
+        ],
+        "IsEnable": 1,
+        "RegionID": 4,
+        "RegionCPN": 1,
+        "UpdatedBy": 1718600,
+        "CreatedAt": "2019-12-05 15:41:26.891226 +0700 +07 m=+0.010290886",
+        "UpdatedAt": "2019-12-05 15:41:26.891227 +0700 +07 m=+0.010291916",
+        "CanUpdateCOD": false,
+        "Status": 1,
+        "UpdatedIP": "35.247.155.234",
+        "UpdatedEmployee": 242614,
+        "UpdatedSource": "internal",
+        "UpdatedDate": "2021-12-14T01:45:29.556Z"
+    }
+]

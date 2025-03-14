@@ -1,0 +1,30 @@
+# config
+/.phpunit.cache
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleetcon
+/.idea
+/.vscode
+/composer.lock
+/package-lock.json
+
+#/database
+/node_modules
+
+# fe
+/resources/fe/app/modules/firebase
+/resources/fe/settings/ConnectApi.js
+
+
+
+
+
+

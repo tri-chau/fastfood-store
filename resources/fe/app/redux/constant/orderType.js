@@ -1,0 +1,30 @@
+// get single order by id
+export const GET_ORDER_PROCESS = "GET_ORDER_PROCESS";
+export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
+
+// get all orders
+export const GET_ORDERS_PROCESS = "GET_ORDERS_PROCESS";
+export const GET_ORDERS_SUCCESS = "GET_ORDERS_SUCCESS";
+
+// admin get all orders
+export const GET_ORDERS_ADMIN_PROCESS = "GET_ORDERS_ADMIN_PROCESS";
+
+// admin get all orders
+export const GET_ORDERS_ADMIN_SUCCESS = "GET_ORDERS_ADMIN_SUCCESS";
+
+// create order
+export const ADMIN_CREATE_ORDER_PROCESS = "ADMIN_CREATE_ORDER_PROCESS";
+
+export const ADMIN_CREATE_ORDER_SUCCESS = "ADMIN_CREATE_ORDER_SUCCESS";
+
+// update order
+export const ADMIN_UPDATE_ORDER_PROCESS = "ADMIN_UPDATE_ORDER_PROCESS";
+
+export const ADMIN_UPDATE_ORDER_SUCCESS = "ADMIN_UPDATE_ORDER_SUCCESS";
+
+// delete
+export const ADMIN_DELETE_ORDER_PROCESS = "ADMIN_DELETE_ORDER_PROCESS";
+
+export const ADMIN_DELETE_ORDER_SUCCESS = "ADMIN_DELETE_ORDER_SUCCESS";
+
+

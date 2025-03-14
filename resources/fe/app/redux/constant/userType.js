@@ -1,0 +1,27 @@
+import exp from "node:constants";
+
+export const LOGIN_PROCESS = "LOGIN_PROCESS";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+
+export const LOGOUT_PROCESS = "LOGOUT_PROCESS";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+
+export const GET_USER_INFO_SUCCESS = "GET_USER_INFO_SUCCESS";
+export const GET_USER_INFO_FAIL = "GET_USER_INFO_FAIL";
+
+export const GET_REFRESH_TOKEN_SUCCESS = "GET_REFRESH_TOKEN_SUCCESS";
+export const GET_REFRESH_TOKEN_FAIL = "GET_REFRESH_TOKEN_FAIL";
+
+export const RESET_STATUS = "RESET_STATUS";
+
+// update
+export const REGISTER_PROCESS = "REGISTER_PROCESS";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+
+// admin login
+export const ADMIN_LOGIN_PROCESS = "ADMIN_LOGIN_PROCESS";
+export const ADMIN_LOGIN_SUCCESS = "ADMIN_LOGIN_SUCCESS";
+export const ADMIN_LOGIN_FAIL = "ADMIN_LOGIN_FAIL";
+

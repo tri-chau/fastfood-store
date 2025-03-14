@@ -1,0 +1,299 @@
+{
+  "_InputElement-BuGiFTyO.js": {
+    "file": "assets/InputElement-BuGiFTyO.js",
+    "name": "InputElement",
+    "imports": [
+      "resources/fe/index.jsx"
+    ]
+  },
+  "_slick-theme-!~{007}~.js": {
+    "file": "assets/slick-theme-DkBSsmpK.css",
+    "src": "_slick-theme-!~{007}~.js"
+  },
+  "_slick-theme-Hkifl9ZP.js": {
+    "file": "assets/slick-theme-Hkifl9ZP.js",
+    "name": "slick-theme",
+    "imports": [
+      "resources/fe/index.jsx"
+    ],
+    "css": [
+      "assets/slick-theme-DkBSsmpK.css"
+    ],
+    "assets": [
+      "assets/ajax-loader-BcnMEykj.gif",
+      "assets/slick-Bi9J8BMx.eot",
+      "assets/slick-BlUtDIuC.woff",
+      "assets/slick-DWzRxEMf.ttf",
+      "assets/slick-BlzDm7g2.svg"
+    ]
+  },
+  "node_modules/slick-carousel/slick/ajax-loader.gif": {
+    "file": "assets/ajax-loader-BcnMEykj.gif",
+    "src": "node_modules/slick-carousel/slick/ajax-loader.gif"
+  },
+  "node_modules/slick-carousel/slick/fonts/slick.eot": {
+    "file": "assets/slick-Bi9J8BMx.eot",
+    "src": "node_modules/slick-carousel/slick/fonts/slick.eot"
+  },
+  "node_modules/slick-carousel/slick/fonts/slick.svg": {
+    "file": "assets/slick-BlzDm7g2.svg",
+    "src": "node_modules/slick-carousel/slick/fonts/slick.svg"
+  },
+  "node_modules/slick-carousel/slick/fonts/slick.ttf": {
+    "file": "assets/slick-DWzRxEMf.ttf",
+    "src": "node_modules/slick-carousel/slick/fonts/slick.ttf"
+  },
+  "node_modules/slick-carousel/slick/fonts/slick.woff": {
+    "file": "assets/slick-BlUtDIuC.woff",
+    "src": "node_modules/slick-carousel/slick/fonts/slick.woff"
+  },
+  "resources/assets/images/landingpage/blog/bg.svg": {
+    "file": "assets/bg-BE7xy4ab.svg",
+    "src": "resources/assets/images/landingpage/blog/bg.svg"
+  },
+  "resources/fe/app/assets/about/about_hero.png": {
+    "file": "assets/about_hero-RR-SXM9p.png",
+    "src": "resources/fe/app/assets/about/about_hero.png"
+  },
+  "resources/fe/app/assets/about/about_profile1.png": {
+    "file": "assets/about_profile1-BAecHEnV.png",
+    "src": "resources/fe/app/assets/about/about_profile1.png"
+  },
+  "resources/fe/app/assets/about/about_profile2.png": {
+    "file": "assets/about_profile2-CM__GkbI.png",
+    "src": "resources/fe/app/assets/about/about_profile2.png"
+  },
+  "resources/fe/app/assets/about/about_profile3.png": {
+    "file": "assets/about_profile3-DJqAcKQe.png",
+    "src": "resources/fe/app/assets/about/about_profile3.png"
+  },
+  "resources/fe/app/assets/banner/banner1.png": {
+    "file": "assets/banner1-DSNjj7QS.png",
+    "src": "resources/fe/app/assets/banner/banner1.png"
+  },
+  "resources/fe/app/assets/banner/banner2.png": {
+    "file": "assets/banner2-COh3HSGP.png",
+    "src": "resources/fe/app/assets/banner/banner2.png"
+  },
+  "resources/fe/app/assets/categories/beauty.png": {
+    "file": "assets/beauty-zM3VRbjo.png",
+    "src": "resources/fe/app/assets/categories/beauty.png"
+  },
+  "resources/fe/app/assets/categories/fragrances.png": {
+    "file": "assets/fragrances-jHKU4wh3.png",
+    "src": "resources/fe/app/assets/categories/fragrances.png"
+  },
+  "resources/fe/app/assets/categories/furnitures.png": {
+    "file": "assets/furnitures-B3MR0Z8W.png",
+    "src": "resources/fe/app/assets/categories/furnitures.png"
+  },
+  "resources/fe/app/assets/categories/groceries.png": {
+    "file": "assets/groceries-BCNis7Vp.png",
+    "src": "resources/fe/app/assets/categories/groceries.png"
+  },
+  "resources/fe/app/assets/categories/home-decoration.png": {
+    "file": "assets/home-decoration-BRLJVSKg.png",
+    "src": "resources/fe/app/assets/categories/home-decoration.png"
+  },
+  "resources/fe/app/assets/categories/kitchen-accessories.png": {
+    "file": "assets/kitchen-accessories-F7vHZy_W.png",
+    "src": "resources/fe/app/assets/categories/kitchen-accessories.png"
+  },
+  "resources/fe/app/assets/categories/laptops.png": {
+    "file": "assets/laptops-fR2NdaWI.png",
+    "src": "resources/fe/app/assets/categories/laptops.png"
+  },
+  "resources/fe/app/assets/categories/mens-shirts.png": {
+    "file": "assets/mens-shirts-CSjuOSJe.png",
+    "src": "resources/fe/app/assets/categories/mens-shirts.png"
+  },
+  "resources/fe/app/assets/categories/mens-shoes.png": {
+    "file": "assets/mens-shoes-Dd3tCavr.png",
+    "src": "resources/fe/app/assets/categories/mens-shoes.png"
+  },
+  "resources/fe/app/assets/categories/mens-watches.png": {
+    "file": "assets/mens-watches-jwpSIdG6.png",
+    "src": "resources/fe/app/assets/categories/mens-watches.png"
+  },
+  "resources/fe/app/assets/categories/mobile-accessories.png": {
+    "file": "assets/mobile-accessories-g_awgh7q.png",
+    "src": "resources/fe/app/assets/categories/mobile-accessories.png"
+  },
+  "resources/fe/app/assets/categories/motorcycle.png": {
+    "file": "assets/motorcycle-mLvHE-qS.png",
+    "src": "resources/fe/app/assets/categories/motorcycle.png"
+  },
+  "resources/fe/app/assets/categories/skin-care.png": {
+    "file": "assets/skin-care-Dohd5PKU.png",
+    "src": "resources/fe/app/assets/categories/skin-care.png"
+  },
+  "resources/fe/app/assets/categories/smartphones.png": {
+    "file": "assets/smartphones-BtsaPT8R.png",
+    "src": "resources/fe/app/assets/categories/smartphones.png"
+  },
+  "resources/fe/app/assets/categories/sports-accessories.png": {
+    "file": "assets/sports-accessories-BoAKEO50.png",
+    "src": "resources/fe/app/assets/categories/sports-accessories.png"
+  },
+  "resources/fe/app/assets/categories/sunglasses.png": {
+    "file": "assets/sunglasses-CS4EOAKk.png",
+    "src": "resources/fe/app/assets/categories/sunglasses.png"
+  },
+  "resources/fe/app/assets/categories/tablets.png": {
+    "file": "assets/tablets-BIoUxX-P.png",
+    "src": "resources/fe/app/assets/categories/tablets.png"
+  },
+  "resources/fe/app/assets/categories/tops.png": {
+    "file": "assets/tops-CpiNAgEh.png",
+    "src": "resources/fe/app/assets/categories/tops.png"
+  },
+  "resources/fe/app/assets/categories/vehicle.png": {
+    "file": "assets/vehicle-OXhN_b7r.png",
+    "src": "resources/fe/app/assets/categories/vehicle.png"
+  },
+  "resources/fe/app/assets/categories/womens-bags.png": {
+    "file": "assets/womens-bags-ZuyLTPvc.png",
+    "src": "resources/fe/app/assets/categories/womens-bags.png"
+  },
+  "resources/fe/app/assets/categories/womens-dresses.png": {
+    "file": "assets/womens-dresses-Dgkpnp5c.png",
+    "src": "resources/fe/app/assets/categories/womens-dresses.png"
+  },
+  "resources/fe/app/assets/categories/womens-jewellery.png": {
+    "file": "assets/womens-jewellery-oRQXI-c5.png",
+    "src": "resources/fe/app/assets/categories/womens-jewellery.png"
+  },
+  "resources/fe/app/assets/categories/womens-shoes.png": {
+    "file": "assets/womens-shoes-DG73s92b.png",
+    "src": "resources/fe/app/assets/categories/womens-shoes.png"
+  },
+  "resources/fe/app/assets/categories/womens-watches.png": {
+    "file": "assets/womens-watches-D1DK_D6S.png",
+    "src": "resources/fe/app/assets/categories/womens-watches.png"
+  },
+  "resources/fe/app/assets/footer/barcode.png": {
+    "file": "assets/barcode-DZGBxaxH.png",
+    "src": "resources/fe/app/assets/footer/barcode.png"
+  },
+  "resources/fe/app/assets/footer/google_play.png": {
+    "file": "assets/google_play-B5apG3g3.png",
+    "src": "resources/fe/app/assets/footer/google_play.png"
+  },
+  "resources/fe/app/assets/footer/play_store.png": {
+    "file": "assets/play_store-ChJzBndP.png",
+    "src": "resources/fe/app/assets/footer/play_store.png"
+  },
+  "resources/fe/app/assets/signup/signup_image.png": {
+    "file": "assets/signup_image-DNXfwIvi.png",
+    "src": "resources/fe/app/assets/signup/signup_image.png"
+  },
+  "resources/fe/app/pages/About/index.jsx": {
+    "file": "assets/index-CDLy0kiK.js",
+    "name": "index",
+    "src": "resources/fe/app/pages/About/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/fe/index.jsx",
+      "_slick-theme-Hkifl9ZP.js"
+    ],
+    "assets": [
+      "assets/about_hero-RR-SXM9p.png",
+      "assets/about_profile1-BAecHEnV.png",
+      "assets/about_profile2-CM__GkbI.png",
+      "assets/about_profile3-DJqAcKQe.png"
+    ]
+  },
+  "resources/fe/app/pages/Contact/index.jsx": {
+    "file": "assets/index-CdebyNX2.js",
+    "name": "index",
+    "src": "resources/fe/app/pages/Contact/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/fe/index.jsx",
+      "_InputElement-BuGiFTyO.js"
+    ]
+  },
+  "resources/fe/app/pages/Home/index.jsx": {
+    "file": "assets/index-JjVBYDGE.js",
+    "name": "index",
+    "src": "resources/fe/app/pages/Home/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/fe/index.jsx",
+      "_slick-theme-Hkifl9ZP.js"
+    ],
+    "assets": [
+      "assets/banner1-DSNjj7QS.png",
+      "assets/banner2-COh3HSGP.png",
+      "assets/tops-CpiNAgEh.png",
+      "assets/beauty-zM3VRbjo.png",
+      "assets/tablets-BIoUxX-P.png",
+      "assets/vehicle-OXhN_b7r.png",
+      "assets/laptops-fR2NdaWI.png",
+      "assets/skin-care-Dohd5PKU.png",
+      "assets/groceries-BCNis7Vp.png",
+      "assets/mens-shoes-Dd3tCavr.png",
+      "assets/furnitures-B3MR0Z8W.png",
+      "assets/fragrances-jHKU4wh3.png",
+      "assets/sunglasses-CS4EOAKk.png",
+      "assets/motorcycle-mLvHE-qS.png",
+      "assets/womens-bags-ZuyLTPvc.png",
+      "assets/mens-shirts-CSjuOSJe.png",
+      "assets/smartphones-BtsaPT8R.png",
+      "assets/womens-shoes-DG73s92b.png",
+      "assets/mens-watches-jwpSIdG6.png",
+      "assets/womens-watches-D1DK_D6S.png",
+      "assets/womens-dresses-Dgkpnp5c.png",
+      "assets/home-decoration-BRLJVSKg.png",
+      "assets/womens-jewellery-oRQXI-c5.png",
+      "assets/mobile-accessories-g_awgh7q.png",
+      "assets/sports-accessories-BoAKEO50.png",
+      "assets/kitchen-accessories-F7vHZy_W.png"
+    ]
+  },
+  "resources/fe/app/pages/Login/index.jsx": {
+    "file": "assets/index-iQtO4NDM.js",
+    "name": "index",
+    "src": "resources/fe/app/pages/Login/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/fe/index.jsx",
+      "_InputElement-BuGiFTyO.js"
+    ],
+    "assets": [
+      "assets/signup_image-DNXfwIvi.png"
+    ]
+  },
+  "resources/fe/app/pages/Register/index.jsx": {
+    "file": "assets/index-DI0H3IWv.js",
+    "name": "index",
+    "src": "resources/fe/app/pages/Register/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/fe/index.jsx",
+      "_InputElement-BuGiFTyO.js"
+    ]
+  },
+  "resources/fe/index.jsx": {
+    "file": "assets/index-B6AZzZ4c.js",
+    "name": "index",
+    "src": "resources/fe/index.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/fe/app/pages/Home/index.jsx",
+      "resources/fe/app/pages/About/index.jsx",
+      "resources/fe/app/pages/Login/index.jsx",
+      "resources/fe/app/pages/Register/index.jsx",
+      "resources/fe/app/pages/Contact/index.jsx"
+    ],
+    "css": [
+      "assets/index-DATqTT1n.css"
+    ],
+    "assets": [
+      "assets/barcode-DZGBxaxH.png",
+      "assets/play_store-ChJzBndP.png",
+      "assets/google_play-B5apG3g3.png",
+      "assets/bg-BE7xy4ab.svg"
+    ]
+  }
+}

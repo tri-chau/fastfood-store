@@ -1,0 +1,176 @@
+{
+    "NOTIFICATION": {
+        "NOT_AVAILABLE": "This feature is not available"
+    },
+
+    "HEADER": {
+        "SEARCH_FOR_PRODUCTS": "Search for products",
+        "NO_PRODUCTS_FOUND": "Not products found",
+        "HOME": "Home",
+        "MENU": "Menu",
+        "ORDER": "Order",
+        "LOGIN": "Login",
+        "PROFILE": "Profile",
+        "LANGUAGE": "Language",
+        "LOGOUT": "Logout"
+    },
+
+    "FOOTER": {
+        "SHOPPING_NOW": "Shopping Now",
+        "CONTACT": "Contact us",
+        "PHONE": "Phone",
+        "WEBSITE": "Website",
+        "FOLLOW_US": "Follow Us"
+    },
+
+    "LOGIN": {
+        "LOGIN": "Login",
+        "EMAIL": "Email",
+        "PLACEHOLDER_EMAIL": "Enter your email",
+        "PASSWORD": "Password",
+        "PLACEHOLDER_PASSWORD": "Enter your password",
+        "FORGOT_PASSWORD": "Forgot password",
+        "DON_T_HAVE_ACCOUNT": "Don't have an account?",
+        "REGISTER_NOW": "Register now",
+        "OR": "Or",
+        "LOGIN_WITH_GOOGLE": "Login with Google",
+        "LOGINING": "Logining...",
+        "LOGIN_SUCCESS": "Login successfully",
+        "LOGIN_FAILED": "Login failed"
+    },
+
+    "REGISTER": {
+        "REGISTER": "Register",
+        "FULL_NAME": "Full name",
+        "PLACEHOLDER_FULL_NAME": "Enter your full name",
+        "EMAIL": "Email",
+        "PLACEHOLDER_EMAIL": "Enter your email",
+        "PHONE_NUMBER": "Phone number",
+        "PLACEHOLDER_PHONE_NUMBER": "Enter your phone number",
+        "PASSWORD": "Password",
+        "PLACEHOLDER_PASSWORD": "Enter your password",
+        "CONFIRM_PASSWORD": "Confirm password",
+        "PLACEHOLDER_CONFIRM_PASSWORD": "Enter your password again",
+        "HAVE_ACCOUNT": "Already have an account?",
+        "LOGIN_NOW": "Login now",
+        "SAME_PASSWORD": "Password and confirm password must be the same",
+        "REGISTER_SUCCESS": "Register successfully",
+        "REGISTER_FAILED": "Register failed",
+        "REGISTERING": "Registering...",
+        "ADD_PHONE": {
+            "TITLE": "Add phone number for your account",
+            "PHONE": "Phone number",
+            "PLACEHOLDER_PHONE": "Enter your phone number",
+            "ADD": "Add"
+        }
+    },
+
+    "HOME": {
+        "ABOUT": "About Us",
+        "BEST_PRODUCTS": "Best Products"
+    },
+
+    "MENU": {
+        "CATALOGUE": "Product catalogue",
+        "SEARCH": "Search for products",
+        "FILTER": "Filter",
+        "SORT" : "Sort",
+        "ASC": "Price: Ascending",
+        "DESC": "Price: Descending",
+        "ALL" : "All products",
+        "FILTERS": {
+            "CANCEL": "Cancel",
+            "CLEAR_ALL": "Clear all",
+            "FILTER_PRODUCTS": "Filter products",
+            "PRICE_RANGE": "Price range",
+            "MAX_PRICE": "Max price",
+            "MIN_PRICE": "Min price",
+            "APPLY": "Apply"
+        },
+        "ADD_TO_CART": "Add to cart"
+    },
+
+    "DETAIL_PRODUCT": {
+       "SIZE": "Size",
+        "TOPPING": "Topping",
+        "NO_TOPPING": "Product has no topping",
+        "QUANTITY": "Quantity",
+        "NOTE": "Note",
+        "EXAMPLE_NOTE": "Note something here",
+        "TOTAL": "Total",
+        "ADD_TO_CART": "Add to cart",
+        "EDIT_CONFIRM": "Confirm"
+    },
+
+    "CART": {
+        "CARTS": "Carts",
+        "CART_NAME": "Cart Name",
+        "DATE_CREATED": "Date Created",
+        "NOTE": "Note",
+        "TOPPINGS": "Toppings",
+        "NO_TOPPING": "No toppings selected",
+        "TOTAL": "Total",
+        "DELETE": "Delete",
+        "PAYMENT_DETAIL": "Payment Detail",
+        "NO_CARTS": "Not exist any carts"
+    },
+
+    "DETAIL_PAYMENT": {
+        "DELIVERY_ADDRESS": "Delivery Address",
+        "DELIVERY_ADDRESSES": {
+            "PROVINCE": "Province",
+            "SELECT_PROVINCE": "Select Province",
+            "DISTRICT": "District",
+            "SELECT_DISTRICT": "Select District",
+            "WARD": "Ward",
+            "SELECT_WARD": "Select Ward",
+            "STREET": "Street",
+            "PLACEHOLDER_STREET": "Enter your street"
+        },
+        "PAYMENT": "Payment",
+        "RECEIVER_NAME": "Receiver Name",
+        "PLACEHOLDER_RECEIVER_NAME": "Enter receiver name",
+        "PHONE_NUMBER": "Phone Number",
+        "PLACEHOLDER_PHONE_NUMBER": "Enter phone number",
+        "NOTE": "Note",
+        "EXAMPLE_NOTE": "Note something here",
+        "PAYMENT_METHOD": "Payment Method",
+        "PAYMENT_METHODS": {
+            "COD": "Cash on delivery",
+            "ONLINE": "Online payment"
+        },
+        "CANCEL": "Cancel",
+        "PROCEED_ORDER": "Proceed order",
+        "PLACE_ORDER_SUCCESS": "Place order successfully\n",
+        "PAY_SUCCESS": "Pay successfully",
+        "REQUEST_TO_PAY": "Please pay the order to proceed, you can pay now or later!",
+        "CLOSE": "Close",
+        "VIEW_ORDER": "View order",
+        "PAY_NOW": "Pay now"
+    },
+
+    "ORDERS": {
+        "ORDER_HISTORY": "Order history",
+        "WAIT_FOR_APPROVAL": "Wait for approval",
+        "IN_PROGRESS": "In progress",
+        "DELIVERING": "Delivering",
+        "DELIVERED": "Delivered",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled",
+        "NO_ORDERS": "Not exist any orders in this status",
+
+        "DETAIL_ORDER": {
+            "PAYMENT_METHODS": {
+                "COD": "Cash on delivery",
+                "ONLINE": "Online payment"
+            },
+            "QUANTITY": "Quantity",
+            "NOTE": "Note",
+            "TOTAL": "Total",
+            "PRODUCTS": "products",
+            "CANCEL": "Cancel",
+            "PAY_NOW": "Pay now"
+        }
+
+    }
+}

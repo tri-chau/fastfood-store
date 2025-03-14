@@ -1,0 +1,175 @@
+{
+    "NOTIFICATION": {
+        "NOT_AVAILABLE": "Tính năng này không khả dụng"
+    },
+
+    "HEADER": {
+        "SEARCH_FOR_PRODUCTS": "Tìm kiếm sản phẩm",
+        "NO_PRODUCTS_FOUND": "Không tìm thấy sản phẩm",
+        "HOME": "Trang chủ",
+        "MENU": "Thực đơn",
+        "ORDER": "Đơn hàng",
+        "LOGIN": "Đăng nhập",
+        "PROFILE": "Hồ sơ",
+        "LANGUAGE": "Ngôn ngữ",
+        "LOGOUT": "Đăng xuất"
+    },
+
+    "FOOTER": {
+        "SHOPPING_NOW": "Đặt hàng ngay",
+        "CONTACT": "Thông tin liên hệ",
+        "PHONE": "Số điện thoại",
+        "WEBSITE": "Trang web",
+        "FOLLOW_US": "Theo dõi chúng tôi"
+    },
+
+    "LOGIN": {
+        "LOGIN": "Đăng nhập",
+        "EMAIL": "Email",
+        "PLACEHOLDER_EMAIL": "Nhập email của bạn",
+        "PASSWORD": "Mật khẩu",
+        "PLACEHOLDER_PASSWORD": "Nhập mật khẩu của bạn",
+        "FORGOT_PASSWORD": "Quên mật khẩu",
+        "DON_T_HAVE_ACCOUNT": "Chưa có tài khoản?",
+        "REGISTER_NOW": "Đăng ký ngay",
+        "OR": "Hoặc",
+        "LOGIN_WITH_GOOGLE": "Đăng nhập với Google",
+        "LOGINING": "Đang đăng nhập...",
+        "LOGIN_SUCCESS": "Đăng nhập thành công",
+        "LOGIN_FAILED": "Đăng nhập thất bại"
+    },
+
+    "REGISTER": {
+        "REGISTER": "Đăng ký",
+        "FULL_NAME": "Họ tên",
+        "PLACEHOLDER_FULL_NAME": "Nhập họ tên của bạn",
+        "EMAIL": "Email",
+        "PLACEHOLDER_EMAIL": "Nhập email của bạn",
+        "PHONE_NUMBER": "Số điện thoại",
+        "PLACEHOLDER_PHONE_NUMBER": "Nhập số điện thoại của bạn",
+        "PASSWORD": "Mật khẩu",
+        "PLACEHOLDER_PASSWORD": "Nhập mật khẩu của bạn",
+        "CONFIRM_PASSWORD": "Xác nhận mật khẩu",
+        "PLACEHOLDER_CONFIRM_PASSWORD": "Nhập lại mật khẩu của bạn",
+        "HAVE_ACCOUNT": "Đã có tài khoản?",
+        "LOGIN_NOW": "Đăng nhập ngay",
+        "SAME_PASSWORD": "Mật khẩu và xác nhận mật khẩu phải giống nhau",
+        "REGISTER_SUCCESS": "Đăng ký thành công",
+        "REGISTER_FAILED": "Đăng ký thất bại",
+        "REGISTERING": "Đang đăng ký...",
+        "ADD_PHONE": {
+            "TITLE": "Thêm số điện thoại cho tài khoản của bạn",
+            "PHONE": "Số điện thoại",
+            "PLACEHOLDER_PHONE": "Nhập số điện thoại của bạn",
+            "ADD": "Thêm"
+        }
+    },
+
+    "HOME": {
+        "ABOUT": "Về chúng tôi",
+        "BEST_PRODUCTS": "Sản phẩm tốt nhất"
+    },
+
+    "MENU": {
+        "CATALOGUE": "Danh mục sản phẩm",
+        "SEARCH": "Tìm kiếm sản phẩm",
+        "FILTER": "Lọc",
+        "SORT" : "Sắp xếp",
+        "ASC": "Giá: Tăng dần",
+        "DESC": "Giá: Giảm dần",
+        "ALL" : "Tất cả sản phẩm",
+        "FILTERS": {
+            "CANCEL": "Hủy",
+            "CLEAR_ALL": "Xóa tất cả",
+            "FILTER_PRODUCTS": "Lọc sản phẩm",
+            "PRICE_RANGE": "Khoảng giá",
+            "MAX_PRICE": "Giá tối đa",
+            "MIN_PRICE": "Giá tối thiểu",
+            "APPLY": "Áp dụng"
+        },
+        "ADD_TO_CART": "Thêm vào giỏ hàng"
+    },
+
+    "DETAIL_PRODUCT": {
+        "SIZE": "Kích thước",
+        "TOPPING": "Topping",
+        "NO_TOPPING": "Sản phẩm không có topping",
+        "QUANTITY": "Số lượng",
+        "NOTE": "Ghi chú",
+        "EXAMPLE_NOTE": "Ghi chú gì đó ở đây",
+        "TOTAL": "Tổng",
+        "ADD_TO_CART": "Thêm vào giỏ",
+        "EDIT_CONFIRM": "Xác nhận"
+    },
+
+    "CART": {
+        "CARTS": "Giỏ hàng",
+        "CART_NAME": "Tên giỏ hàng",
+        "DATE_CREATED": "Ngày tạo",
+        "NOTE": "Ghi chú",
+        "TOPPINGS": "Toppings",
+        "NO_TOPPING": "Không có topping",
+        "TOTAL": "Tổng",
+        "DELETE": "Xóa giỏ hàng",
+        "PAYMENT_DETAIL": "Chi tiết thanh toán",
+        "NO_CARTS": "Quý khách không có giỏ hàng nào"
+    },
+
+    "DETAIL_PAYMENT": {
+        "DELIVERY_ADDRESS": "Địa chỉ giao hàng",
+        "DELIVERY_ADDRESSES": {
+            "PROVINCE": "Tỉnh/Thành phố",
+            "SELECT_PROVINCE": "Chọn Tỉnh/Thành phố",
+            "DISTRICT": "Quận/Huyện",
+            "SELECT_DISTRICT": "Chọn Quận/Huyện",
+            "WARD": "Phường/Xã",
+            "SELECT_WARD": "Chọn Phường/Xã",
+            "STREET": "Đường",
+            "PLACEHOLDER_STREET": "Nhập số nhà và tên đường"
+        },
+        "PAYMENT": "Thanh toán",
+        "RECEIVER_NAME": "Tên người nhận",
+        "PLACEHOLDER_RECEIVER_NAME": "Nhập tên người nhận",
+        "PHONE_NUMBER": "Số điện thoại",
+        "PLACEHOLDER_PHONE_NUMBER": "Nhập số điện thoại",
+        "NOTE": "Ghi chú",
+        "EXAMPLE_NOTE": "Ghi chú gì đó ở đây",
+        "PAYMENT_METHOD": "Phương thức thanh toán",
+        "PAYMENT_METHODS": {
+            "COD": "Thanh toán khi nhận hàng",
+            "ONLINE": "Thanh toán trực tuyến"
+        },
+        "CANCEL": "Hủy",
+        "PROCEED_ORDER": "Tiến hành đặt hàng",
+        "PLACE_ORDER_SUCCESS": "Đặt hàng thành công! \n",
+        "PAY_SUCCESS": "Thanh toán thành công",
+        "REQUEST_TO_PAY": "Vui lòng thanh toán đơn hàng để tiếp tục, bạn có thể thanh toán ngay hoặc sau!",
+        "CLOSE": "Đóng",
+        "VIEW_ORDER": "Xem đơn hàng",
+        "PAY_NOW": "Thanh toán ngay"
+    },
+
+    "ORDERS": {
+        "ORDER_HISTORY": "Lịch sử đơn hàng",
+        "WAIT_FOR_APPROVAL": "Chờ duyệt",
+        "IN_PROGRESS": "Đang xử lý",
+        "DELIVERING": "Đang giao",
+        "DELIVERED": "Đã giao",
+        "COMPLETED": "Hoàn thành",
+        "CANCELLED": "Đã hủy",
+        "NO_ORDERS": "Quý khách không có đơn hàng nào ở trạng thái này",
+
+        "DETAIL_ORDER": {
+            "PAYMENT_METHODS": {
+                "COD": "Thanh toán khi nhận hàng",
+                "ONLINE": "Thanh toán trực tuyến"
+            },
+            "QUANTITY": "Số lượng",
+            "NOTE": "Ghi chú",
+            "TOTAL": "Tổng",
+            "PRODUCTS": "sản phẩm",
+            "CANCEL": "Hủy",
+            "PAY_NOW": "Thanh toán"
+        }
+    }
+}

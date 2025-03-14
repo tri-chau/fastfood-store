@@ -1,0 +1,54 @@
+.marketing {
+    flex-shrink: 0;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(153, 125, 108, 0.74) 0%, rgba(49, 31, 21, 0.74) 100%);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.market_content_btn {
+    display: flex;
+    min-width: 64px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 40px;
+    background: #FFF8E8;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.btn_text {
+    flex: 1 0 0;
+    color: black;
+    text-align: center;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "Kaisei Decol";
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 100% */
+    letter-spacing: 0.24px;
+    text-transform: uppercase;
+}
+.market_content_label {
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Kaisei Decol";
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.percent_label {
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Kaisei Decol";
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.percent_claim {
+    display: flex;
+    min-width: 64px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 40px;
+    background: #FFF8E8;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
