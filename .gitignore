@@ -18,6 +18,7 @@ yarn-error.log
 
 #/database
 /node_modules
+/public_fail
 
 # fe
 /resources/fe/app/modules/firebase
@@ -28,3 +29,4 @@ yarn-error.log
 
 
 
+/public_fail/
