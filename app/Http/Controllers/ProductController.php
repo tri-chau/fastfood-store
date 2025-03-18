@@ -339,7 +339,7 @@ class ProductController extends BaseController
 
             if ($request->hasFile('thumbnailImage')) {
                 $image = $request->file('thumbnailImage');
-                $path = $image->store('build/assets/product_image', 'public');
+                $path = $image->store('build/assets/product_image', 'public_fail');
                 $product->update(['image' => $path]);
             }
 
@@ -373,7 +373,7 @@ class ProductController extends BaseController
                     foreach ($productDetailImages as $image) {
                         if ($image->isValid()) {
                             // Store each image in 'build/assets/product_image' directory
-                            $path = $image->store('build/assets/product_image', 'public');
+                            $path = $image->store('build/assets/product_image', 'public_fail');
 
                             // Create a record for each image in the product's images table
                             $product->images()->create(['image_path' => $path]);
@@ -541,7 +541,7 @@ class ProductController extends BaseController
 
         if ($request->hasFile('thumbnailImage')) {
             $image = $request->file('thumbnailImage');
-            $image->storeAs('build/assets/Product', $image->hashName(), 'public');
+            $image->storeAs('build/assets/Product', $image->hashName(), 'public_fail');
             $product->update(['image' => 'Product/' . $image->hashName()]);
         }
 
@@ -549,7 +549,7 @@ class ProductController extends BaseController
 //        if (isset($validated['productDetailImages'])) {
 //            // Delete old images if necessary
 //            foreach ($product->images as $image) {
-//                Storage::disk('public')->delete($image->image_path);
+//                Storage::disk('public_fail')->delete($image->image_path);
 //                $image->delete();
 //            }
 //            $index = 0;
@@ -565,7 +565,7 @@ class ProductController extends BaseController
 //
 //                $image_base64 = base64_decode($image_parts[1]);
 //                $filename = uniqid('product_') . '.' . $image_type; // Generate a unique name
-//                $directory = storage_path('app/public/build/assets/product_image'); // Target directory
+//                $directory = storage_path('app/public_fail/build/assets/product_image'); // Target directory
 //                $path = "$directory/$filename";
 //
 //
@@ -597,7 +597,7 @@ class ProductController extends BaseController
                     if ($image->isValid()) {
                         // Store each image in 'build/assets/product_image' directory
 
-                        $image->storeAs('build/assets/Product', $image->hashName(), 'public');
+                        $image->storeAs('build/assets/Product', $image->hashName(), 'public_fail');
 
                         // Create a record for each image in the product's images table
                         $product->images()->create(['image_path' => 'Product/' . $image->hashName()]);
@@ -647,7 +647,7 @@ class ProductController extends BaseController
 
         // Delete associated images
         foreach ($product->images as $image) {
-            Storage::disk('public')->delete($image->image_path);
+            Storage::disk('public_fail')->delete($image->image_path);
         }
 
         $product->forceDelete();

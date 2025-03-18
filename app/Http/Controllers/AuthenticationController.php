@@ -231,7 +231,7 @@ class AuthenticationController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-//    public function login(Request $request): JsonResponse
+//    public_fail function login(Request $request): JsonResponse
 //    {
 //        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
 //            return $this->sendResponse($this->authSuccess(Auth::user()), 'User login successfully.');

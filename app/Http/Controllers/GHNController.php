@@ -62,7 +62,7 @@ class GHNController extends Controller
         $provinceId = $request->input('province_id');
 
         // GHN API endpoint
-        $url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id={$provinceId}";
+        $url = "https://online-gateway.ghn.vn/shiip/public_fail-api/master-data/district?province_id={$provinceId}";
 
         // Initialize Guzzle client
         $client = new Client();
@@ -104,7 +104,7 @@ class GHNController extends Controller
         $districtId = $request->input('district_id');
 
         // GHN API endpoint
-        $url = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id={$districtId}";
+        $url = "https://online-gateway.ghn.vn/shiip/public_fail-api/master-data/ward?district_id={$districtId}";
 
         // Initialize Guzzle client
         $client = new \GuzzleHttp\Client();
