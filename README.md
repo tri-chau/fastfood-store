@@ -7,8 +7,6 @@
 Developed a web-based system for selling jelly desserts online, featuring product management, order
 processing, shopping cart, and secure payment.
 
-## 🌐 Product: [bepmetay.id.vn](https://bepmetay.id.vn/)
-
 ## ✨ Features
 
 <details>
@@ -97,5 +95,4 @@ processing, shopping cart, and secure payment.
 
 ## 💌 Contact Information
 
-Owner: Le Minh Hoang  
-Email: leminhhoang.working@gmail.com
+
