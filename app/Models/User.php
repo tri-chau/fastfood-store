@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     // User.php
 
-//    public function team()
+//    public_fail function team()
 //    {
 //        return $this->belongsTo(Team::class);
 //    }

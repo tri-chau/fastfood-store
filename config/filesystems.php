@@ -35,14 +35,14 @@ return [
             'root' => storage_path('app'),
             'throw' => false,
             'url' => env('APP_URL') . '/storage_fail',
-            'visibility' => 'public',
+            'visibility' => 'public_fail',
         ],
 
-        'public' => [
+        'public_fail' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public_fail'),
             'url' => env('APP_URL').'/storage_fail',
-            'visibility' => 'public',
+            'visibility' => 'public_fail',
             'throw' => false,
         ],
 
@@ -72,7 +72,7 @@ return [
     */
 
     'links' => [
-        public_path('storage_fail') => storage_path('app/public'),
+        public_path('storage_fail') => storage_path('app/public_fail'),
     ],
 
 ];
