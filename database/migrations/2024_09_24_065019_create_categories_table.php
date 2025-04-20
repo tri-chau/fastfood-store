@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('image_path')->nullable();
 
             $table->uuid('created_by')->nullable();
+
+            // Foreign keys
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
 //            $table->uuid('team_id');

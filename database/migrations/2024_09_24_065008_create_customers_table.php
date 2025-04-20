@@ -21,13 +21,14 @@ return new class extends Migration
             $table->enum('gender', ['Male', 'Female'])->nullable();
             $table->string('phone_number')->unique();
             $table->string('email')->unique();
-            // update
+
+            // update //not in use
             $table->string('customer_number')->nullable();
             $table->enum('rank', ['Diamond', 'Gold', 'Silver', 'Bronze'])->nullable()->default('Bronze');
             $table->decimal('total_spent', 10, 2)->default(0);
             $table->integer('total_point')->default(0);
 
-            //update address
+            //update address //not in use
             $table->string('province')->nullable(); // Add province field
             $table->string('district')->nullable(); // Add district field
             $table->string('ward')->nullable();     // Add ward field

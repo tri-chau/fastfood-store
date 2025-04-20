@@ -60,7 +60,7 @@ class User extends Authenticatable
 //    {
 //        return $this->belongsTo(Team::class);
 //    }
-    public function creator()
+    public function creator() //not in use
     {
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -68,6 +68,16 @@ class User extends Authenticatable
     public function customer(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Customer::class);
+    }
+
+    public function conversations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Conversation::class, 'admin_id', 'id');
+    }
+
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id', 'id');
     }
 
 }

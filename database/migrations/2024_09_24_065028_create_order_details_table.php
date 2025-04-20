@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->uuid('id')->primary();;
-            $table->uuid('customer_order_id');
+            $table->uuid('customer_order_id'); //not in use
             $table->uuid('product_id');
+            $table->uuid('order_id');
             $table->uuid('parent_id')->nullable();
             $table->string('order_detail_number');
             $table->mediumInteger('quantity');
@@ -26,6 +27,7 @@ return new class extends Migration
 
             $table->foreign('customer_order_id')->references('id')->on('customers_orders');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('parent_id')->references('id')->on('order_details');
         });
     }
