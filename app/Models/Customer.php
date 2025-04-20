@@ -12,6 +12,7 @@ class Customer extends Model
 {
     use HasFactory, HasUuid, HasCreatedBy;
     protected $fillable = [
+        'id',
         'date_registered',
         'date_of_birth',
         'full_name',
@@ -33,22 +34,41 @@ class Customer extends Model
             $customer->date_registered = $customer->date_registered ?? Carbon::now();
         });
     }
-    // Customer.php
-    public function orders()
-    {
-        return $this->belongsToMany(Order::class, 'customers_orders')
-            ->using(CustomerOrder::class) // Use the CustomerOrder pivot model
-            ->withPivot('id') // Include the pivot table's ID
-            ->withTimestamps();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function creator()
+    public function conversation(){
+        return $this->hasOne(Conversation::class, 'customer_id', 'id');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'customer_id', 'id');
+    }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'customer_id', 'id');
+    }
+
+    public function creator() //not in use
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Customer.php
+    public function orders() //not in use
+    {
+        return $this->belongsToMany(Order::class, 'customers_orders')
+            ->using(CustomerOrder::class) // Use the CustomerOrder pivot model
+            ->withPivot('id') // Include the pivot table's ID
+            ->withTimestamps();
     }
 }
