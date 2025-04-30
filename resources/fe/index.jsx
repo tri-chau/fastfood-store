@@ -12,12 +12,12 @@ import {I18nextProvider} from 'react-i18next';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
-        {/*<AuthProvider>*/}
+        <AuthProvider>
             <I18nextProvider i18n={i18n}>
                 <PopupProvider>
                     <MainRoutes/>
                 </PopupProvider>
             </I18nextProvider>
-        {/*</AuthProvider>*/}
+        </AuthProvider>
     </Provider>
 );

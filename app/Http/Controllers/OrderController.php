@@ -761,12 +761,12 @@ class OrderController extends Controller
 
     public function checkFirebaseUser(Request $request)
     {
+        \Log::debug('Checking Firebase user');
         $firebaseUser = $request->attributes->get('firebaseUser');
-
         if (!$firebaseUser) {
+           // \Log::info('cant find user firebase id'); // Ghi log
             return null;
         }
-
         // Tìm user trong database dựa vào Firebase UID
         return User::where('firebase_uid', $firebaseUser['sub'])->first();
     }
@@ -785,37 +785,31 @@ class OrderController extends Controller
 //        $user = User::where('firebase_uid', $firebaseUser['sub'])->first();
 
         $user = $this->checkFirebaseUser($request);
-
         if (!$user) {
+            \Log::info('fail to find user'); // Ghi log
             return response()->json(['message' => 'Unauthorized or User not found.'], 401);
         }
-
         $customer = $user->customer;
-
         if (!$customer) {
             return response()->json(['message' => 'Customer not found.'], 404);
         }
-
         // Get the latest order with status 'Draft' for the customer
         $orders = Order::where('host_id', $customer->id)
             ->where('order_status', 'Draft')
             ->orderBy('updated_at', 'DESC')
             ->get();
-
         $return_data = [];
 
         foreach($orders as $order) {
             $total_price = 0;
             // Fetch order details only if the relationship exists
             $orderCustomer = $order->customers()->where('customer_id', $customer->id)->first();
-
             if ($orderCustomer) {
                 // Get order details if the relationship exists
                 $orderDetails = $orderCustomer->pivot->orderDetails()
                     ->where('parent_id', null)
                     ->with('toppings.product') // Include topping product details
                     ->get();
-
                 $data = [
                     'type' => $order->type,
                     'name' => !empty($order->custom_name) ? $order->custom_name : $order->order_number,
@@ -826,8 +820,6 @@ class OrderController extends Controller
                     'count_product' => $orderDetails->count() ?? 0,
                     'order_detail' => []
                 ];
-
-
                 foreach ($orderDetails as $orderDetail) {
                     $total_price += $orderDetail->total_price;
                     $data['order_detail'][] = [
@@ -857,6 +849,7 @@ class OrderController extends Controller
             }
         }
 
+        \Log::info('fetchCart method called'); // Ghi log
         return response()->json([
             'message' => 'Cart fetched successfully.',
             'data' => $return_data

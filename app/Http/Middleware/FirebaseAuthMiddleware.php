@@ -23,22 +23,21 @@ class FirebaseAuthMiddleware
     public function handle(Request $request, Closure $next)
     {
         $token = $request->bearerToken(); // Lấy token từ header Authorization
-
         if (!$token) {
+            \Log::error('No token provided');
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
         try {
             $verifiedIdToken = $this->firebaseAuth->verifyIdToken($token);
+            \Log::info('Token verified successfully:', $verifiedIdToken->claims()->all());
             $request->attributes->set('firebaseUser', $verifiedIdToken->claims()->all());
-//            return \response()->json($request->attributes->get('firebaseUser'));
         } catch (RevokedIdToken $e) {
             return response()->json(['error' => 'Token revoked'], Response::HTTP_UNAUTHORIZED);
         } catch (\Exception $e) {
             \Log::error('Firebase token verification failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Invalid token'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(['error' => 'Unauthorized (Token invalid)'], Response::HTTP_UNAUTHORIZED);
         }
-
         return $next($request);
     }
 }

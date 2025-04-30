@@ -56,13 +56,14 @@ export const resetStatus = () => async (dispatch) => {
 
 export const fetchCart = () => async (dispatch) => {
     dispatch({ type: FETCH_CART_PROCESS });
-
     try {
+        console.log("Fetching cart...");
         const { data } = await connectApi.get("/api/cart/fetchCart");
-
+        console.log("Fetch cart success:", data);
         dispatch({ type: FETCH_CART_SUCCESS, payload: data });
     } catch (error) {
         console.error("Error fetching cart:", error);
+        //throw error;
         // Handle error appropriately
     }
 };
