@@ -26,21 +26,23 @@ const SignInPasswordPopup = ({isVisible, switchPopup}) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         if (!isSigningIn) {
             setIsSigningIn(true);
             try {
                 const data = await doSignInWithEmailAndPassword(inputRef.current.email, inputRef.current.password);
-                setIsSigningIn(false);
-                closePopup();
-                await dispatch(fetchCart());
+                console.log("Firebase login success:", data.user.email);
                 notify('success', t('LOGIN.LOGIN_SUCCESS'));
+                // await dispatch(fetchCart());
+                closePopup();
+                console.log("After fetching cart");
             } catch (error) {
                 setIsSigningIn(false);
+                console.error("Firebase login failed:", error.message);
                 notify('error', t('LOGIN.LOGIN_FAILED'));
             }
             finally {
                 await dispatch(fetchCart());
+                setIsSigningIn(false);
             }
         }
     };
@@ -52,18 +54,18 @@ const SignInPasswordPopup = ({isVisible, switchPopup}) => {
                 const data = await doSignInWithGoogle();
                 if (data) {
                     switchPopup({popupName: 'addPhone', registerData: data});
-                    setIsSigningIn(false);
                 } else {
-                    setIsSigningIn(false);
-                    closePopup();
                     notify('success', t('LOGIN.LOGIN_SUCCESS'));
+                    // await dispatch(fetchCart());
+                    closePopup();
                 }
             } catch (error) {
-                setIsSigningIn(false);
+                console.error("Google login failed:", error.message);
                 notify('error', t('LOGIN.LOGIN_FAILED'));
             }
             finally {
                 await dispatch(fetchCart());
+                setIsSigningIn(false);
             }
         }
     }
