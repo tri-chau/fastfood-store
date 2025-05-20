@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {formatVietnameseCurrency} from '../../../locales/currencyFormat.js';
 import {formatDateTime} from '../../../locales/dateFormat.js';
 import {createPaymentLink, customerCancelOrder} from "../../../redux/action/paymentAction.js";
@@ -6,12 +6,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {usePopup} from "../../../hooks/contexts/popupContext/popupState.jsx";
 import SpinnerLoading from "../../../components/loading/SpinnerLoading.jsx";
 import {useTranslation} from "react-i18next";
+import OrderDetailReviewPopup from '../../../components/popup/OrderDetailReviewPopup.jsx';
+import {BiCommentDots} from "react-icons/bi";
 import {notify} from "../../../layouts/notification/notify.jsx";
 
 const OrderList = ({orders, refetchOrder}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {openPopup} = usePopup();
+    // const {openPopup} = usePopup();
+
+    const {currentPopup, openPopup, closePopup, switchPopup} = usePopup();
 
     const {paymentLink, loading} = useSelector(state => state.payment);
     const currentIndexRef = useRef(null); // Use useRef to store index
@@ -24,6 +28,10 @@ const OrderList = ({orders, refetchOrder}) => {
             console.error('Error fetching checkout URL:', error);
         }
     };
+
+    const handleReviewClick = useCallback((e) => {
+        openPopup({popupName: 'orderDetailReview'});
+    }, [openPopup]);
 
     const cancelOrder = async (index) => {
         if (confirm('Are you sure you want to delete this cart?')) {
@@ -105,8 +113,8 @@ const OrderList = ({orders, refetchOrder}) => {
                                             {/* Product image */}
                                             <div className="w-[10%] min-w-[60px]">
                                                 <img src={item.image || 'storage_fail/build/assets/Product/empty-image.png'}
-                                                     alt="Product"
-                                                     className="w-full shadow-md rounded-lg aspect-square"/>
+                                                    alt="Product"
+                                                    className="w-full shadow-md rounded-lg aspect-square"/>
                                             </div>
                                             {/* Product info */}
                                             <div className="flex flex-col w-full pl-3">
@@ -122,7 +130,19 @@ const OrderList = ({orders, refetchOrder}) => {
                                             </div>
                                             {/* Price */}
                                             <div
-                                                className="font-semibold text-md text-green-600">{formatVietnameseCurrency(item.total_price)}</div>
+                                                className="font-semibold text-md text-green-600 px-3 py-3">{formatVietnameseCurrency(item.total_price)}</div>
+                                            {/* Review button */}
+                                            {order.status === "Completed" && (
+                                                <div className="flex items-center justify-center">
+                                                    <button
+                                                        onClick={handleReviewClick}
+                                                        className="hover:bg-stone-300 relative shadow-md inline-flex items-center px-2 py-2 rounded-md border-gray-20"
+                                                    >
+                                                        <BiCommentDots size={25}/>
+                                                    </button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
                                 ))}
@@ -168,6 +188,12 @@ const OrderList = ({orders, refetchOrder}) => {
                     </div>
                 )}
             </div>
+            {currentPopup?.popupName === 'orderDetailReview' && (
+                <OrderDetailReviewPopup
+                    isVisible={currentPopup?.popupName === 'orderDetailReview'}
+                    orderId={currentPopup?.orderId}
+                />
+            )}
         </div>
 
     );
