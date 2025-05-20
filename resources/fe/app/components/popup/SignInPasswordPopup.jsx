@@ -34,7 +34,6 @@ const SignInPasswordPopup = ({isVisible, switchPopup}) => {
                 notify('success', t('LOGIN.LOGIN_SUCCESS'));
                 // await dispatch(fetchCart());
                 closePopup();
-                console.log("After fetching cart");
             } catch (error) {
                 setIsSigningIn(false);
                 console.error("Firebase login failed:", error.message);

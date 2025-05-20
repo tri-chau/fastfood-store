@@ -35,11 +35,15 @@ Route::middleware(['firebase.auth'])->get('/test-firebase', function (\Illuminat
     ]);
 });
 
-
 Route::middleware(['firebase.auth'])->group(function () {
     //Auth
     Route::get('/auth/me', [AuthenticationController::class, 'me']);
     Route::post('/auth/logout', [AuthenticationController::class, 'logout']);
+
+    //Get Info
+    Route::get('user', function (Request $request) {
+        return response()->json($request->user());
+    });
 
     //Role & Permission routes
     Route::get('/roles/options', [RoleController::class, 'getRoleOptions']);
@@ -70,7 +74,6 @@ Route::middleware(['firebase.auth'])->group(function () {
     Route::get('/products/options', [\App\Http\Controllers\ProductController::class, 'getProductOptions']);
     Route::get('/customer/options', [\App\Http\Controllers\CustomerController::class, 'getCustomerOptions']);
 
-
     Route::post('/cart/addProductToCart', [\App\Http\Controllers\OrderController::class, 'addProductToCart']);
     Route::post('/cart/removeProductFromCart', [\App\Http\Controllers\OrderController::class, 'removeProductFromCart']);
     Route::post('/cart/removeToppingFromCart', [\App\Http\Controllers\OrderController::class, 'removeToppingFromCart']);
@@ -96,6 +99,12 @@ Route::middleware(['firebase.auth'])->group(function () {
     Route::post('/customer/cancelOrder', [\App\Http\Controllers\OrderController::class, 'cancelOrder']);
     Route::post('/customer/giveFeedback', [\App\Http\Controllers\OrderController::class, 'giveFeedback']);
     Route::post('/customer/markReceived', [\App\Http\Controllers\OrderController::class, 'markReceived']);
+
+    //Chat routes
+    Route::post('/messages', [\App\Http\Controllers\ChatController::class, 'message']);
+    Route::get('/getConversation', [\App\Http\Controllers\ChatController::class, 'getConversation']);
+    Route::get('/chat-history', [\App\Http\Controllers\ChatController::class, 'getChatHistory']);
+    Route::get('/admin-conversations', [\App\Http\Controllers\ChatController::class, 'getAdminConversations']);
 
     //PayOs api
     Route::post('/payos/create-payment-link', [\App\Http\Controllers\PayOSController::class, 'createPayment']);
@@ -153,5 +162,4 @@ Route::post('/auth/setCustomTokenForAdmin', [AuthenticationController::class, 's
 Route::post('/auth/addAdmin', [AuthenticationController::class, 'addAdmin']);
 Route::post('/auth/getCustomToken', [AuthenticationController::class, 'getCustomTokenForAdmin']);
 
-
-
+//Route::post('/broadcasting/auth', [\App\Http\Controllers\BroadcastController::class, 'authenticate']);

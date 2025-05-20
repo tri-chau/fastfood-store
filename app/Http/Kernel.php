@@ -24,6 +24,10 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\CorsMiddleware::class,
     ];
 
+//    protected $routeMiddleware = [
+//        'firebase.auth' => \App\Http\Middleware\FirebaseAuthMiddleware::class,
+//    ];
+
     /**
      * The application's route middleware groups.
      *

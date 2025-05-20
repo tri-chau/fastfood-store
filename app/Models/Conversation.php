@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasUuid;
+
 
 class Conversation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuid;
     protected $fillable = [
-        'id',
         'customer_id',
         'admin_id',
         'created_at',
@@ -30,4 +31,9 @@ class Conversation extends Model
     {
         return $this->hasMany(Message::class, 'conversation_id', 'id');
     }
+    public function latestMessage()
+    {
+        return $this->hasOne(Message::class, 'conversation_id', 'id')->latestOfMany('created_at');
+    }
+
 }
