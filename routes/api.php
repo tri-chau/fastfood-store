@@ -142,6 +142,13 @@ Route::get('/customer/products/search', [ProductController::class, 'searchProduc
 Route::get('/customer/products/{category}', [ProductController::class, 'getProducts']);
 Route::get('/categories/options/all', [\App\Http\Controllers\CategoryController::class, 'getCategoryJson']);
 
+Route::get('/feedback/all', [FeedbackController::class, 'index']);
+Route::post('/customer/feedback/add', [FeedbackController::class, 'store']);
+Route::post('/customer/feedback/update/{id}', [FeedbackController::class, 'update']);
+Route::delete('/customer/feedback/delete', [FeedbackController::class, 'destroy']);
+Route::get('/customer/feedback/{id}', [FeedbackController::class, 'getFeedbackDetail']);
+Route::get('/customer/feedbacks/{rating}', [FeedbackController::class, 'getFeedbacks']);
+
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
 Route::post('/auth/refresh', [AuthenticationController::class, 'refresh']);
 Route::post('/auth/auth-otp', [AuthenticationController::class, 'loginWithOtp']);
