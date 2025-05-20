@@ -26,6 +26,7 @@ const Login = () => {
 
                 // get custom token from server by firebase_uid
                 const {data} = await axios.post('/api/auth/getCustomToken', {firebase_uid: user.uid});
+                console.log('Custom token received:', data.custom_token);
 
                 if (data) {
                     await doSignInWithCustomToken(data.custom_token);

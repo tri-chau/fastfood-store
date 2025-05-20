@@ -16,6 +16,7 @@ import CartSelectionPopup from "../../components/popup/CartSelectionPopup.jsx";
 import QRPaymentPopup from "../../components/popup/QRPaymentPopup.jsx";
 import {MdSettings} from "react-icons/md";
 import {fetchCart} from "../../redux/action/cartAction.js";
+import ChatPopup from "../../components/popup/ChatPopup.jsx";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -34,6 +35,8 @@ const Header = () => {
     // return user logged in or not
     const {userLoggedIn, isPremiumUser} = auth || {};
 
+    const firebaseId = auth?.currentUser?.uid; //firebase id
+
     const handleNavMenu = () => {
         setOpenMenu(!openMenu);
     };
@@ -45,6 +48,22 @@ const Header = () => {
             openPopup({popupName: 'cartDrawer'});
     }, [openPopup]);
 
+    const handleSupportClick = useCallback(
+        (e) => {
+            console.log("handleSupportClick called, userLoggedIn:", userLoggedIn, "isPremiumUser:", isPremiumUser, "currentPopup:", currentPopup);
+            if (userLoggedIn && isPremiumUser) {
+                navigate("/admin/conversations");
+            } else if (!userLoggedIn) {
+                console.log("Opening login popup");
+                openPopup({ popupName: "login" });
+            } else {
+                console.log("Opening chat popup, firebaseId:", firebaseId);
+                openPopup({ popupName: "chat" });
+            }
+        },
+        [openPopup, userLoggedIn, isPremiumUser, navigate, firebaseId]
+    );
+
     useEffect(() => {
         if (userLoggedIn && !isPremiumUser) {
             dispatch(fetchCart());
@@ -54,8 +73,8 @@ const Header = () => {
     return (
         <header className="bg-white fixed top-0 w-full z-10 px-2 border-b">
             <div className="container mx-auto">
-                <div className="flex flex-row items-center justify-between space-x-2 py-4 max-h-[70px]">
-                    {/* Logo */}
+                <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
+                    {/* Left: Logo */}
                     <div
                         className="lg:flex hidden items-center text-xl font-semibold tracking-wider space-x-2 whitespace-nowrap"
                         onClick={() => navigate("/")}>
@@ -69,11 +88,22 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    {/* Search bar */}
-                    <SearchInputElement/>
+                    {/* Center: Search box */}
+                    <div className="flex-1 flex justify-center px-2">
+                        <div className="w-full max-w-md">
+                            <SearchInputElement />
+                        </div>
+                    </div>
 
-                    {/* Navigation */}
-                    <div className="inline-flex justify-center items-center space-x-4 px-2 w-auto min-w-max">
+                    {/* Right: Hỗ trợ KH + Menu */}
+                    <div className="flex items-center space-x-4 min-w-max">
+                        <button
+                            className="btn btn-outline-primary whitespace-nowrap"
+                            onClick={handleSupportClick}
+                        >
+                            Hỗ trợ khách hàng
+                        </button>
+
                         <NavMenuElement
                             handleNavMenu={handleNavMenu}
                             openMenu={openMenu}
@@ -90,8 +120,8 @@ const Header = () => {
                                     {cartQuantity > 0 && (
                                         <span
                                             className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
-                                                {cartQuantity}
-                                        </span>
+                                        {cartQuantity}
+                                    </span>
                                     )}
                                 </button>}
 
@@ -130,14 +160,12 @@ const Header = () => {
             {currentPopup?.popupName === 'addPhone' &&
                 <AddPhoneNumberPopup isVisible={currentPopup?.popupName === 'addPhone'}
                                      registerData={currentPopup.registerData}/>}
-
             {/* Select available cart when user add product to cart */}
             {currentPopup?.popupName === 'cartSelection' &&
                 <CartSelectionPopup isVisible={currentPopup?.popupName === 'cartSelection'}
                                     cartData={currentPopup?.cartData}
                                     product={currentPopup?.product}
                                     resetState={currentPopup?.resetState}/>}
-
             {/* cart drawer */}
             {currentPopup?.popupName === 'cartDrawer' &&
                 <CartDrawerPopup isVisible={currentPopup?.popupName === 'cartDrawer'}/>}
@@ -154,11 +182,18 @@ const Header = () => {
                     productDetailInCart={currentPopup?.productDetailInCart}
                 />
             )}
-
             {/* QR payment popup */}
             {currentPopup?.popupName === 'qrPayment' && currentPopup?.paymentLink &&
                 <QRPaymentPopup isVisible={currentPopup?.popupName === 'qrPayment'}
                                 paymentLink={currentPopup?.paymentLink} cart={currentPopup?.order}/>}
+
+            {currentPopup?.popupName === "chat" && (
+                <ChatPopup
+                    isVisible={currentPopup?.popupName === "chat"}
+                    closePopup={closePopup}
+                    firebaseId={firebaseId}
+                />
+            )}
 
         </header>
     );

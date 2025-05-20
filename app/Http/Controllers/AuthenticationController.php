@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Helpers\SpeedSMSAPI;
+use Kreait\Firebase\Factory;
 use Laravel\Sanctum\PersonalAccessToken;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 use Twilio\Rest\Client;
@@ -72,9 +73,7 @@ class AuthenticationController extends BaseController
                 return $this->sendError('Email already exists.', ['error' => 'Email already exists.']);
             }
 
-
             $user = User::create($input);
-
             // Assign role and permissions to the user
             if ($user->user_type == 'customer') {
 
@@ -406,6 +405,7 @@ class AuthenticationController extends BaseController
         }
 
         $user = User::where('firebase_uid', $request->firebase_uid)->first();
+        \Log::info('user found in AuthenController: ' . $user);
 
         if ($user) {
             return response()->json([
@@ -418,7 +418,6 @@ class AuthenticationController extends BaseController
             'success' => true,
             'existed' => false
         ]);
-
     }
 
     public function setCustomTokenForAdmin(Request $request): JsonResponse
@@ -452,9 +451,7 @@ class AuthenticationController extends BaseController
             $validated = $request->validate([
                 'firebase_uid' => 'required|string'
             ]);
-
             $user = User::where('firebase_uid', $validated['firebase_uid'])->first();
-
             if (!$user) {
                 return response()->json(['message' => 'Unauthorized or User not found.'], 401);
             }
@@ -463,9 +460,18 @@ class AuthenticationController extends BaseController
                 return response()->json(['message' => 'Unauthorized.'], 401);
             }
 
+//            Log::info('Custom token being returned: ' . $user->custom_token);
+
+            $auth = (new Factory)->withServiceAccount(base_path('resources/fe/app/modules/firebase/firebase_credentials.json'))
+                ->createAuth();
+            $customToken = $auth->createCustomToken($validated['firebase_uid'], [
+                'premiumAccount' => true
+            ]);
+            Log::info('Custom token generated: ' . $customToken->toString());
+
             return response()->json([
                 'success' => true,
-                'custom_token' => $user->custom_token
+                'custom_token' => $customToken->toString()
             ]);
 
         } catch (\Exception $e) {

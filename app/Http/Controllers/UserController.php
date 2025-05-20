@@ -19,9 +19,6 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    /**
-     * Show the specified user.
-     */
     public function show(User $user)
     {
         return response()->json($user->load('roles'));

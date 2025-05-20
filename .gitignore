@@ -22,10 +22,8 @@ yarn-error.log
 
 # fe
 /resources/fe/app/modules/firebase
+/resources/fe/app/modules/pusher
 /resources/fe/settings/ConnectApi.js
-
-
-
 
 
 

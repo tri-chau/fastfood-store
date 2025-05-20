@@ -9,7 +9,7 @@ return [
     'debug' => (bool) env('APP_DEBUG', false),
     'url' => env('APP_URL', 'http://localhost'),
     'asset_url' => env('ASSET_URL'),
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Ho_Chi_Minh'),
     'locale' => 'en',
     'date_format' => 'Y-m-d',
     'time_format' => 'H:i:s',
@@ -29,6 +29,7 @@ return [
         Laravel\Fortify\FortifyServiceProvider::class,
         App\Providers\CarbonServiceProvider::class,
         App\Providers\ModuleServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
     ])->toArray(),
 
     'aliases' => Facade::defaultAliases()->merge([

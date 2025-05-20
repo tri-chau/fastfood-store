@@ -764,9 +764,11 @@ class OrderController extends Controller
         \Log::debug('Checking Firebase user');
         $firebaseUser = $request->attributes->get('firebaseUser');
         if (!$firebaseUser) {
-           // \Log::info('cant find user firebase id'); // Ghi log
+           \Log::info('cant find user firebase id'); // Ghi log
             return null;
         }
+
+        \Log::info('Firebase user attributes:', $firebaseUser);
         // Tìm user trong database dựa vào Firebase UID
         return User::where('firebase_uid', $firebaseUser['sub'])->first();
     }
