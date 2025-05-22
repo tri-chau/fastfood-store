@@ -160,7 +160,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Remove the specified team from storage_fail.
+     * Remove the specified team from storage.
      */
     public function destroy($id): JsonResponse
     {

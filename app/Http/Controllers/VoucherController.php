@@ -19,7 +19,7 @@ class VoucherController extends BaseController
     }
 
     /**
-     * Store a newly created voucher in storage_fail.
+     * Store a newly created voucher in storage.
      */
     public function store(Request $request)
     {
@@ -142,7 +142,7 @@ class VoucherController extends BaseController
     }
 
     /**
-     * Update the specified voucher in storage_fail.
+     * Update the specified voucher in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -174,7 +174,7 @@ class VoucherController extends BaseController
     }
 
     /**
-     * Remove the specified voucher from storage_fail.
+     * Remove the specified voucher from storage.
      */
     public function destroy(string $id)
     {

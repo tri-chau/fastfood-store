@@ -104,7 +104,7 @@ const OrderList = ({orders, refetchOrder}) => {
                                             className="flex h-full p-2 w-full items-center bg-white shadow-sm rounded-lg">
                                             {/* Product image */}
                                             <div className="w-[10%] min-w-[60px]">
-                                                <img src={item.image || 'storage_fail/build/assets/Product/empty-image.png'}
+                                                <img src={item.image || 'storage/build/assets/Product/empty-image.png'}
                                                      alt="Product"
                                                      className="w-full shadow-md rounded-lg aspect-square"/>
                                             </div>
@@ -163,7 +163,7 @@ const OrderList = ({orders, refetchOrder}) => {
                             }
                         </div>
                     ))) : (<div className="flex flex-col items-center justify-center w-full h-full">
-                        <img src="/storage_fail/build/assets/no-data-found.png" alt="No data" className="w-80 opacity-60"/>
+                        <img src="/storage/build/assets/no-data-found.png" alt="No data" className="w-80 opacity-60"/>
                         <span className="text-gray-500 mt-2">{t('ORDERS.NO_ORDERS')}</span>
                     </div>
                 )}

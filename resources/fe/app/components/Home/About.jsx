@@ -23,7 +23,7 @@ const About = () => {
                     {/* Logo Section */}
                     <div className="md:w-1/3 flex justify-center md:justify-end overflow-hidden">
                         <img
-                            src="/storage_fail/build/assets/logo.png"
+                            src="/storage/build/assets/Logo.png"
                             alt="Bếp Mẹ Tây"
                             className="w-[100%] h-auto"
                         />

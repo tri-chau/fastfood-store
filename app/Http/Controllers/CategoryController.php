@@ -48,7 +48,7 @@ class CategoryController extends Controller
         ], 200);
     }
     /**
-     * Store a newly created category in storage_fail.
+     * Store a newly created category in storage.
      */
     public function store(Request $request)
     {
@@ -77,7 +77,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified category in storage_fail.
+     * Update the specified category in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -95,7 +95,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified category from storage_fail (soft delete).
+     * Remove the specified category from storage (soft delete).
      */
     public function destroy(string $id)
     {

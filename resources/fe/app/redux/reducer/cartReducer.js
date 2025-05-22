@@ -8,7 +8,7 @@ import {
     RESET_STATUS, UPDATE_CART_PROCESS, UPDATE_CART_SUCCESS,
 } from "../constant/cartType";
 
-// Load the initial cart state from local storage_fail
+// Load the initial cart state from local storage
 const loadCartFromLocalStorage = () => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -104,7 +104,7 @@ export const cartReducer = (state = cartState, action) => {
                     item.id === id ? {...item, amount: item.amount + 1} : item
                 );
 
-                // Update local storage_fail
+                // Update local storage
                 localStorage.setItem("cart", JSON.stringify(updatedCart));
 
                 return {
@@ -121,7 +121,7 @@ export const cartReducer = (state = cartState, action) => {
                 item.id === id ? {...item, amount: item.amount - 1} : item
             );
 
-            // Update local storage_fail
+            // Update local storage
             localStorage.setItem("cart", JSON.stringify(updatedCart));
 
             return {

@@ -207,7 +207,7 @@ const CartDrawerPopup = ({isVisible}) => {
                 <div id="default-tab-content">
                     {loading ? <SpinnerLoading/> : cartData?.length === 0 ? (
                         <div className="flex flex-col items-center justify-center w-full h-full">
-                            <img src="/storage_fail/build/assets/no-data-found.png" alt="No data"
+                            <img src="/storage/build/assets/no-data-found.png" alt="No data"
                                  className="w-80 opacity-60"/>
                             <span className="text-gray-500 mt-2">{t('CART.NO_CARTS')}</span>
                         </div>
@@ -244,7 +244,7 @@ const CartDrawerPopup = ({isVisible}) => {
                                                     <div className="flex gap-4 h-full rounded-lg">
                                                         <div className="w-[12%]">
                                                             <img
-                                                                src={item.image || '/storage_fail/build/assets/Product/empty-image.png'}
+                                                                src={item.image || '/storage/build/assets/Product/empty-image.png'}
                                                                 alt="Product"
                                                                 className="w-full shadow-lg rounded-lg aspect-square"/>
                                                         </div>
