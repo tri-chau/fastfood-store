@@ -11,6 +11,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRolePermissionController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,12 +143,13 @@ Route::get('/customer/products/search', [ProductController::class, 'searchProduc
 Route::get('/customer/products/{category}', [ProductController::class, 'getProducts']);
 Route::get('/categories/options/all', [\App\Http\Controllers\CategoryController::class, 'getCategoryJson']);
 
-Route::get('/feedback/all', [FeedbackController::class, 'index']);
-Route::post('/customer/feedback/add', [FeedbackController::class, 'store']);
-Route::post('/customer/feedback/update/{id}', [FeedbackController::class, 'update']);
-Route::delete('/customer/feedback/delete', [FeedbackController::class, 'destroy']);
-Route::get('/customer/feedback/{id}', [FeedbackController::class, 'getFeedbackDetail']);
-Route::get('/customer/feedbacks/{rating}', [FeedbackController::class, 'getFeedbacks']);
+Route::get('/review/all', [ReviewsController::class, 'index']);
+Route::post('/customer/review/add', [ReviewsController::class, 'store']);
+Route::put('/customer/review/update/{id}', [ReviewsController::class, 'update']);
+Route::delete('/customer/review/delete/{id}', [ReviewsController::class, 'destroy']);
+Route::get('/customer/review/{id}', [ReviewsController::class, 'getReviewDetail']);
+Route::get('/customer/reviews/{rating}', [ReviewsController::class, 'getReviews']);
+Route::get('/customer/review/by-product', [ReviewsController::class, 'getCustomerProductReview']);
 
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
 Route::post('/auth/refresh', [AuthenticationController::class, 'refresh']);
