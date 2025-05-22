@@ -172,5 +172,27 @@
             "PAY_NOW": "Pay now"
         }
 
+    },
+    
+    "REVIEWS":
+    {
+        "REVIEW": "Leave feedback",
+        "RATING": "Rating",
+        "COMMENT": "Leave a comment",
+        "PLACEHOLDER_COMMENT": "Your comment here...",
+        "CANCEL": "Cancel",
+        "SUBMIT": "Submit",
+        "SELECT_RATING": "Please select rating",
+        "NO_REVIEWS": "Chưa có đánh giá nào",
+        "COMPLETED": "Your feedback",
+        "DELETE": "Delete",
+        "DELETE_CONFIRM": "Are you sure you want to delete this review?",
+        "CONFIRM": "Yes",
+        "CANCEL_CONFIRM": "No",
+        "EDIT": "Edit",
+        "SUBMISSION_SUCCEEDED": "Thank you for your feedback",
+        "SUBMISSION_FAILED": "Submission failed",
+        "DELETE_SUCCEEDED": "Delete review successfully",
+        "DELETE_FAILED": "Delete review failed"
     }
 }
