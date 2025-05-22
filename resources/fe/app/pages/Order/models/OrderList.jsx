@@ -29,9 +29,9 @@ const OrderList = ({orders, refetchOrder}) => {
         }
     };
 
-    const handleReviewClick = useCallback((e) => {
-        openPopup({popupName: 'orderDetailReview'});
-    }, [openPopup]);
+    const handleReviewClick = (item, product_id) => {
+        openPopup({popupName: 'orderDetailReview', orderDetail: item, productId: product_id});
+    };
 
     const cancelOrder = async (index) => {
         if (confirm('Are you sure you want to delete this cart?')) {
@@ -135,7 +135,7 @@ const OrderList = ({orders, refetchOrder}) => {
                                             {order.status === "Completed" && (
                                                 <div className="flex items-center justify-center">
                                                     <button
-                                                        onClick={handleReviewClick}
+                                                        onClick={() => handleReviewClick(item, item.product_id)}
                                                         className="hover:bg-stone-300 relative shadow-md inline-flex items-center px-2 py-2 rounded-md border-gray-20"
                                                     >
                                                         <BiCommentDots size={25}/>
@@ -191,7 +191,8 @@ const OrderList = ({orders, refetchOrder}) => {
             {currentPopup?.popupName === 'orderDetailReview' && (
                 <OrderDetailReviewPopup
                     isVisible={currentPopup?.popupName === 'orderDetailReview'}
-                    orderId={currentPopup?.orderId}
+                    orderDetail={currentPopup?.orderDetail}
+                    productId={currentPopup?.productId}
                 />
             )}
         </div>
