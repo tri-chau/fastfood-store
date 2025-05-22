@@ -16,9 +16,7 @@ class Reviews extends Model
         'order_detail_id',
         'rating',
         'comment',
-        'is_edited',
-        'created_at',
-        'updated_at',
+        'is_edited'
     ];
 
     public function customer()
@@ -32,5 +30,9 @@ class Reviews extends Model
     public function orderDetail()
     {
         return $this->belongsTo(OrderDetail::class, 'order_detail_id', 'id');
+    }
+    public function reviews()
+    {
+        return $this->hasManyThrough(Reviews::class, OrderDetail::class, 'order_id', 'order_detail_id', 'id', 'id');
     }
 }
