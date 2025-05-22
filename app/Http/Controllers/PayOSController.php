@@ -18,15 +18,14 @@ use Endroid\QrCode\QrCode;
 class PayOSController extends Controller
 {
     private $payos = null;
-//    public function __construct()
-//    {
-//        $this->payos = new PayOS(
-//            config('services.payos.client_id'),
-//            config('services.payos.api_key'),
-//            config('services.payos.checksum_key')
-//        );
-//    }
-//TODO: Uncomment this
+    public function __construct()
+    {
+        $this->payos = new PayOS(
+            config('services.payos.client_id'),
+            config('services.payos.api_key'),
+            config('services.payos.checksum_key')
+        );
+    }
     public function createPayment(Request $request)
     {
         try {

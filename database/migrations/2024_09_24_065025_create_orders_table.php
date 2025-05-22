@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();;
             $table->uuid('customer_id'); //Id of customer who placed this order
-            $table->uuid('address_id'); //Id of address where the order will be delivered
+            $table->uuid('address_id')->nullable(); //Id of address where the order will be delivered
             $table->timestamps();
             $table->string('order_number');
             $table->string('receiver_name');

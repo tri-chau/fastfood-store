@@ -227,6 +227,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
     // get images from selectedProduct
     useEffect(() => {
         if (selectedProduct) {
+            console.log('selectedProduct', selectedProduct);
             setImages([
                 selectedProduct.image_url,
                 ...(selectedProduct.productDetailImages || []).map(img => img.image_url)

@@ -19,8 +19,8 @@ class ImageController extends Controller
         // Generate a unique file name
         $imageName = Str::random(40) . '.' . $request->image->extension();
 
-        // Store the image in the 'public_fail' disk (which stores files in storage_fail/app/public_fail)
-        $path = $request->file('image')->storeAs('images', $imageName, 'public_fail');
+        // Store the image in the 'public_fail' disk (which stores files in storage/app/public_fail)
+        $path = $request->file('image')->storeAs('images', $imageName, 'public');
 
         // Optionally, you can save the image path in the database if needed
         // Image::create(['path' => $path]);
@@ -29,8 +29,8 @@ class ImageController extends Controller
     }
     public function getImage($imageName)
     {
-        // Define the storage_fail disk (public_fail disk is used here)
-        $disk = 'public_fail';
+        // Define the storage disk (public_fail disk is used here)
+        $disk = 'public';
 
         // Construct the path where the image is stored
         $path = 'images/' . $imageName;
@@ -40,7 +40,7 @@ class ImageController extends Controller
             return response()->json(['error' => 'Image not found'], 404);
         }
 
-        // Get the file content from storage_fail
+        // Get the file content from storage
         $file = Storage::disk($disk)->get($path);
 
         // Return the image content as a response

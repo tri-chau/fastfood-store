@@ -25,7 +25,7 @@ class TagController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage_fail.
+     * Store a newly created resource in storage.
      */
     public function store(StoreTagRequest $request)
     {
@@ -49,7 +49,7 @@ class TagController extends Controller
     }
 
     /**
-     * Update the specified resource in storage_fail.
+     * Update the specified resource in storage.
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
@@ -57,7 +57,7 @@ class TagController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage_fail.
+     * Remove the specified resource from storage.
      */
     public function destroy(Tag $tag)
     {

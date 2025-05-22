@@ -80,7 +80,7 @@ const Header = () => {
                         onClick={() => navigate("/")}>
                         <Link to="/" className="flex items-center space-x-2">
                             <img
-                                src="/storage_fail/build/assets/logo.png"
+                                src="/storage/build/assets/Logo.png"
                                 alt="logo"
                                 className="h-auto max-h-12 w-auto"
                             />

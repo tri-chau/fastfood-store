@@ -12,7 +12,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
                     {/* First Column: Logo and BEPMETAY */}
                     <div className="flex flex-col items-start">
-                        <img src={"/storage_fail/build/assets/logo.png"} alt="Logo" className="w-36 mb-4"/>
+                        <img src={"/storage/build/assets/Logo.png"} alt="Logo" className="w-36 mb-4"/>
                         <span className="text-2xl font-bold tracking-wide">BEPMETAY</span>
                     </div>
 

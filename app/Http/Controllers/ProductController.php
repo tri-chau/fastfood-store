@@ -203,6 +203,10 @@ class ProductController extends BaseController
 //                $query->orderBy('products.priority', 'desc');  // Assuming ascending priority
 //            }
         }
+        // Thêm orderBy
+        $query->orderBy('categories.priority', 'desc')
+            ->orderBy('categories.id', 'asc')
+            ->orderBy('products.priority', 'desc');
 
         // Get the number of items to fetch, defaulting to 10
         $pageSize = $request->input('page_size', 10);
@@ -213,26 +217,47 @@ class ProductController extends BaseController
         else
             $products = $query->limit($limit === 'undefined' || is_null($limit) ? $pageSize : $limit)->get();
 
+//        $return_data = [];
+//        $prev_category_id = null;
+//        foreach ($products as $product) {
+//            if ($prev_category_id != $product->category_id) {
+//                $return_data[$product->category_id] = [
+//                    'category_name' => $product->category_name,
+//                    'category_id' => $product->category_id,
+//                    'category_priority' => $product->category_priority,
+//                    'category_description' => $product->category_description,
+//                ];
+//                $prev_category_id = $product->category_id;
+//            }
+//            $return_data[$product->category_id]['product_list'][] = [
+//                'product_id' => $product->product_id,
+//                'product_name' => $product->product_name,
+//                'product_description' => $product->product_description,
+//                'product_price' => $product->product_price,
+//                'product_image' => $product->product_image ? asset('storage/build/assets/Product/' . $product->product_image) : null,
+//            ];
+//        }
         $return_data = [];
-        $prev_category_id = null;
         foreach ($products as $product) {
-            if ($prev_category_id != $product->category_id) {
-                $return_data[$product->category_id] = [
+            $category_id = $product->category_id;
+            if (!isset($return_data[$category_id])) {
+                $return_data[$category_id] = [
                     'category_name' => $product->category_name,
                     'category_id' => $product->category_id,
-                    'category_priority' => $product->priority,
+                    'category_priority' => $product->category_priority,
                     'category_description' => $product->category_description,
+                    'product_list' => [],
                 ];
-                $prev_category_id = $product->category_id;
             }
-            $return_data[$product->category_id]['product_list'][] = [
+            $return_data[$category_id]['product_list'][] = [
                 'product_id' => $product->product_id,
                 'product_name' => $product->product_name,
                 'product_description' => $product->product_description,
                 'product_price' => $product->product_price,
-                'product_image' => $product->product_image ? asset('storage_fail/build/assets/' . $product->product_image) : null,
+                'product_image' => $product->product_image ? asset('storage/build/assets/Product/' . $product->product_image) : null,
             ];
         }
+        $return_data = array_values($return_data); // Chuyển mảng key bằng category_id thành mảng số
 
         // Determine if there are more products to load
         $hasMore = $products->count() < $query->count();
@@ -272,11 +297,11 @@ class ProductController extends BaseController
             'name' => $product->name,
             'price' => $product->price,
             'topping_list' => $toppingList,
-            'image_url' => $product->image ? asset('storage_fail/build/assets/' . $product->image) : null,
+            'image_url' => $product->image ? asset('storage/build/assets/Product/' . $product->image) : null,
             'productDetailImages' => $product->images->map(function ($image) {
                 return [
                     'id' => $image->id,
-                    'image_url' => asset('storage_fail/build/assets/' . $image->image_path),
+                    'image_url' => asset('storage/build/assets/Product/' . $image->image_path),
                 ];
             }),
 
@@ -304,7 +329,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Store a newly created product in storage_fail.
+     * Store a newly created product in storage.
      */
     public function store(Request $request)
     {
@@ -339,7 +364,7 @@ class ProductController extends BaseController
 
             if ($request->hasFile('thumbnailImage')) {
                 $image = $request->file('thumbnailImage');
-                $path = $image->store('build/assets/product_image', 'public_fail');
+                $path = $image->store('build/assets/product_image', 'public');
                 $product->update(['image' => $path]);
             }
 
@@ -373,7 +398,7 @@ class ProductController extends BaseController
                     foreach ($productDetailImages as $image) {
                         if ($image->isValid()) {
                             // Store each image in 'build/assets/product_image' directory
-                            $path = $image->store('build/assets/product_image', 'public_fail');
+                            $path = $image->store('build/assets/product_image', 'public');
 
                             // Create a record for each image in the product's images table
                             $product->images()->create(['image_path' => $path]);
@@ -410,7 +435,7 @@ class ProductController extends BaseController
             return [
                 'id' => $product->id,
                 'name' => $product->name,
-                'image' => $product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage_fail/' . $product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
+                'image' => $product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage/' . $product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
             ];
         });
 
@@ -447,7 +472,7 @@ class ProductController extends BaseController
             return [
                 'id' => $product->id,
                 'name' => $product->name,
-                'image_url' => $product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage_fail/' . $product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
+                'image_url' => $product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage/' . $product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
                 'price' => $product->price,
                 'toppings' => $toppingList,
             ];
@@ -472,7 +497,7 @@ class ProductController extends BaseController
         $product['images_list'] = $product->images->map(function ($image) {
             return [
                 'id' => $image->id,
-                'image_url' => asset('storage_fail/' . $image->image_path),  // Generate the full URL
+                'image_url' => asset('storage/' . $image->image_path),  // Generate the full URL
                 'image_path' => $image->image_path,  // Original image path
             ];
         });
@@ -484,7 +509,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Update the specified product in storage_fail.
+     * Update the specified product in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -541,7 +566,7 @@ class ProductController extends BaseController
 
         if ($request->hasFile('thumbnailImage')) {
             $image = $request->file('thumbnailImage');
-            $image->storeAs('build/assets/Product', $image->hashName(), 'public_fail');
+            $image->storeAs('build/assets/Product', $image->hashName(), 'public');
             $product->update(['image' => 'Product/' . $image->hashName()]);
         }
 
@@ -597,7 +622,7 @@ class ProductController extends BaseController
                     if ($image->isValid()) {
                         // Store each image in 'build/assets/product_image' directory
 
-                        $image->storeAs('build/assets/Product', $image->hashName(), 'public_fail');
+                        $image->storeAs('build/assets/Product', $image->hashName(), 'public');
 
                         // Create a record for each image in the product's images table
                         $product->images()->create(['image_path' => 'Product/' . $image->hashName()]);
@@ -617,7 +642,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * Remove the specified product from storage_fail (soft delete).
+     * Remove the specified product from storage (soft delete).
      */
     public function destroy(string $id)
     {
@@ -647,7 +672,7 @@ class ProductController extends BaseController
 
         // Delete associated images
         foreach ($product->images as $image) {
-            Storage::disk('public_fail')->delete($image->image_path);
+            Storage::disk('public')->delete($image->image_path);
         }
 
         $product->forceDelete();
@@ -692,11 +717,11 @@ class ProductController extends BaseController
                         'extra_price' => $topping->pivot->extra_price,
                     ];
                 }),
-                'thumbnailImage' => $product->image ? asset('storage_fail/' . $product->image) : null,
+                'thumbnailImage' => $product->image ? asset('storage/' . $product->image) : null,
                 'productDetailImages' => $product->images->map(function ($image) {
                     return [
                         'id' => $image->id,
-                        'image_url' => asset('storage_fail/' . $image->image_path),
+                        'image_url' => asset('storage/' . $image->image_path),
                     ];
                 }),
             ];

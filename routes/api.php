@@ -162,4 +162,3 @@ Route::post('/auth/setCustomTokenForAdmin', [AuthenticationController::class, 's
 Route::post('/auth/addAdmin', [AuthenticationController::class, 'addAdmin']);
 Route::post('/auth/getCustomToken', [AuthenticationController::class, 'getCustomTokenForAdmin']);
 
-//Route::post('/broadcasting/auth', [\App\Http\Controllers\BroadcastController::class, 'authenticate']);
