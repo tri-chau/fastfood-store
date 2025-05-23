@@ -150,6 +150,7 @@ Route::delete('/customer/review/delete/{id}', [ReviewsController::class, 'destro
 Route::get('/customer/review/{id}', [ReviewsController::class, 'getReviewDetail']);
 Route::get('/customer/reviews/{rating}', [ReviewsController::class, 'getReviews']);
 Route::get('/customer/review/by-product', [ReviewsController::class, 'getCustomerProductReview']);
+Route::get('/customer/reviews/by-product/{productId}', [ReviewsController::class, 'getAllReviewsByProduct']);
 
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
 Route::post('/auth/refresh', [AuthenticationController::class, 'refresh']);
