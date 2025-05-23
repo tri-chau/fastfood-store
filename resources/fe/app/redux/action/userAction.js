@@ -17,11 +17,13 @@ import axios from "axios";
 
 export const userLogin = (input) => async (dispatch) => {
     try {
-        dispatch({type: LOGIN_PROCESS});
+        dispatch({ type: LOGIN_PROCESS });
 
         const response = await connectApi.post("/api/auth/login", {
-            email: input.phone,
-            password: input.password,
+            // email: input.phone,
+            // password: input.password,
+            email: "admin@admin.com",
+            password: "123",
         });
 
         const data = response.data;
@@ -41,7 +43,7 @@ export const userLogin = (input) => async (dispatch) => {
             type: LOGIN_SUCCESS,
         });
     } catch (error) {
-        dispatch({type: LOGIN_FAIL, payload: error.message});
+        dispatch({ type: LOGIN_FAIL, payload: error.message });
     }
 };
 
@@ -53,9 +55,9 @@ export const getUserInfo = () => async (dispatch) => {
             },
         });
 
-        dispatch({type: GET_USER_INFO_SUCCESS, payload: response.data});
+        dispatch({ type: GET_USER_INFO_SUCCESS, payload: response.data });
     } catch (error) {
-        dispatch({type: GET_USER_INFO_FAIL, payload: error});
+        dispatch({ type: GET_USER_INFO_FAIL, payload: error });
     }
 };
 
@@ -82,19 +84,19 @@ export const getRefreshToken = () => async (dispatch) => {
             });
         }
 
-        dispatch({type: "GET_REFRESH_TOKEN_SUCCESS"});
+        dispatch({ type: "GET_REFRESH_TOKEN_SUCCESS" });
     } catch (error) {
-        dispatch({type: "GET_REFRESH_TOKEN_FAIL", payload: error.message});
+        dispatch({ type: "GET_REFRESH_TOKEN_FAIL", payload: error.message });
     }
 };
 
 export const resetStatus = () => async (dispatch) => {
-    dispatch({type: RESET_STATUS});
+    dispatch({ type: RESET_STATUS });
 };
 
 export const userRegister = (input, firebase_uid) => async (dispatch) => {
     try {
-        dispatch({type: REGISTER_PROCESS});
+        dispatch({ type: REGISTER_PROCESS });
 
         const response = await connectApi.post("/api/auth/register", {
             name: input.name,
@@ -108,7 +110,7 @@ export const userRegister = (input, firebase_uid) => async (dispatch) => {
             auth_type: input.auth_type,
         });
 
-        dispatch({type: REGISTER_SUCCESS});
+        dispatch({ type: REGISTER_SUCCESS });
     } catch (error) {
         let errorMessage = "Something went wrong!";
 
@@ -116,7 +118,7 @@ export const userRegister = (input, firebase_uid) => async (dispatch) => {
             errorMessage = error.response.data.message || errorMessage;
         }
 
-        dispatch({type: REGISTER_FAIL, payload: error.errorMessage});
+        dispatch({ type: REGISTER_FAIL, payload: error.errorMessage });
 
         throw new Error(errorMessage);
     }

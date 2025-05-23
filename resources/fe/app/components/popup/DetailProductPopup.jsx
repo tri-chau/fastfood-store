@@ -1,17 +1,18 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {formatVietnameseCurrency} from '../../locales/currencyFormat.js';
-import {addProductToCart, fetchCart, resetCart, updateProductInCart} from "../../redux/action/cartAction.js";
-import {useAuth} from "../../hooks/contexts/authContext/index.jsx";
-import {usePopup} from "../../hooks/contexts/popupContext/popupState.jsx";
-import {notify} from "../../layouts/Notification/notify.jsx";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { formatVietnameseCurrency } from '../../locales/currencyFormat.js';
+import { addProductToCart, fetchCart, resetCart, updateProductInCart } from "../../redux/action/cartAction.js";
+import { useAuth } from "../../hooks/contexts/authContext/index.jsx";
+import { usePopup } from "../../hooks/contexts/popupContext/popupState.jsx";
+import { notify } from "../../layouts/Notification/notify.jsx";
 import SpinnerLoading from "../loading/SpinnerLoading.jsx";
-import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
-import {useTranslation} from "react-i18next";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { formatDate } from '../../locales/dateFormat.js';
 
-const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
+const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
     const dispatch = useDispatch();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const selectedProduct = useSelector(state => state.product.product);
 
     // Find the correct size from selectedProduct.size_list
@@ -37,7 +38,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
     const [note, setNote] = useState(productDetailInCart?.note || '');
 
     // use state for handling add product to cart
-    const {cartData, loading} = useSelector(state => state.cart);
+    const { cartData, loading } = useSelector(state => state.cart);
     const [product, setProduct] = useState({});
     // const {currentPopup, openPopup, closePopup, switchPopup} = usePopupState();
 
@@ -50,8 +51,8 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
     const imageRef = useRef(null); // Tham chiếu đến thẻ <img>
     const [images, setImages] = useState([]);
 
-    const {userLoggedIn} = useAuth();
-    const {openPopup, closePopup, switchPopup} = usePopup();
+    const { userLoggedIn } = useAuth();
+    const { openPopup, closePopup, switchPopup } = usePopup();
 
     // reset state after add product to cart
     const resetState = async () => {
@@ -85,10 +86,10 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
             const exists = prev.find((t) => t.id === topping.id);
             if (exists) {
                 return prev.map((t) =>
-                    t.id === topping.id ? {...t, is_selected: !t.is_selected} : t
+                    t.id === topping.id ? { ...t, is_selected: !t.is_selected } : t
                 );
             }
-            return [...prev, {...topping, is_selected: true}];
+            return [...prev, { ...topping, is_selected: true }];
         });
     }, []);
 
@@ -100,7 +101,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
         }
         // check login
         if (!userLoggedIn)
-            return switchPopup({popupName: 'login'});
+            return switchPopup({ popupName: 'login' });
 
         // start loading
 
@@ -157,7 +158,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
             // resetState();
             // closePopup();
         } else {
-            openPopup({popupName: 'cartSelection', product: product, cartData: cartData, resetState: resetState});
+            openPopup({ popupName: 'cartSelection', product: product, cartData: cartData, resetState: resetState });
         }
     }, [product]);
 
@@ -165,12 +166,33 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
         selectedToppingsKey.current += 1;
     }, [selectedToppings]);
 
+    const [reviews, setReviews] = useState([]);
 
-    // useEffect(() => {
-    //     if (selectedProduct) {
-    //         calculateTotal();
-    //     }
-    // }, [selectedProduct, selectedSize, selectedToppings, quantity]);
+    // Tạo mảng review mẫu
+    // const reviews = [
+    //     { id:"1", customer_name: "A", rating: 5, created_at:"2025-04-11", comment: "Sản phẩm rất ngon, sẽ ủng hộ tiếp!", is_edited: true },
+    //     { id:"2", customer_name: "B", rating: 3, created_at:"2025-04-23", comment: "Hương vị ổn, giao hàng nhanh.", is_edited: false },
+    //     { id:"3", customer_name: "cheese", rating: 3, created_at:"2025-04-30", comment: "Bình thường, không có gì đặc biệt.", is_edited: false },
+    // ];
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            if (!selectedProduct?.id) return;
+            try {
+                const { data } = await connectApi.get(`/api/customer/reviews/by-product/${selectedProduct.id}`);
+                setReviews(data.data || []);
+            } catch (error) {
+                setReviews([]);
+            }
+        };
+        if (isVisible && selectedProduct?.id) {
+            fetchReviews();
+        }
+    }, [isVisible, selectedProduct]);
+
+    const averageRating = reviews && reviews.length > 0
+        ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(1)
+        : null;
 
     const saveEditing = async () => {
         if (!selectedProduct) {
@@ -192,7 +214,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
             const result = await dispatch(updateProductInCart(updatedProduct));
             notify('success', 'Update product successfully');
             fetchCart();
-            openPopup({popupName: 'cartDrawer'});
+            openPopup({ popupName: 'cartDrawer' });
         } catch (error) {
             notify('error', 'Update product failed');
         }
@@ -200,7 +222,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
 
     const handleClosePopup = () => {
         if (isEdit) {
-            openPopup({popupName: 'cartDrawer'});
+            openPopup({ popupName: 'cartDrawer' });
         } else {
             closePopup();
         }
@@ -223,6 +245,19 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
         total *= quantity;
         setTotalPrice(total);
     }, [selectedProduct, selectedSize, selectedToppings, quantity]);
+
+    // stop background scroll
+    useEffect(() => {
+        if (isVisible) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        // Clean up in case the component is unmounted while visible
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isVisible]);
 
     // get images from selectedProduct
     useEffect(() => {
@@ -253,43 +288,85 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
     return (
         <div className="overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
             <div className="bg-white rounded-lg shadow-lg w-[1300px] h-[600px] relative flex z-9999"
-                 onClick={(e) => e.stopPropagation()}>
-                {/* Left Section */}
+                onClick={(e) => e.stopPropagation()}>
+                {/* Left Section (ảnh) */}
                 <div
-                    className="w-[600px] h-[600px] overflow-hidden rounded-l-lg flex items-center justify-center relative">
-                    {/* Left Arrow Button */}
-                    <button
-                        onClick={() => {
-                            if (images.length === 1) return;
-                            currentImageIndexRef.current = (currentImageIndexRef.current - 1 + images.length) % images.length;
-                            if (imageRef.current) {
-                                imageRef.current.src = images[currentImageIndexRef.current];
-                            }
-                        }}
-                        className="absolute left-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
-                        <FaArrowLeft/>
-                    </button>
+                    className="border flex-col items-center justify-center overflow-y-auto transition-transform-translate-x-full w-[640px]"
+                    style={{ maxHeight: '600px' }} // Optional: ensures max height for scrolling
+                >
+                    <div className="shadow-lg h-[580px] h-[600px] overflow-hidden rounded-l-lg flex items-center justify-center relative">
+                        {/* Left Arrow Button */}
+                        <button
+                            onClick={() => {
+                                if (images.length === 1) return;
+                                currentImageIndexRef.current = (currentImageIndexRef.current - 1 + images.length) % images.length;
+                                if (imageRef.current) {
+                                    imageRef.current.src = images[currentImageIndexRef.current];
+                                }
+                            }}
+                            className="absolute left-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
+                            <FaArrowLeft />
+                        </button>
 
-                    {/* Image */}
-                    <img
-                        ref={imageRef}
-                        src={images[0] || "/build/assets/Product/empty-image.png"}
-                        alt="Product Image"
-                        className="w-[550px] h-[550px] object-cover rounded-lg"
-                    />
+                        {/* Image */}
+                        <img
+                            ref={imageRef}
+                            src={images[0] || "/build/assets/Product/empty-image.png"}
+                            alt="Product Image"
+                            className="w-[550px] h-[550px] object-cover aspect-square rounded-lg"
+                        />
 
-                    {/* Right Arrow Button */}
-                    <button
-                        onClick={() => {
-                            if (images.length === 1) return;
-                            currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;
-                            if (imageRef.current) {
-                                imageRef.current.src = images[currentImageIndexRef.current];
-                            }
-                        }}
-                        className="absolute right-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
-                        <FaArrowRight/>
-                    </button>
+                        {/* Right Arrow Button */}
+                        <button
+                            onClick={() => {
+                                if (images.length === 1) return;
+                                currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;
+                                if (imageRef.current) {
+                                    imageRef.current.src = images[currentImageIndexRef.current];
+                                }
+                            }}
+                            className="absolute right-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
+                            <FaArrowRight />
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col px-6 mt-4 w-[600px] rounded-l-lg">
+                        <h3 className="text-[30px] font-bold mb-2">Đánh giá sản phẩm</h3>
+
+                        {/* display average rating */}
+                        {averageRating && (
+                            <div className="mb-2 text-[20px] font-semibold">
+                                <span className="font-semibold">{averageRating}</span>
+                                <span className="font-serif text-yellow-500 ml-2">
+                                    {"★".repeat(Math.round(averageRating))}
+                                </span>
+                            </div>
+                        )}
+
+                        {reviews && reviews.length > 0 ? (
+                            reviews.map((review) => (
+                                <div key={review?.id} className="mb-2 p-2 border rounded">
+                                    <span className="font-semibold mr-2">
+                                        {review.customer_name || "Ẩn danh"}
+                                    </span>
+                                    <div className="flex flex-row flex-wrap items-center mt-4 w-full">
+                                        <span className="font-semibold italic">
+                                            {formatDate(review?.created_at)}
+                                        </span>
+                                        {review?.is_edited && (
+                                            <span className="text-[18px] font-serif text-stone-400 ml-2">
+                                                {"(edited)"}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="text-yellow-500">{"★".repeat(review?.rating)}</div>
+                                    <div>{review?.comment}</div>
+                                </div>
+                            ))
+                        ) : (
+                            <div>Chưa có đánh giá nào.</div>
+                        )}
+                    </div>
                 </div>
 
                 {/*right*/}
@@ -303,9 +380,9 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
                         <div className="h-full">
                             <button onClick={handleClosePopup} className="text-gray-500 hover:text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                          d="M6 18L18 6M6 6l12 12"/>
+                                        d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
@@ -345,11 +422,10 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
                                                 <button
                                                     key={topping.id + selectedToppingsKey.current}
                                                     className={`px-4 py-2 rounded-lg text-xs md:text-[16px] font-medium transition-all focus:ring-2 focus:ring-[#f26d78] focus:ring-offset-2
-                                                    ${
-                                                        isSelected
+                                                    ${isSelected
                                                             ? "bg-[#f26d78] text-white shadow-md"
                                                             : "bg-neutral-100 text-form-strokedark shadow-md"
-                                                    }`}
+                                                        }`}
                                                     onClick={() => handleToppingClick(topping)}>
                                                     {topping.name}
                                                 </button>
@@ -382,7 +458,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
                                             stroke="currentColor"
                                             className="h-4 w-4"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14"/>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                         </svg>
                                     </button>
 
@@ -410,7 +486,7 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
                                             className="h-4 w-4"
                                         >
                                             <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M12 4.5v15m7.5-7.5h-15"/>
+                                                d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>
                                     </button>
                                 </div>
@@ -438,18 +514,18 @@ const DetailProductPopup = ({isVisible, isEdit, productDetailInCart}) => {
                     <div className="flex justify-end items-center space-x-4 h-[10%]">
                         <div>
                             <span className="mr-3">
-                                {t('DETAIL_PRODUCT.TOTAL')}: {totalPrice.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'})}
+                                {t('DETAIL_PRODUCT.TOTAL')}: {totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                             </span>
                             {!isEdit ? (
                                 <button onClick={addToCart}
-                                        className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
+                                    className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
                                     {/*Add to cart*/}
-                                    {loading ? <SpinnerLoading/> : t('DETAIL_PRODUCT.ADD_TO_CART')}
+                                    {loading ? <SpinnerLoading /> : t('DETAIL_PRODUCT.ADD_TO_CART')}
                                 </button>
                             ) : (
                                 <button onClick={saveEditing}
-                                        className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
-                                    {loading ? <SpinnerLoading/> : t('DETAIL_PRODUCT.EDIT_CONFIRM')}
+                                    className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
+                                    {loading ? <SpinnerLoading /> : t('DETAIL_PRODUCT.EDIT_CONFIRM')}
                                 </button>
                             )}
                         </div>
