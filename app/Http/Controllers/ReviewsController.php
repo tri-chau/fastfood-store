@@ -79,6 +79,31 @@ class ReviewsController extends Controller
         ]);
     }
 
+    public function getAllReviewsByProduct($productId)
+    {
+        $reviews = \App\Models\Reviews::with('customer') // eager load customer
+            ->where('product_id', $productId)
+            ->orderBy('rating', 'desc')
+            ->get();
+
+        // Map to include customer name in each review
+        $reviews = $reviews->map(function($review) {
+            return [
+                'id' => $review->id,
+                'rating' => $review->rating,
+                'created_at' => $review->created_at,
+                'comment' => $review->comment,
+                'is_edited' => $review->is_edited,
+                'customer_name' => $review->customer ? $review->customer->full_name : 'Ẩn danh',
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $reviews
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
