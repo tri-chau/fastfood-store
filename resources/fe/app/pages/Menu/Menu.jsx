@@ -13,8 +13,6 @@ import Marketing from "./models/Marketing.jsx";
 import {useTranslation} from "react-i18next";
 import {MdOutlineSort, MdSort} from "react-icons/md";
 
-import DetailProductPopup from "../../components/popup/DetailProductPopup.jsx";
-
 const Menu = () => {
     const dispatch = useDispatch();
     const dispatchProduct = useDispatch();
@@ -179,7 +177,7 @@ const Menu = () => {
 
     const handleOpenDetailProduct = useCallback((product_id) => {
         return () => {
-            openPopup({popupName: 'details'/*, productId: product_id*/});
+            openPopup({popupName: 'details', productId: product_id});
         };
     }, [openPopup]);
 
@@ -264,7 +262,7 @@ const Menu = () => {
                 </div>
 
                 {/* Right section : products */}
-                {/* <div className="col-span-12 lg:col-span-9 grid grid-cols-1 lg:grid-cols-1 gap-0 lg:gap-4 mb-4">
+                <div className="col-span-12 lg:col-span-9 grid grid-cols-1 lg:grid-cols-1 gap-0 lg:gap-4 mb-4">
                     {loading ? (
                         [...Array(3)].map((_, n) => (
                             <div key={n} className="mb-6">
@@ -335,54 +333,7 @@ const Menu = () => {
                             </div>
                         ))
                     )}
-                </div> */}
-                {/* ------------------------------------------------------------------------ */}
-                <div key={"mini" /*category.category_id*/}>
-                    <span
-                        className="text-3xl font-bold text-black-2 ml-4">{"Rau câu mini" /*category.category_name*/}</span>
-                    <div
-                        className="col-span-12 lg:col-span-9 grid grid-cols-2 lg:grid-cols-3 gap-0 lg:gap-4 mt-4">
-                        {/* {category.product_list.map(product => ( */}
-                            <div key={"1" /*product.product_id*/} className="p-4 cursor-pointer">
-                                <div
-                                    className="bg-gray-200/50 rounded-md relative mb-4 max-h-[250px] group overflow-hidden">
-                                    <img
-                                        src={/*product.product_image ||*/ "/storage_fail/build/assets/Product/empty-image.png"}
-                                        alt="Product"
-                                        className="w-full shadow-lg rounded-lg aspect-square"
-                                    />
-                                    <ButtonElement
-                                        value={"1" /*product.product_id*/}
-                                        action={handleOpenDetailProduct("1" /*product.product_id*/)}
-                                        style={buttonStyle}
-                                        title={t('MENU.ADD_TO_CART')}
-                                    />
-                                </div>
-
-                                <div className="product_content flex flex-row justify-between mt-4 ">
-                                    <div className="product_label">
-                                    <h3 className="font-bold text-black truncate w-52">{"Rau câu cà phê dứa mini 100gr" /*product.product_name*/}</h3>
-                                        <p className="text-gray-600 text-xs lg:text-sm">{formatVietnameseCurrency("6000" /*product.product_price*/)}</p>
-                                    </div>
-                                    <div className="flex justify-center items-center mb-3 lg:mb-0">
-                                        <button onClick={handleOpenDetailProduct("1" /*product.product_id*/)}
-                                                className="add_btn flex justify-center items-center p-1 bg-[#f26d78] hover:bg-[#C15760]">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" strokeWidth="1.5" stroke="white"
-                                                    className="size-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round"
-                                                        d="M12 4.5v15m7.5-7.5h-15"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        {/* ))} */}
-                        {currentPopup?.popupName === 'details' &&
-                            <DetailProductPopup isVisible={currentPopup?.popupName === 'details'} isEdit={false}/>}
-                    </div>
                 </div>
-                {/* ------------------------------------------------------------------------ */}
             </div>
         </div>
     );
