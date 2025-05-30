@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {formatVietnameseCurrency} from '../../../locales/currencyFormat.js';
 import {formatDateTime} from '../../../locales/dateFormat.js';
 import {createPaymentLink, customerCancelOrder} from "../../../redux/action/paymentAction.js";
@@ -6,12 +6,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {usePopup} from "../../../hooks/contexts/popupContext/popupState.jsx";
 import SpinnerLoading from "../../../components/loading/SpinnerLoading.jsx";
 import {useTranslation} from "react-i18next";
+import OrderDetailReviewPopup from '../../../components/popup/OrderDetailReviewPopup.jsx';
+import {BiCommentDots} from "react-icons/bi";
 import {notify} from "../../../layouts/notification/notify.jsx";
 
 const OrderList = ({orders, refetchOrder}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {openPopup} = usePopup();
+    // const {openPopup} = usePopup();
+
+    const {currentPopup, openPopup, closePopup, switchPopup} = usePopup();
 
     const {paymentLink, loading} = useSelector(state => state.payment);
     const currentIndexRef = useRef(null); // Use useRef to store index
@@ -23,6 +27,10 @@ const OrderList = ({orders, refetchOrder}) => {
         } catch (error) {
             console.error('Error fetching checkout URL:', error);
         }
+    };
+
+    const handleReviewClick = (item, product_id) => {
+        openPopup({popupName: 'orderDetailReview', orderDetail: item, productId: product_id});
     };
 
     const cancelOrder = async (index) => {
@@ -48,6 +56,52 @@ const OrderList = ({orders, refetchOrder}) => {
 
     }, [paymentLink]);
 
+    // orders = [
+    // {
+    //     order_id: "5dd57e53-2ae7-11f0-96e3-c4efbb5e3d83",
+    //     order_number: "1",
+    //     date_created: "2025-05-28 16:06:36",
+    //     host_id: "716b3011-2ae6-11f0-96e3-c4efbb5e3d83",
+    //     payment_method: "Cash",
+    //     payment_status: "paid",
+    //     receiver_name: "an",
+    //     count_product: 1,
+    //     status: "Completed",
+    //     total_price: 10000.00,
+    //     order_date: "2025-05-28 16:06:36",
+    //     rate: 2,
+    //     feedback: "good",
+    //     note: "",
+    //     order_detail: [
+    //         {
+    //             id: "e67988e9-2ae7-11f0-96e3-c4efbb5e3d83",
+    //             order_detail_number: "1",
+    //             product_id: "5a4d7925-3bab-11f0-a70d-c4efbb5e3d83",
+    //             product_name: "chicken soup2",
+    //             product_price: 10000.00,
+    //             size: "S",
+    //             quantity: 1,
+    //             image: null,
+    //             note: "no pepper",
+    //             total_price: 10000.00,
+    //             count_topping: 0,
+    //         },
+    //         {
+    //             id: "a617811c-3bcc-11f0-a4c0-c4efbb5e3d83",
+    //             order_detail_number: "1",
+    //             product_id: "e62fe461-2ae6-11f0-96e3-c4efbb5e3d83",
+    //             product_name: "Chicken Soup",
+    //             product_price: 102.00,
+    //             size: "S",
+    //             quantity: 1,
+    //             image: null,
+    //             note: "no",
+    //             total_price: 102.00,
+    //             count_topping: 0,
+    //         }
+    //     ]
+    // }
+// ];
 
     return (<div className="flex mt-4 shadow-lg rounded-lg">
             <div
@@ -104,14 +158,14 @@ const OrderList = ({orders, refetchOrder}) => {
                                             className="flex h-full p-2 w-full items-center bg-white shadow-sm rounded-lg">
                                             {/* Product image */}
                                             <div className="w-[10%] min-w-[60px]">
-                                                <img src={item.image || 'storage/build/assets/Product/empty-image.png'}
-                                                     alt="Product"
-                                                     className="w-full shadow-md rounded-lg aspect-square"/>
+                                                <img src={item.image || 'storage_fail/build/assets/Product/empty-image.png'}
+                                                    alt="Product"
+                                                    className="w-full shadow-md rounded-lg aspect-square"/>
                                             </div>
                                             {/* Product info */}
                                             <div className="flex flex-col w-full pl-3">
                                                 <span
-                                                    className="text-md font-semibold text-gray-700">{item.product_name} ({item.size})</span>
+                                                    className="text-md font-semibold text-gray-700">{item.product_name} ({item.size}) {/*item.product_id*/}</span>
                                                 {item.count_topping !== 0 && (<span
                                                     className="text-xs text-gray-500">+ {item.count_topping} toppings</span>)}
                                                 <span
@@ -122,7 +176,19 @@ const OrderList = ({orders, refetchOrder}) => {
                                             </div>
                                             {/* Price */}
                                             <div
-                                                className="font-semibold text-md text-green-600">{formatVietnameseCurrency(item.total_price)}</div>
+                                                className="font-semibold text-md text-green-600 px-3 py-3">{formatVietnameseCurrency(item.total_price)}</div>
+                                            {/* Review button */}
+                                            {order.status === "Completed" && (
+                                                <div className="flex items-center justify-center">
+                                                    <button
+                                                        onClick={() => handleReviewClick(item, item.product_id)}
+                                                        className="hover:bg-stone-300 relative shadow-md inline-flex items-center px-2 py-2 rounded-md border-gray-20"
+                                                    >
+                                                        <BiCommentDots size={25}/>
+                                                    </button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
                                 ))}
@@ -168,6 +234,13 @@ const OrderList = ({orders, refetchOrder}) => {
                     </div>
                 )}
             </div>
+            {currentPopup?.popupName === 'orderDetailReview' && (
+                <OrderDetailReviewPopup
+                    isVisible={currentPopup?.popupName === 'orderDetailReview'}
+                    orderDetail={currentPopup?.orderDetail}
+                    productId={currentPopup?.productId}
+                />
+            )}
         </div>
 
     );

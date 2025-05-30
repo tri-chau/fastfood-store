@@ -11,6 +11,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRolePermissionController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -143,6 +144,12 @@ Route::middleware(['firebase.auth'])->group(function () {
         Route::post('/orders/update/{id}', [\App\Http\Controllers\OrderController::class, 'update']);
         Route::delete('/orders/delete/{id}', [\App\Http\Controllers\OrderController::class, 'destroy']);
     });
+
+    // Review
+    Route::get('/customer/reviews/one-by-product', [\App\Http\Controllers\ReviewsController::class, 'getCustomerProductReview']);
+    Route::post('/customer/reviews/add', [\App\Http\Controllers\ReviewsController::class, 'store']);
+    Route::put('/customer/reviews/update/{id}', [\App\Http\Controllers\ReviewsController::class, 'update']);
+    Route::delete('/customer/reviews/delete/{id}', [\App\Http\Controllers\ReviewsController::class, 'destroy']);
 });
 
 Route::get('/customer/product/{id}', [ProductController::class, 'getProductDetail']);
@@ -150,6 +157,16 @@ Route::get('/customer/products/all', [ProductController::class, 'getProducts']);
 Route::get('/customer/products/search', [ProductController::class, 'searchProducts']);
 Route::get('/customer/products/{category}', [ProductController::class, 'getProducts']);
 Route::get('/categories/options/all', [\App\Http\Controllers\CategoryController::class, 'getCategoryJson']);
+
+// // incase want to run hardcoded ids
+// Route::post('/customer/reviews/add', [ReviewsController::class, 'store']);
+// Route::put('/customer/reviews/update/{id}', [ReviewsController::class, 'update']);
+// Route::delete('/customer/reviews/delete/{id}', [ReviewsController::class, 'destroy']);
+// Route::get('/customer/reviews/one-by-product', [ReviewsController::class, 'getCustomerProductReview']);
+Route::get('/reviews/all', [ReviewsController::class, 'index']);
+Route::get('/reviews/by-product/{productId}', [ReviewsController::class, 'getAllReviewsByProduct']);
+Route::get('/customer/reviews/{id}', [ReviewsController::class, 'getReviewDetail']);
+Route::get('/customer/reviews/{rating}', [ReviewsController::class, 'getReviews']);
 
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
 Route::post('/auth/refresh', [AuthenticationController::class, 'refresh']);
