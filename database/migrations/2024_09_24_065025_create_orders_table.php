@@ -14,6 +14,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();;
+            $table->uuid('customer_id'); //Id of customer who placed this order
+            $table->uuid('address_id')->nullable(); //Id of address where the order will be delivered
             $table->timestamps();
             $table->string('order_number');
             $table->string('receiver_name');
@@ -26,14 +28,14 @@ return new class extends Migration
             $table->string('customer_feedback');
             $table->uuid('host_id'); //Id of customer who placed this order
             $table->enum('source', ['Offline', 'Online'])->default('Offline');
+            $table->string('note')->nullable();
 
-            // update
+            // update //not in use
             $table->string('payment_link')->nullable();
             $table->string('receiver_phone')->nullable();
             $table->decimal('shipping_fee', 15, 2)->default(0);
-            $table->string('note')->nullable();
 
-            //update address
+            //update address //not in use
             $table->string('province')->nullable(); // Add province field
             $table->string('district')->nullable(); // Add district field
             $table->string('ward')->nullable();     // Add ward field
@@ -51,7 +53,9 @@ return new class extends Migration
 //            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
 
             //Foreign Keys
-            $table->foreign('host_id')->references('id')->on('customers');
+            $table->foreign('host_id')->references('id')->on('customers'); //not in use
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
         });
     }
 

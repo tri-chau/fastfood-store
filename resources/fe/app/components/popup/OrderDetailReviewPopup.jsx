@@ -29,7 +29,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
 
     // Fetch review on mount or when productId changes
     useEffect(() => {
-        if (isVisible && productId) {
+        if (isVisible && orderDetail) {
             getReview();
         }
         // eslint-disable-next-line
@@ -38,9 +38,10 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
     // Fetch review from backend
     const getReview = async () => {
         try {
-            const { data } = await connectApi.get('/api/customer/review/by-product', {
+            const { data } = await connectApi.get('/api/customer/reviews/one-by-product', {
                 params: { product_id: productId }
             });
+
             if (data && data.data) {
                 setReview(data.data);
                 setHasReview(true);
@@ -74,7 +75,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
         try {
             if (hasReview && editMode && review?.id) {
                 // Edit existing review
-                await connectApi.put(`/api/customer/review/update/${review.id}`, {
+                await connectApi.put(`/api/customer/reviews/update/${review.id}`, {
                     product_id: productId,
                     order_detail_id: orderDetail.id,
                     rating: selectedRating,
@@ -84,11 +85,12 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                 notify('success', t('REVIEWS.SUBMISSION_SUCCEEDED'));
             } else {
                 // Create new review
-                await connectApi.post('/api/customer/review/add', {
+                await connectApi.post(`/api/customer/reviews/add`, {
                     product_id: productId,
                     order_detail_id: orderDetail.id,
                     rating: selectedRating,
-                    comment: comment
+                    comment: comment,
+                    is_edited: false
                 });
                 notify('success', t('REVIEWS.SUBMISSION_SUCCEEDED'));
             }
@@ -103,8 +105,9 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
     const handleDeleteReview = async () => {
         if (!review || !review.id) return;
         try {
-            await connectApi.delete(`/api/customer/review/delete/${review.id}`);
-            notify('success', t('REVIEWS.DELETE_SUCCESS'));
+            console.log('Review:', review);
+            await connectApi.delete(`/api/customer/reviews/delete/${review.id}`);
+            notify('success', t('REVIEWS.DELETE_SUCCEEDED'));
             setHasReview(false);
             setReview(null);
             setSelectedRating(0);
@@ -134,7 +137,6 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
 
     // Show input popup if no review or editing
     const showInput = !hasReview || editClicked || editMode;
-
 
     return (
         <div onClick={closePopup} className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -243,7 +245,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                                         <span className="text-[18px] font-serif italic">
                                             {formatDate(review?.created_at)}
                                         </span>
-                                        {review?.is_edited && (
+                                        {review?.is_edited === 1 && (
                                             <span className="text-[18px] font-serif text-stone-300 ml-2">
                                                 {"(edited)"}
                                             </span>

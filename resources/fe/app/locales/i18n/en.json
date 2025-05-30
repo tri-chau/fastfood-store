@@ -89,7 +89,7 @@
         },
         "ADD_TO_CART": "Add to cart"
     },
-
+    
     "DETAIL_PRODUCT": {
        "SIZE": "Size",
         "TOPPING": "Topping",
@@ -99,9 +99,11 @@
         "EXAMPLE_NOTE": "Note something here",
         "TOTAL": "Total",
         "ADD_TO_CART": "Add to cart",
-        "EDIT_CONFIRM": "Confirm"
+        "EDIT_CONFIRM": "Confirm",
+        "REVIEWS_SECTION": "Reviews",
+        "NO_REVIEWS": "No reviews yet"
     },
-
+    
     "CART": {
         "CARTS": "Carts",
         "CART_NAME": "Cart Name",

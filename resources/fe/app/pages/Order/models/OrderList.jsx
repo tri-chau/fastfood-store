@@ -56,6 +56,52 @@ const OrderList = ({orders, refetchOrder}) => {
 
     }, [paymentLink]);
 
+    // orders = [
+    // {
+    //     order_id: "5dd57e53-2ae7-11f0-96e3-c4efbb5e3d83",
+    //     order_number: "1",
+    //     date_created: "2025-05-28 16:06:36",
+    //     host_id: "716b3011-2ae6-11f0-96e3-c4efbb5e3d83",
+    //     payment_method: "Cash",
+    //     payment_status: "paid",
+    //     receiver_name: "an",
+    //     count_product: 1,
+    //     status: "Completed",
+    //     total_price: 10000.00,
+    //     order_date: "2025-05-28 16:06:36",
+    //     rate: 2,
+    //     feedback: "good",
+    //     note: "",
+    //     order_detail: [
+    //         {
+    //             id: "e67988e9-2ae7-11f0-96e3-c4efbb5e3d83",
+    //             order_detail_number: "1",
+    //             product_id: "5a4d7925-3bab-11f0-a70d-c4efbb5e3d83",
+    //             product_name: "chicken soup2",
+    //             product_price: 10000.00,
+    //             size: "S",
+    //             quantity: 1,
+    //             image: null,
+    //             note: "no pepper",
+    //             total_price: 10000.00,
+    //             count_topping: 0,
+    //         },
+    //         {
+    //             id: "a617811c-3bcc-11f0-a4c0-c4efbb5e3d83",
+    //             order_detail_number: "1",
+    //             product_id: "e62fe461-2ae6-11f0-96e3-c4efbb5e3d83",
+    //             product_name: "Chicken Soup",
+    //             product_price: 102.00,
+    //             size: "S",
+    //             quantity: 1,
+    //             image: null,
+    //             note: "no",
+    //             total_price: 102.00,
+    //             count_topping: 0,
+    //         }
+    //     ]
+    // }
+// ];
 
     return (<div className="flex mt-4 shadow-lg rounded-lg">
             <div
@@ -119,7 +165,7 @@ const OrderList = ({orders, refetchOrder}) => {
                                             {/* Product info */}
                                             <div className="flex flex-col w-full pl-3">
                                                 <span
-                                                    className="text-md font-semibold text-gray-700">{item.product_name} ({item.size})</span>
+                                                    className="text-md font-semibold text-gray-700">{item.product_name} ({item.size}) {/*item.product_id*/}</span>
                                                 {item.count_topping !== 0 && (<span
                                                     className="text-xs text-gray-500">+ {item.count_topping} toppings</span>)}
                                                 <span
@@ -183,7 +229,7 @@ const OrderList = ({orders, refetchOrder}) => {
                             }
                         </div>
                     ))) : (<div className="flex flex-col items-center justify-center w-full h-full">
-                        <img src="/storage_fail/build/assets/no-data-found.png" alt="No data" className="w-80 opacity-60"/>
+                        <img src="/storage/build/assets/no-data-found.png" alt="No data" className="w-80 opacity-60"/>
                         <span className="text-gray-500 mt-2">{t('ORDERS.NO_ORDERS')}</span>
                     </div>
                 )}

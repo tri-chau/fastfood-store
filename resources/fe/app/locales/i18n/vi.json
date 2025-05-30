@@ -89,7 +89,7 @@
         },
         "ADD_TO_CART": "Thêm vào giỏ hàng"
     },
-
+    
     "DETAIL_PRODUCT": {
         "SIZE": "Kích thước",
         "TOPPING": "Topping",
@@ -99,7 +99,9 @@
         "EXAMPLE_NOTE": "Ghi chú gì đó ở đây",
         "TOTAL": "Tổng",
         "ADD_TO_CART": "Thêm vào giỏ",
-        "EDIT_CONFIRM": "Xác nhận"
+        "EDIT_CONFIRM": "Xác nhận",
+        "REVIEWS_SECTION": "Các đánh giá",
+        "NO_REVIEWS": "Chưa có đánh giá nào"
     },
 
     "CART": {

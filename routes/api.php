@@ -36,11 +36,15 @@ Route::middleware(['firebase.auth'])->get('/test-firebase', function (\Illuminat
     ]);
 });
 
-
 Route::middleware(['firebase.auth'])->group(function () {
     //Auth
     Route::get('/auth/me', [AuthenticationController::class, 'me']);
     Route::post('/auth/logout', [AuthenticationController::class, 'logout']);
+
+    //Get Info
+    Route::get('user', function (Request $request) {
+        return response()->json($request->user());
+    });
 
     //Role & Permission routes
     Route::get('/roles/options', [RoleController::class, 'getRoleOptions']);
@@ -71,7 +75,6 @@ Route::middleware(['firebase.auth'])->group(function () {
     Route::get('/products/options', [\App\Http\Controllers\ProductController::class, 'getProductOptions']);
     Route::get('/customer/options', [\App\Http\Controllers\CustomerController::class, 'getCustomerOptions']);
 
-
     Route::post('/cart/addProductToCart', [\App\Http\Controllers\OrderController::class, 'addProductToCart']);
     Route::post('/cart/removeProductFromCart', [\App\Http\Controllers\OrderController::class, 'removeProductFromCart']);
     Route::post('/cart/removeToppingFromCart', [\App\Http\Controllers\OrderController::class, 'removeToppingFromCart']);
@@ -97,6 +100,12 @@ Route::middleware(['firebase.auth'])->group(function () {
     Route::post('/customer/cancelOrder', [\App\Http\Controllers\OrderController::class, 'cancelOrder']);
     Route::post('/customer/giveFeedback', [\App\Http\Controllers\OrderController::class, 'giveFeedback']);
     Route::post('/customer/markReceived', [\App\Http\Controllers\OrderController::class, 'markReceived']);
+
+    //Chat routes
+    Route::post('/messages', [\App\Http\Controllers\ChatController::class, 'message']);
+    Route::get('/getConversation', [\App\Http\Controllers\ChatController::class, 'getConversation']);
+    Route::get('/chat-history', [\App\Http\Controllers\ChatController::class, 'getChatHistory']);
+    Route::get('/admin-conversations', [\App\Http\Controllers\ChatController::class, 'getAdminConversations']);
 
     //PayOs api
     Route::post('/payos/create-payment-link', [\App\Http\Controllers\PayOSController::class, 'createPayment']);
@@ -135,6 +144,12 @@ Route::middleware(['firebase.auth'])->group(function () {
         Route::post('/orders/update/{id}', [\App\Http\Controllers\OrderController::class, 'update']);
         Route::delete('/orders/delete/{id}', [\App\Http\Controllers\OrderController::class, 'destroy']);
     });
+
+    // Review
+    Route::get('/customer/reviews/one-by-product', [\App\Http\Controllers\ReviewsController::class, 'getCustomerProductReview']);
+    Route::post('/customer/reviews/add', [\App\Http\Controllers\ReviewsController::class, 'store']);
+    Route::put('/customer/reviews/update/{id}', [\App\Http\Controllers\ReviewsController::class, 'update']);
+    Route::delete('/customer/reviews/delete/{id}', [\App\Http\Controllers\ReviewsController::class, 'destroy']);
 });
 
 Route::get('/customer/product/{id}', [ProductController::class, 'getProductDetail']);
@@ -143,14 +158,15 @@ Route::get('/customer/products/search', [ProductController::class, 'searchProduc
 Route::get('/customer/products/{category}', [ProductController::class, 'getProducts']);
 Route::get('/categories/options/all', [\App\Http\Controllers\CategoryController::class, 'getCategoryJson']);
 
-Route::get('/review/all', [ReviewsController::class, 'index']);
-Route::post('/customer/review/add', [ReviewsController::class, 'store']);
-Route::put('/customer/review/update/{id}', [ReviewsController::class, 'update']);
-Route::delete('/customer/review/delete/{id}', [ReviewsController::class, 'destroy']);
-Route::get('/customer/review/{id}', [ReviewsController::class, 'getReviewDetail']);
+// incase want to run hardcoded ids
+// Route::post('/customer/reviews/add', [ReviewsController::class, 'store']);
+// Route::put('/customer/reviews/update/{id}', [ReviewsController::class, 'update']);
+// Route::delete('/customer/reviews/delete/{id}', [ReviewsController::class, 'destroy']);
+// Route::get('/customer/reviews/one-by-product', [ReviewsController::class, 'getCustomerProductReview']);
+Route::get('/reviews/all', [ReviewsController::class, 'index']);
+Route::get('/reviews/by-product/{productId}', [ReviewsController::class, 'getAllReviewsByProduct']);
+Route::get('/customer/reviews/{id}', [ReviewsController::class, 'getReviewDetail']);
 Route::get('/customer/reviews/{rating}', [ReviewsController::class, 'getReviews']);
-Route::get('/customer/review/by-product', [ReviewsController::class, 'getCustomerProductReview']);
-Route::get('/customer/reviews/by-product/{productId}', [ReviewsController::class, 'getAllReviewsByProduct']);
 
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
 Route::post('/auth/refresh', [AuthenticationController::class, 'refresh']);
@@ -162,6 +178,4 @@ Route::post('/auth/check-firebase-user', [AuthenticationController::class, 'chec
 Route::post('/auth/setCustomTokenForAdmin', [AuthenticationController::class, 'setCustomTokenForAdmin']);
 Route::post('/auth/addAdmin', [AuthenticationController::class, 'addAdmin']);
 Route::post('/auth/getCustomToken', [AuthenticationController::class, 'getCustomTokenForAdmin']);
-
-
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Product extends Model
+class  Product extends Model
 {
     use HasFactory, HasUuid, HasCreatedBy;
     protected $fillable = [
@@ -28,45 +28,51 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
     }
-    public function tags()
+    public function reviews()
     {
-        return $this->belongsToMany(Tag::class);
-    }
-    public function vouchers()
-    {
-        return $this->belongsToMany(Voucher::class);
-    }
-    public function toppings()
-    {
-        return $this->belongsToMany(Product::class, 'products_toppings', 'product_id', 'topping_id')
-                    ->withTimestamps()
-                    ->withPivot('extra_price');
-    }
-
-    public function productsToppingThis()
-    {
-        return $this->belongsToMany(Product::class, 'products_toppings', 'topping_id', 'product_id')
-                    ->withTimestamps()
-                    ->withPivot('extra_price');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class); // Singular: "team"
-    }
-
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class, 'product_id');
+        return $this->hasMany(Reviews::class, 'product_id', 'id');
     }
 
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, 'product_id');
     }
+
+    public function tags() //not in use
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+    public function vouchers() //not in use
+    {
+        return $this->belongsToMany(Voucher::class);
+    }
+    public function toppings() //not in use
+    {
+        return $this->belongsToMany(Product::class, 'products_toppings', 'product_id', 'topping_id')
+                    ->withTimestamps()
+                    ->withPivot('extra_price');
+    }
+
+    public function productsToppingThis() //not in use
+    {
+        return $this->belongsToMany(Product::class, 'products_toppings', 'topping_id', 'product_id')
+                    ->withTimestamps()
+                    ->withPivot('extra_price');
+    }
+
+    public function creator() //not in use
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function team() //not in use
+    {
+        return $this->belongsTo(Team::class); // Singular: "team"
+    }
+
+    public function images() //not in use
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
 }

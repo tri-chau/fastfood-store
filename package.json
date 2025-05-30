@@ -43,6 +43,7 @@
         "lodash": "^4.17.21",
         "notiwind": "^2.0.2",
         "otp-input-react": "^0.3.0",
+        "pusher-js": "^8.4.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-hot-toast": "^2.5.1",

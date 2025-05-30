@@ -119,7 +119,7 @@ const Menu = () => {
     //         });
     //     }
     // };
-
+//TODO: Load menu page here
     const handleFilterUpdate = (filters) => {
         setFiltersOption({...filters});
     };
@@ -298,7 +298,7 @@ const Menu = () => {
                                             <div
                                                 className="bg-gray-200/50 rounded-md relative mb-4 max-h-[250px] group overflow-hidden">
                                                 <img
-                                                    src={product.product_image || "/storage_fail/build/assets/Product/empty-image.png"}
+                                                    src={product.product_image || "/storage/build/assets/Product/empty-image.png"}
                                                     alt="Product"
                                                     className="w-full shadow-lg rounded-lg aspect-square"
                                                 />

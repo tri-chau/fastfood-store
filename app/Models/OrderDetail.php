@@ -10,18 +10,28 @@ class OrderDetail extends Model
 {
     use HasFactory, HasUuid;
     protected $fillable = [
-        'customer_order_id',
+        'id',
         'product_id',
+        'order_id',
         'parent_id',
         'order_detail_number',
         'quantity',
         'total_price',
         'note',
         'size',
+        'customer_order_id',
+        'customer_id',
+        'created_at',
+        'updated_at',
     ];
 
+    public function review()
+    {
+        return $this->hasOne(Reviews::class, 'order_detail_id', 'id');
+    }
+
     // Relationship with the customer_order (pivot table)
-    public function customerOrder()
+    public function customerOrder() //not in use
     {
         return $this->belongsTo(CustomerOrder::class, 'customer_order_id');
     }
@@ -29,7 +39,7 @@ class OrderDetail extends Model
     // Relationship with the product
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     // Self-referential relationship for toppings (parent-child)

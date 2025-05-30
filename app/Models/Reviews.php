@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Reviews extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUUid;
     protected $fillable = [
         'id',
         'customer_id',

@@ -158,7 +158,7 @@ class OrderController extends Controller
                     'product_price' => $orderDetail->product->price,
                     'size' => $orderDetail->size,
                     'quantity' => $orderDetail->quantity,
-                    'image' => $orderDetail->product->image ? asset('storage_fail/build/assets/' . $orderDetail->product->image) : null,
+                    'image' => $orderDetail->product->image ? asset('storage/build/assets/Product/' . $orderDetail->product->image) : null,
                     'note' => $orderDetail->note,
                     'total_price' => $orderDetail->total_price,
                     'count_topping' => $orderDetail->toppings->count(),
@@ -300,7 +300,7 @@ class OrderController extends Controller
                         'product_price' => $orderDetail->product->price,
                         'size' => $orderDetail->size,
                         'quantity' => $orderDetail->quantity,
-                        'image' => $orderDetail->product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage_fail/' .$orderDetail->product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
+                        'image' => $orderDetail->product->image ? 'https://weevil-exotic-thankfully.ngrok-free.app/storage/' .$orderDetail->product->image : 'https://weevil-exotic-thankfully.ngrok-free.app/resources/assets/images/empty-image.jpg',
                         'note' => $orderDetail->note,
                         'total_price' => $orderDetail->total_price,
                         'count_topping' => $orderDetail->toppings->count(),
@@ -576,6 +576,7 @@ class OrderController extends Controller
                 'customer_feedback' => '',
                 'order_total' => $validated['product']['total_price'],
                 'host_id' => $customer->id,
+                'customer_id' => $customer->id,
             ]);
             $order->customers()->attach($customer->id);
             $validated['order_ids'] = [$order->id];
@@ -608,6 +609,7 @@ class OrderController extends Controller
             // Add order detail using the CustomerOrder pivot
             $orderDetail = $customerOrder->orderDetails()->create([
                 'order_detail_number' => 'OD' . time(),
+                'order_id' => $order->id,
                 'customer_order_id' => $customerOrder->id,
                 'product_id' => $product->id,
                 'parent_id' => null,
@@ -616,6 +618,9 @@ class OrderController extends Controller
                 'note' => $validated['product']['note'] ?? '',
                 'total_price' => $validated['product']['total_price'],
             ]);
+
+            // Log để debug
+            \Log::info('Order Detail Created:', $orderDetail->toArray());
 
             // Add toppings if provided
             if (isset($validated['product']['toppings_id'])) {
@@ -628,6 +633,7 @@ class OrderController extends Controller
 
                     $orderDetail->toppings()->create([
                         'order_detail_number' => 'ODTP' . time(),
+                        'order_id' => $order->id,
                         'customer_order_id' => $customerOrder->id,
                         'product_id' => $topping->id,
                         'size' => 'S',
@@ -658,6 +664,8 @@ class OrderController extends Controller
                 ],
             ];
         }
+
+        \Log::debug('Added products:', $addedProducts);
 
         return response()->json([
             'message' => 'Product added to multiple carts successfully.',
@@ -761,12 +769,14 @@ class OrderController extends Controller
 
     public function checkFirebaseUser(Request $request)
     {
+        \Log::debug('Checking Firebase user');
         $firebaseUser = $request->attributes->get('firebaseUser');
-
         if (!$firebaseUser) {
+           \Log::info('cant find user firebase id'); // Ghi log
             return null;
         }
 
+        \Log::info('Firebase user attributes:', $firebaseUser);
         // Tìm user trong database dựa vào Firebase UID
         return User::where('firebase_uid', $firebaseUser['sub'])->first();
     }
@@ -785,37 +795,31 @@ class OrderController extends Controller
 //        $user = User::where('firebase_uid', $firebaseUser['sub'])->first();
 
         $user = $this->checkFirebaseUser($request);
-
         if (!$user) {
+            \Log::info('fail to find user'); // Ghi log
             return response()->json(['message' => 'Unauthorized or User not found.'], 401);
         }
-
         $customer = $user->customer;
-
         if (!$customer) {
             return response()->json(['message' => 'Customer not found.'], 404);
         }
-
         // Get the latest order with status 'Draft' for the customer
         $orders = Order::where('host_id', $customer->id)
             ->where('order_status', 'Draft')
             ->orderBy('updated_at', 'DESC')
             ->get();
-
         $return_data = [];
 
         foreach($orders as $order) {
             $total_price = 0;
             // Fetch order details only if the relationship exists
             $orderCustomer = $order->customers()->where('customer_id', $customer->id)->first();
-
             if ($orderCustomer) {
                 // Get order details if the relationship exists
                 $orderDetails = $orderCustomer->pivot->orderDetails()
                     ->where('parent_id', null)
                     ->with('toppings.product') // Include topping product details
                     ->get();
-
                 $data = [
                     'type' => $order->type,
                     'name' => !empty($order->custom_name) ? $order->custom_name : $order->order_number,
@@ -826,8 +830,6 @@ class OrderController extends Controller
                     'count_product' => $orderDetails->count() ?? 0,
                     'order_detail' => []
                 ];
-
-
                 foreach ($orderDetails as $orderDetail) {
                     $total_price += $orderDetail->total_price;
                     $data['order_detail'][] = [
@@ -838,7 +840,7 @@ class OrderController extends Controller
                         'product_price' => $orderDetail->product->price,
                         'size' => $orderDetail->size,
                         'quantity' => $orderDetail->quantity,
-                        'image' => $orderDetail->product->image ? asset('/storage_fail/build/assets/' . $orderDetail->product->image) : null,
+                        'image' => $orderDetail->product->image ? asset('/storage/build/assets/Product/' . $orderDetail->product->image) : null,
                         'note' => $orderDetail->note,
                         'total_price' => $orderDetail->total_price,
                         'count_topping' => $orderDetail->toppings->count(),
@@ -857,6 +859,7 @@ class OrderController extends Controller
             }
         }
 
+        \Log::info('fetchCart method called'); // Ghi log
         return response()->json([
             'message' => 'Cart fetched successfully.',
             'data' => $return_data
@@ -1128,7 +1131,7 @@ class OrderController extends Controller
         return response()->json(['message' => 'Order cancelled successfully.']);
     }
     /**
-     * Store a newly created order in storage_fail.
+     * Store a newly created order in storage.
      */
     public function store(Request $request)
     {
@@ -1166,7 +1169,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Update the specified order in storage_fail.
+     * Update the specified order in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -1210,7 +1213,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Remove the specified order from storage_fail (soft delete).
+     * Remove the specified order from storage (soft delete).
      */
     public function destroy(string $id)
     {

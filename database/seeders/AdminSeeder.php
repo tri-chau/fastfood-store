@@ -15,18 +15,19 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminUuid = 'B4NZvHjUcEhCdUPsxgUyWmnzSQd2';
         if (!User::where('id', '1')->exists()) {
             User::create([
                 'id' => '1',
-                'firebase_uid' => '1',
+                'firebase_uid' => $adminUuid,
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
-                'password' => bcrypt('Mjnhh0@ng2004'),
+                'password' => bcrypt('123456'),
                 'email_verified_at' => now(),
                 'is_admin' => true,
                 'api_token' => Str::random(80),
                 'user_type' => 'user',
-                'created_by' => '1'
+                'created_by' => $adminUuid
             ]);
         }
     }
