@@ -25,6 +25,8 @@ yarn-error.log
 /resources/fe/app/modules/pusher
 /resources/fe/settings/ConnectApi.js
 /resources/fe/settings
+/resources/fe/app/settings/ConnectApi.js
+/resources/fe/app/settings
 
 
 /public_fail/
