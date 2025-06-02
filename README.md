@@ -61,7 +61,6 @@ processing, shopping cart, and secure payment.
 - <b>Language:</b> PHP, JavaScript
 - <b>Tools:</b> Composer, npm, Vite, Git, Postman,
 - <b>API Integration:</b> PayOS
-- <b>Deployment:</b> VPS, Nginx, SSL, Cloudflare
 
 ## 🚀 Installation
 
