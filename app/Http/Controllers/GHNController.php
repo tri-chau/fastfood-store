@@ -51,6 +51,8 @@ class GHNController extends Controller
         }
     }
 
+
+    //not in use
     public function getDistricts(Request $request)
     {
         //TODO: wait for the api to return json, then copy it and create new json file, then load from that file
@@ -121,9 +123,10 @@ class GHNController extends Controller
                 ],
             ]);
 
+
             // Decode the JSON response
             $data = json_decode($response->getBody(), true);
-
+            \Log::debug('GHN API response', ['data' => $data]);
             // Return the response data
             return response()->json($data);
         } catch (\Exception $e) {
