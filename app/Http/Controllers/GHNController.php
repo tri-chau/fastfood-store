@@ -53,6 +53,7 @@ class GHNController extends Controller
 
     public function getDistricts(Request $request)
     {
+        //TODO: wait for the api to return json, then copy it and create new json file, then load from that file
         // Validate the request
         $request->validate([
             'province_id' => 'required|integer',
