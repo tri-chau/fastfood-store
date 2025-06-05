@@ -36,7 +36,7 @@ export const chatReducer = (state = initialState, action) => {
         case FETCH_CUSTOMER_CONVERSATION_SUCCESS:
             return {
                 ...state,
-                conversationId: action.payload.id, //payload trả về là id thì phải .id
+                conversationId: state.conversationId !== action.payload.id ? action.payload.id : state.conversationId, //payload trả về là id thì phải .id
                 loading: false,
             };
         case FETCH_ADMIN_CONVERSATION_SUCCESS:
@@ -51,7 +51,7 @@ export const chatReducer = (state = initialState, action) => {
         case FETCH_CHAT_HISTORY_SUCCESS:
             return {
                 ...state,
-                messages: action.payload,
+                messages: state.messages !== action.payload ? action.payload : state.messages,
                 loading: false,
             };
         case FETCH_CHAT_HISTORY_FAIL:
