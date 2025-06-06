@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Reviews extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUUid;
     protected $fillable = [
         'id',
         'customer_id',
@@ -15,9 +17,7 @@ class Reviews extends Model
         'order_detail_id',
         'rating',
         'comment',
-        'is_edited',
-        'created_at',
-        'updated_at',
+        'is_edited'
     ];
 
     public function customer()
@@ -31,5 +31,9 @@ class Reviews extends Model
     public function orderDetail()
     {
         return $this->belongsTo(OrderDetail::class, 'order_detail_id', 'id');
+    }
+    public function reviews()
+    {
+        return $this->hasManyThrough(Reviews::class, OrderDetail::class, 'order_id', 'order_detail_id', 'id', 'id');
     }
 }

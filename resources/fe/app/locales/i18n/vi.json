@@ -89,7 +89,7 @@
         },
         "ADD_TO_CART": "Thêm vào giỏ hàng"
     },
-
+    
     "DETAIL_PRODUCT": {
         "SIZE": "Kích thước",
         "TOPPING": "Topping",
@@ -99,7 +99,9 @@
         "EXAMPLE_NOTE": "Ghi chú gì đó ở đây",
         "TOTAL": "Tổng",
         "ADD_TO_CART": "Thêm vào giỏ",
-        "EDIT_CONFIRM": "Xác nhận"
+        "EDIT_CONFIRM": "Xác nhận",
+        "REVIEWS_SECTION": "Các đánh giá",
+        "NO_REVIEWS": "Chưa có đánh giá nào"
     },
 
     "CART": {
@@ -171,5 +173,27 @@
             "CANCEL": "Hủy",
             "PAY_NOW": "Thanh toán"
         }
+    },
+    
+    "REVIEWS":
+    {
+        "REVIEW": "Để lại ý kiến",
+        "RATING": "Đánh giá",
+        "COMMENT": "Viết bình luận",
+        "PLACEHOLDER_COMMENT": "Bình luận của bạn...",
+        "CANCEL": "Hủy",
+        "SUBMIT": "Gửi",
+        "SELECT_RATING": "Vui lòng chọn đánh giá",
+        "NO_REVIEWS": "Chưa có đánh giá nào",
+        "COMPLETED": "Phản hồi của bạn",
+        "DELETE": "Xóa",
+        "DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa đánh giá này không?",
+        "CONFIRM": "Có",
+        "CANCEL_CONFIRM": "Không",
+        "EDIT": "Sửa",
+        "SUBMISSION_SUCCEEDED": "Cảm ơn đánh giá của bạn",
+        "SUBMISSION_FAILED": "Đánh giá không thành công",
+        "DELETE_SUCCEEDED": "Xóa đánh giá thành công",
+        "DELETE_FAILED": "Xóa đánh giá không thành công"
     }
 }
