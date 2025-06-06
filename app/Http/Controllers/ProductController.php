@@ -364,8 +364,10 @@ class ProductController extends BaseController
 
             if ($request->hasFile('thumbnailImage')) {
                 $image = $request->file('thumbnailImage');
-                $path = $image->store('build/assets/product_image', 'public');
-                $product->update(['image' => $path]);
+                // Chỉ lưu tên file vào cột image
+                $filename = $image->hashName();
+                $image->storeAs('build/assets/Product', $filename, 'public');
+                $product->update(['image' => $filename]);
             }
 
             // Attach categories to the product
@@ -398,7 +400,7 @@ class ProductController extends BaseController
                     foreach ($productDetailImages as $image) {
                         if ($image->isValid()) {
                             // Store each image in 'build/assets/product_image' directory
-                            $path = $image->store('build/assets/product_image', 'public');
+                            $path = $image->store('build/assets/Product', 'public');
 
                             // Create a record for each image in the product's images table
                             $product->images()->create(['image_path' => $path]);
@@ -566,8 +568,10 @@ class ProductController extends BaseController
 
         if ($request->hasFile('thumbnailImage')) {
             $image = $request->file('thumbnailImage');
-            $image->storeAs('build/assets/Product', $image->hashName(), 'public');
-            $product->update(['image' => 'Product/' . $image->hashName()]);
+            // Chỉ lưu tên file vào cột image
+            $filename = $image->hashName();
+            $image->storeAs('build/assets/Product', $filename, 'public');
+            $product->update(['image' => $filename]);
         }
 
         // Handle Base64 images
@@ -616,16 +620,13 @@ class ProductController extends BaseController
         // Handle image uploads
         if ($request->hasFile('productDetailImages')) {
             $productDetailImages = $request->file('productDetailImages');
-
             if (is_array($productDetailImages)) {
                 foreach ($productDetailImages as $image) {
                     if ($image->isValid()) {
-                        // Store each image in 'build/assets/product_image' directory
-
-                        $image->storeAs('build/assets/Product', $image->hashName(), 'public');
-
-                        // Create a record for each image in the product's images table
-                        $product->images()->create(['image_path' => 'Product/' . $image->hashName()]);
+                        // Chỉ lưu tên file vào cột image_path
+                        $filename = $image->hashName();
+                        $image->storeAs('build/assets/Product', $filename, 'public');
+                        $product->images()->create(['image_path' => $filename]);
                     } else {
                         Log::error('Invalid image file', ['file' => $image]);
                     }
