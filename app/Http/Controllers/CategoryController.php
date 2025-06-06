@@ -129,8 +129,9 @@ class CategoryController extends Controller
 
     public function adminGetCategories(): JsonResponse
     {
+        \Log::debug('Admin get categories');
         $categories = Category::all();
-
+        \Log::debug('categories data: ' . \json_encode($categories));
         return response()->json([
             'success' => true,
             'data' => $categories

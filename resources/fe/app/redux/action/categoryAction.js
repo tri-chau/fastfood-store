@@ -43,3 +43,5 @@ export const adminGetAllCategories = () => async (dispatch) => {
         dispatch({type: ADMIN_GET_CATEGORIES_FAIL, payload: error});
     }
 }
+
+

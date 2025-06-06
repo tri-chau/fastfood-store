@@ -10,7 +10,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { formatDate } from '../../locales/dateFormat.js';
 
-import connectApi from '../../settings/ConnectApi.js';
+import connectApi from '../../../settings/ConnectApi.js';
 
 const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
     const dispatch = useDispatch();

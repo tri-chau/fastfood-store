@@ -515,7 +515,7 @@ const OrderCRUD = () => {
                                         <option value="Wait for Approval">Wait for Approval</option>
                                         <option value="In Progress">In Progress</option>
                                         <option value="Delivering">Delivering</option>
-                                        <option value="Delivered">Delivered</option>
+                                        {/*<option value="Delivered">Delivered</option>*/}
                                         <option value="Completed">Completed</option>
                                         <option value="Cancelled">Cancelled</option>
                                     </select>
@@ -681,7 +681,7 @@ const OrderCRUD = () => {
                                     <option value="Wait for Approval">Wait for Approval</option>
                                     <option value="In Progress">In Progress</option>
                                     <option value="Delivering">Delivering</option>
-                                    <option value="Delivered">Delivered</option>
+                                    {/*<option value="Delivered">Delivered</option>*/}
                                     <option value="Completed">Completed</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
