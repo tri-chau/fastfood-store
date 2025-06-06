@@ -12,10 +12,14 @@ class PayOSWebhookController extends Controller
 {
     public function handlePayOSWebhook(Request $request): \Illuminate\Http\JsonResponse
     {
-        Log::debug('PayOS Webhook test received');
+        Log::debug('PayOS Webhook received', [
+            'body' => $request->getContent(),
+            'headers' => $request->headers->all(),
+        ]);
         $body = json_decode($request->getContent(), true);
         // Handle webhook test
         if (in_array($body["data"]["description"], ["Ma giao dich thu nghiem", "VQRIO123"])) {
+            Log::info('Webhook test received', ['data' => $body["data"]]);
             return response()->json([
                 "error" => 0,
                 "message" => "Ok",
@@ -25,6 +29,7 @@ class PayOSWebhookController extends Controller
 
         // Log the data
         $orderNumber = 'ORD'.$body['data']["orderCode"];
+        Log::info('Processing webhook for order', ['order_number' => $orderNumber]);
         $order = Order::where('order_number', $orderNumber)->first();
         if($order->payment_status == 'paid') {
             return response()->json([
@@ -37,7 +42,13 @@ class PayOSWebhookController extends Controller
         $order->payment_status = 'paid';
         $order->order_status = 'In Progress';
         $order->save();
+        Log::info('Order status updated', [
+            'order_number' => $orderNumber,
+            'payment_status' => $order->payment_status,
+            'order_status' => $order->order_status,
+        ]);
         $this->sendSocket($order);
+        \Log::info('Socket event sent for order', ['order_id' => $order->id]);
         return response()->json([
             "error" => 0,
             "message" => "Ok",
@@ -62,6 +73,7 @@ class PayOSWebhookController extends Controller
                 ],
             ],
         ];
+        Log::debug('Sending socket event', ['url' => $url, 'body' => $body]);
 
         // Send the POST request
         $response = Http::withHeaders([

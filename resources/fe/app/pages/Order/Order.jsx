@@ -17,7 +17,7 @@ const Order = () => {
         {id: 'Wait For Approval', label: t('ORDERS.WAIT_FOR_APPROVAL')},
         {id: 'In Progress', label: t('ORDERS.IN_PROGRESS')},
         {id: 'Delivering', label: t('ORDERS.DELIVERING')},
-        {id: 'Delivered', label: t('ORDERS.DELIVERED')},
+        // {id: 'Delivered', label: t('ORDERS.DELIVERED')},
         {id: 'Completed', label: t('ORDERS.COMPLETED')},
         {id: 'Cancelled', label: t('ORDERS.CANCELLED')},
     ];
