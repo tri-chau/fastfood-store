@@ -8,6 +8,7 @@ import SpinnerLoading from "../loading/SpinnerLoading.jsx";
 import {notify} from "../../layouts/Notification/notify.jsx";
 import {useNavigate} from "react-router-dom";
 import provinceJson from "../../locales/tinh_tp.json";
+import districtJson from "../../locales/quan_huyen.json";
 import {useTranslation} from "react-i18next";
 
 const PaymentDetailPopup = ({isVisible, index, cart, refetchData}) => {
@@ -20,6 +21,7 @@ const PaymentDetailPopup = ({isVisible, index, cart, refetchData}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [showButtons, setShowButtons] = useState(false);
     const [showPaynowButton, setShowPaynowButton] = useState(false);
+    const [districts, setDistricts] = useState([]); // Add state for districts
 
     const [form, setForm] = useState({
         province: '',
@@ -41,7 +43,7 @@ const PaymentDetailPopup = ({isVisible, index, cart, refetchData}) => {
 
     // fetch provinces, districts, wards
     const dispatch = useDispatch();
-    const districts = useSelector(state => state.districts.districts);
+    // const districts = useSelector(state => state.districts.districts);
     const wards = useSelector(state => state.wards.wards);
     const [provinces, setProvinces] = useState([]);
 
@@ -70,12 +72,27 @@ const PaymentDetailPopup = ({isVisible, index, cart, refetchData}) => {
         setProvinces(provinceJson);
     }, []);
 
-    // fetch districts when province is selected
+    // Filter districts when province changes
     useEffect(() => {
-        if (form.province !== '') {
-            dispatch(fetchDistricts(form.province));
+        if (form.province !== "") {
+            // Filter districts from districtJson based on selected province
+            const filteredDistricts = Object.values(districtJson).filter(
+                (district) => district.ProvinceID.toString() === form.province.toString()
+            );
+            setDistricts(filteredDistricts);
+            // Reset district and ward when province changes
+            setForm((prev) => ({ ...prev, district: "", ward: "" }));
+        } else {
+            setDistricts([]);
         }
     }, [form.province]);
+
+    // // fetch districts when province is selected
+    // useEffect(() => {
+    //     if (form.province !== '') {
+    //         dispatch(fetchDistricts(form.province));
+    //     }
+    // }, [form.province]);
 
     // fetch wards when district is selected
     useEffect(() => {
@@ -340,17 +357,14 @@ const PaymentDetailPopup = ({isVisible, index, cart, refetchData}) => {
                                                 <div>
                                                     <label
                                                         className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{t('DETAIL_PAYMENT.DELIVERY_ADDRESSES.DISTRICT')}</label>
-                                                    <select value={form.district} onChange={(e) => setForm({
-                                                        ...form,
-                                                        district: e.target.value,
-                                                        ward: ''
-                                                    })}
-                                                            className="bg-white border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option
-                                                            value="">{t('DETAIL_PAYMENT.DELIVERY_ADDRESSES.SELECT_DISTRICT')}</option>
-                                                        {districts?.filter(d => d.ProvinceID.toString() === form.province.toString()).map((district) => (
-                                                            <option key={district.DistrictID}
-                                                                    value={district.DistrictID}>
+                                                    <select
+                                                        value={form.district}
+                                                        onChange={(e) => setForm({ ...form, district: e.target.value, ward: "" })}
+                                                        className="bg-white border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    >
+                                                        <option value="">{t("DETAIL_PAYMENT.DELIVERY_ADDRESSES.SELECT_DISTRICT")}</option>
+                                                        {districts?.map((district) => (
+                                                            <option key={district.DistrictID} value={district.DistrictID}>
                                                                 {district.DistrictName}
                                                             </option>
                                                         ))}

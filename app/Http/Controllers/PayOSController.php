@@ -63,8 +63,8 @@ class PayOSController extends Controller
                 'orderCode' => $orderCode, // Unique order code
                 'amount' => intval($order->order_total), // Payment amount
                 'description' => '#' . $order->order_number, // Payment description
-                'returnUrl' => 'https://b9c5-2402-800-63ac-8a09-f954-92d2-5a6c-bf2a.ngrok-free.app', // Redirect URL after payment
-                'cancelUrl' => 'https://b9c5-2402-800-63ac-8a09-f954-92d2-5a6c-bf2a.ngrok-free.app', // Redirect URL if payment is canceled
+                'returnUrl' => 'https://478c-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL after payment
+                'cancelUrl' => ' https://478c-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL if payment is canceled
             ];
 
             try {
@@ -115,8 +115,8 @@ class PayOSController extends Controller
                 'orderCode' => $orderCode, // Unique order code
                 'amount' => intval($order->order_total), // Payment amount
                 'description' => '#' . $order->order_number, // Payment description
-                'returnUrl' => 'https://b9c5-2402-800-63ac-8a09-f954-92d2-5a6c-bf2a.ngrok-free.app', // Redirect URL after payment
-                'cancelUrl' => 'https://b9c5-2402-800-63ac-8a09-f954-92d2-5a6c-bf2a.ngrok-free.app', // Redirect URL if payment is canceled
+                'returnUrl' => 'https://d323-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL after payment
+                'cancelUrl' => 'https://d323-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL if payment is canceled
             ];
 
             try {
