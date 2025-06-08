@@ -130,6 +130,8 @@ Route::middleware(['firebase.auth'])->group(function () {
         // Category CRUD
         Route::get('/categories/all', [\App\Http\Controllers\CategoryController::class, 'adminGetCategories']);
         Route::post('/categories/add', [\App\Http\Controllers\CategoryController::class, 'store']);
+        Route::put('/categories/update/{id}', [\App\Http\Controllers\CategoryController::class, 'update']);
+        Route::delete('/categories/delete/{id}', [\App\Http\Controllers\CategoryController::class, 'destroy']);
 
         // Product CRUD
         Route::get('/products/all', [\App\Http\Controllers\ProductController::class, 'index']);
