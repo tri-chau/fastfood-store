@@ -13,7 +13,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
     const [hoveredRating, setHoveredRating] = useState(0);
     const [selectedRating, setSelectedRating] = useState(0);
     const [comment, setComment] = useState('');
-    // const [review, setReview] = useState(null);
+    const [review, setReview] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
     const { closePopup, switchPopup, popupHistory } = usePopup();
