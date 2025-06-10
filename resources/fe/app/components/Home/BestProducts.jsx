@@ -102,18 +102,18 @@ const BestProducts = () => {
                                             <ButtonElement
                                                 value={product.product_id}
                                                 action={handleOpenDetailProduct(product.product_id)}
-                                                style="btn absolute bottom-0 w-full h-[50px] bg-[#f26d78] text-white text-xs md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                                style="btn w-full h-[50px] text-white text-xs md:text-[16px] absolute cursor-pointer group-hover:bottom-0 -bottom-14 hover:bg-[#fccc00] bg-[#9f1000] transition-all duration-300 text-[#fff] hover:text-[#002a86]"
                                                 title="Add to Cart"
                                             />
                                         </div>
                                         <div className="flex justify-between items-center mt-4">
                                             <div>
-                                                <h3 className="font-bold text-black truncate w-40">{product.product_name}</h3>
-                                                <p className="text-gray-600 text-xs lg:text-sm">{formatVietnameseCurrency(product.product_price)}</p>
+                                                <h3 className="font-bold truncate w-40 text-[#002a86]">{product.product_name}</h3>
+                                                <p className="text-[#002a86] text-xs lg:text-sm">{formatVietnameseCurrency(product.product_price)}</p>
                                             </div>
                                             <button
                                                 onClick={handleOpenDetailProduct(product.product_id)}
-                                                className="p-2 bg-[#f26d78] hover:bg-[#C15760] text-white rounded-full transition-all"
+                                                className="p-2 bg-[#9f1000] hover:bg-[#fccc00] text-white rounded-full transition-all"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
