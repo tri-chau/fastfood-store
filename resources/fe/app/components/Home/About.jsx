@@ -10,7 +10,7 @@ const About = () => {
                     {/* Text Section */}
                     <div className="md:w-2/3 space-y-6">
                         <h2 className="text-5xl font-bold text-gray-900">LOS POLLOS HERMANOS</h2>
-                        <h3 className="text-2xl text-gray-700 font-semibold">Rau câu kỳ diệu</h3>
+{/*                         <h3 className="text-2xl text-gray-700 font-semibold">Rau câu kỳ diệu</h3> */}
 
                         <p className="text-gray-700 text-2xl leading-relaxed">
                             {/* Là một món tráng miệng thơm ngon và mát lạnh, rau câu đã được yêu thích bởi hương vị thanh nhẹ
