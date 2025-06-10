@@ -17,7 +17,7 @@ const Order = () => {
         {id: 'Wait For Approval', label: t('ORDERS.WAIT_FOR_APPROVAL')},
         {id: 'In Progress', label: t('ORDERS.IN_PROGRESS')},
         {id: 'Delivering', label: t('ORDERS.DELIVERING')},
-        {id: 'Delivered', label: t('ORDERS.DELIVERED')},
+        // {id: 'Delivered', label: t('ORDERS.DELIVERED')},
         {id: 'Completed', label: t('ORDERS.COMPLETED')},
         {id: 'Cancelled', label: t('ORDERS.CANCELLED')},
     ];
@@ -71,13 +71,13 @@ const Order = () => {
             <div className="flex p-6 gap-4 w-full h-full justify-center">
                 {/* Order Tabs*/}
                 <div>
-                    <span className="text-gray-500 text-3xl font-bold whitespace-nowrap">{t('ORDERS.ORDER_HISTORY')}</span>
+                    <span className="text-[#002a86] text-3xl font-bold whitespace-nowrap">{t('ORDERS.ORDER_HISTORY')}</span>
                     <div className="flex flex-col mb-4 border-gray-200 dark:border-gray-700 mt-6">
                         <ul className="flex flex-wrap flex-col gap-3 -mb-px text-sm font-semibold text-center">
                             {tabs.map((tab) => (
                                 <li key={tab.id} className="me-2 flex justify-end">
                                     <button
-                                        className={`hover:bg-stone-300 shadow-lg inline-flex items-center px-4 py-3 rounded-lg w-[180px] ${activeTab === tab.id ? 'bg-blue-500 text-white' : 'hover:bg-stone-300'}`}
+                                        className={`bg-[#fccc00] text-[#002a86] shadow-lg inline-flex items-center px-4 py-3 rounded-lg w-[180px] ${activeTab === tab.id ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-[#ffe77f]'}`}
                                         id={`${tab.id}-tab`}
                                         type="button"
                                         aria-controls={`${tab.id}-content`}
