@@ -342,7 +342,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                         {reviews && reviews.length > 0 ? (
                             reviews.map((review) => (
                                 <div key={review?.id} className="mb-2 p-2 border border-[#002a86] rounded">
-                                    <span className="font-semibold mr-2 text-[#9f1000]">
+                                    <span className="font-semibold mr-2 text-[#002a86]">
                                         {review.customer_name || "Ẩn danh"}
                                     </span>
                                     <div className="flex flex-row flex-wrap items-center mt-4 w-full">
@@ -356,7 +356,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                         )}
                                     </div>
                                     <div className="text-yellow-500">{"★".repeat(review?.rating)}</div>
-                                    <div className="text-[#002a86]">{review?.comment}</div>
+                                    <div>{review?.comment}</div>
                                 </div>
                             ))
                         ) : (
