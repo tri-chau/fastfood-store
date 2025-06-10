@@ -100,15 +100,14 @@ const OrderList = ({orders, refetchOrder}) => {
     //             count_topping: 0,
     //         }
     //     ]
-    // }
-// ];
+    // }];
 
     return (<div className="flex mt-4 shadow-lg rounded-lg">
             <div
                 className="scrollbar-thin w-full gap-6 grid overflow-y-auto rounded-lg p-6 bg-gray-50 dark:bg-gray-900">
                 {orders !== undefined && orders.length > 0 ? (orders.map((order, index) =>
                     (<div key={order.order_id}
-                          className="w-[100%] h-full border flex flex-col justify-between border-gray-300 p-5 rounded-xl shadow-md cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out">
+                          className="w-[100%] h-full border flex flex-col justify-between bg-white border-[#9f1000] border-[2px] p-5 rounded-xl shadow-md hover:bg-gray-100 transition-all duration-300 ease-in-out">
 
                             {/* Basic order info */}
                             {/*<div className="order-info flex w-full justify-between items-center">*/}
@@ -127,10 +126,10 @@ const OrderList = ({orders, refetchOrder}) => {
                             <div className="order-info flex w-full justify-between items-center">
                                 {/* Order Number & Date */}
                                 <div className="flex items-center gap-3">
-                                    <p className="text-lg font-semibold flex items-center gap-2">
+                                    <p className="text-lg text-[#9f1000] font-semibold flex items-center gap-2">
                                         #{order.order_number}
                                         <span
-                                            className="text-sm font-normal text-gray-500">- {formatDateTime(order.order_date)}</span>
+                                            className="text-sm font-normal text-[#002a86]">- {formatDateTime(order.order_date)}</span>
                                     </p>
 
                                     {/* Payment Method */}
@@ -160,19 +159,19 @@ const OrderList = ({orders, refetchOrder}) => {
                                             <div className="w-[10%] min-w-[60px]">
                                                 <img src={item.image || 'storage_fail/build/assets/Product/empty-image.png'}
                                                     alt="Product"
-                                                    className="w-full shadow-md rounded-lg aspect-square"/>
+                                                    className="w-full text-[#002a86] shadow-md rounded-lg aspect-square"/>
                                             </div>
                                             {/* Product info */}
                                             <div className="flex flex-col w-full pl-3">
                                                 <span
-                                                    className="text-md font-semibold text-gray-700">{item.product_name} ({item.size}) {/*item.product_id*/}</span>
+                                                    className="text-md font-semibold text-[#002a86]">{item.product_name} ({item.size}) {/*item.product_id*/}</span>
                                                 {item.count_topping !== 0 && (<span
-                                                    className="text-xs text-gray-500">+ {item.count_topping} toppings</span>)}
+                                                    className="text-xs text-[#002a86]">+ {item.count_topping} toppings</span>)}
                                                 <span
-                                                    className="text-xs text-gray-500">{t('ORDERS.DETAIL_ORDER.QUANTITY')}: {item.quantity}</span>
+                                                    className="text-xs text-[#002a86]">{t('ORDERS.DETAIL_ORDER.QUANTITY')}: {item.quantity}</span>
                                                 {item.note &&
                                                     <span
-                                                        className="text-xs text-gray-400">{t('ORDERS.DETAIL_ORDER.NOTE')}: {item.note}</span>}
+                                                        className="text-xs text-[#002a86]">{t('ORDERS.DETAIL_ORDER.NOTE')}: {item.note}</span>}
                                             </div>
                                             {/* Price */}
                                             <div
@@ -193,7 +192,7 @@ const OrderList = ({orders, refetchOrder}) => {
                                     </div>
                                 ))}
                                 <div className="text-gray-600">
-                                    <p className="text-gray-600 text-md mt-2">{t('ORDERS.DETAIL_ORDER.NOTE')}: {order.note}</p>
+                                    <p className="text-[#002a86] text-md mt-2">{t('ORDERS.DETAIL_ORDER.NOTE')}: {order.note}</p>
                                 </div>
                             </div>
 
