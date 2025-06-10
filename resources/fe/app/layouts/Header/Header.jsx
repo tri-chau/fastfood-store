@@ -71,7 +71,7 @@ const Header = () => {
     }, [dispatch]);
 
     return (
-        <header className="bg-white fixed top-0 w-full z-10 px-2 border-b">
+        <header className="fixed top-0 w-full z-10 px-2 border-b bg-[#fccc00] border-[#9f1000] shadow-md">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
                     {/* Left: Logo */}
@@ -84,7 +84,7 @@ const Header = () => {
                                 alt="logo"
                                 className="h-auto max-h-12 w-auto"
                             />
-                            <span>BEPMETAY</span>
+                            <span className="text-[#002a86]">POLLOS HERMANOS</span>
                         </Link>
                     </div>
 
@@ -98,7 +98,7 @@ const Header = () => {
                     {/* Right: Hỗ trợ KH + Menu */}
                     <div className="flex items-center space-x-4 min-w-max">
                         <button
-                            className="btn btn-outline-primary whitespace-nowrap"
+                            className="btn btn-outline-primary whitespace-nowrap text-[#002a86] hover:text-[#9f1000] transition-colors duration-300"
                             onClick={handleSupportClick}
                         >
                             Hỗ trợ khách hàng
@@ -116,7 +116,7 @@ const Header = () => {
                             {/* Cart button */}
                             {!isPremiumUser &&
                                 <button className="relative" onClick={handleCartClick}>
-                                    <BsCart3 className="text-lg lg:text-xl"/>
+                                    <BsCart3 className="text-lg lg:text-xl text-[#002a86] hover:text-[#9f1000] transition-colors duration-300"/>
                                     {cartQuantity > 0 && (
                                         <span
                                             className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
@@ -128,7 +128,7 @@ const Header = () => {
                             {/* Profile button */}
                             {userLoggedIn && (
                                 <div className="relative flex items-center">
-                                    <button onClick={() => openPopup({popupName: 'logout'})} className="px-2 text-lg">
+                                    <button onClick={() => openPopup({popupName: 'logout'})} className="px-2 text-lg text-[#002a86] hover:text-[#9f1000] transition-colors duration-300">
                                         <MdSettings/>
                                     </button>
                                 </div>
