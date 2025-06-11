@@ -105,7 +105,6 @@ class ChatController extends Controller
 
     public function getChatHistory(Request $request)
     {
-        \Log::debug('getChatHistory called', ['conversation_id' => $request->query('conversation_id')]);
         $conversationId = $request->query('conversation_id');
 
         $validator = \Validator::make($request->all(), [
@@ -128,7 +127,6 @@ class ChatController extends Controller
 
     public function getAdminConversations(Request $request)
     {
-        \Log::debug('getAdminConversations called');
         $user = $this->checkFirebaseUser($request);
         if (!$user->is_admin) {
             return response()->json(['error' => 'Chỉ admin mới xem được danh sách conversation'], 403);

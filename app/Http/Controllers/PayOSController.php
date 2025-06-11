@@ -63,8 +63,8 @@ class PayOSController extends Controller
                 'orderCode' => $orderCode, // Unique order code
                 'amount' => intval($order->order_total), // Payment amount
                 'description' => '#' . $order->order_number, // Payment description
-                'returnUrl' => 'https://478c-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL after payment
-                'cancelUrl' => ' https://478c-2001-ee0-e2f1-29d0-fd48-19d5-38ff-3fac.ngrok-free.app', // Redirect URL if payment is canceled
+                'returnUrl' => 'https://c596-2001-ee0-e2f4-4da0-e537-4bcf-403f-3243.ngrok-free.app', // Redirect URL after payment
+                'cancelUrl' => 'https://c596-2001-ee0-e2f4-4da0-e537-4bcf-403f-3243.ngrok-free.app', // Redirect URL if payment is canceled
             ];
 
             try {

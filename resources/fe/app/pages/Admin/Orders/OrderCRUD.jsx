@@ -5,15 +5,25 @@ import {Drawer, Modal} from 'flowbite';
 import {useDispatch, useSelector} from "react-redux";
 import {adminDeleteOrder, adminUpdateOrder, getAllOrdersAdmin} from "../../../redux/action/orderAction.js";
 import {notify} from "../../../layouts/Notification/notify.jsx";
+import provinceJson from "../../../locales/tinh_tp.json";
+import districtJson from "../../../locales/quan_huyen.json";
+import {fetchWards} from "../../../redux/action/paymentAction.js";
+import order from "../../Order/Order.jsx";
 
 const OrderCRUD = () => {
     const dispatch = useDispatch();
+    const wards = useSelector(state => state.wards.wards); // Lấy wards từ Redux
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [pendingOrder, setPendingOrder] = useState(null);
+
+
 
     const {orders: list, loading: getOrderLoading} = useSelector(state => state.orders);
 
     const [form, setForm] = useState({
         order_number: '',
         receiver_name: '',
+        receiver_phone: '',
         receiver_address: '',
         payment_method: 'Banking',
         order_status: 'Wait for Approval',
@@ -25,6 +35,7 @@ const OrderCRUD = () => {
         id: '',
         order_number: '',
         receiver_name: '',
+        receiver_phone: '',
         receiver_address: '',
         payment_method: 'Banking',
         payment_status: 'pending',
@@ -110,21 +121,109 @@ const OrderCRUD = () => {
         }
     };
 
+    // Định nghĩa các hàm ánh xạ trong file
+    const getProvinceName = (provinceId) => {
+        const province = provinceJson.find(
+            (p) => p.ProvinceID.toString() === provinceId?.toString()
+        );
+        return province ? province.ProvinceName : provinceId;
+    };
+
+    const getDistrictName = (districtId) => {
+        const district = Object.values(districtJson).find(
+            (d) => d.DistrictID.toString() === districtId?.toString()
+        );
+        return district ? district.DistrictName : districtId;
+    };
+
+    // Hàm lấy tên phường
+    const getWardName = (wardId) => {
+        if (!wards) return wardId; // fallback là ID
+        const found = wards.find(w => w.WardCode === wardId || w.WardCode == wardId);
+        return found ? found.WardName : wardId;
+    };
+
     const openUpdateModal = (order) => {
-        setFormEdit({
-            id: order.id,
-            order_number: order.order_number,
-            receiver_name: order.receiver_name,
-            receiver_address: order.receiver_address,
-            payment_method: order.payment_method,
-            order_status: order.order_status,
-            order_total: order.order_total,
-            team_id: order.team_id,
+        const [street, wardId, districtId, provinceId] = order.receiver_address.split(', ').map(part => part.trim());
+
+        setSelectedOrder({
+            ...order,
+            street,
+            wardId,
+            districtId,
+            provinceId
         });
-        if (updateDrawerInstance) {
-            updateDrawerInstance.show();
+
+        // Fetch lại wards nếu district khác với currentWards
+        if (!wards || wards.length === 0 || wards[0].district_id !== districtId) {
+            console.log('Fetching wards for district:', districtId);
+            dispatch(fetchWards(districtId));
         }
     };
+    useEffect(() => {
+        if (selectedOrder && wards && wards.length > 0) {
+            const provinceName = getProvinceName(selectedOrder.provinceId);
+            const districtName = getDistrictName(selectedOrder.districtId);
+            const wardName = getWardName(selectedOrder.wardId);
+
+            const fullAddress = `${selectedOrder.street}, ${wardName}, ${districtName}, ${provinceName}`;
+            setFormEdit({
+                id: selectedOrder.id,
+                order_number: selectedOrder.order_number,
+                receiver_name: selectedOrder.receiver_name,
+                receiver_phone: selectedOrder.receiver_phone,
+                receiver_address: fullAddress,
+                payment_method: selectedOrder.payment_method,
+                order_status: selectedOrder.order_status,
+                order_total: selectedOrder.order_total,
+                team_id: selectedOrder.team_id,
+            });
+
+            if (updateDrawerInstance) {
+                updateDrawerInstance.show();
+            }
+
+            // Reset selectedOrder sau khi hiển thị modal
+            setSelectedOrder(null);
+        }
+    }, [wards, selectedOrder, updateDrawerInstance]);
+
+
+
+    // const openUpdateModal = (order) => {
+    //     // Phân tách các thành phần từ receiver_address (street, wardId, districtId, provinceId)
+    //     const [street, wardId, districtId, provinceId] = order.receiver_address.split(', ').map(part => part.trim());
+    //
+    //     // Chuyển đổi ID thành tên
+    //     const provinceName = getProvinceName(provinceId);
+    //     const districtName = getDistrictName(districtId);
+    //     const wardName = getWardName(wardId);
+    //
+    //     // Tạo địa chỉ đầy đủ
+    //     const fullAddress = `${street}, ${wardName}, ${districtName}, ${provinceName}`;
+    //     setFormEdit({
+    //         id: order.id,
+    //         order_number: order.order_number,
+    //         receiver_name: order.receiver_name,
+    //         receiver_address: fullAddress,
+    //         payment_method: order.payment_method,
+    //         order_status: order.order_status,
+    //         order_total: order.order_total,
+    //         team_id: order.team_id,
+    //     });
+    //     if (updateDrawerInstance) {
+    //         updateDrawerInstance.show();
+    //     }
+    //     console.log('Open update modal with order:', order);
+    //     console.log('Full address:', fullAddress); // Debug
+    // };
+    // // Tải wards dựa trên districtID của order
+    // useEffect(() => {
+    //     if (order && order.district && (!wards || wards.length === 0)) {
+    //         console.log('Fetching wards for district:', order.district);
+    //         dispatch(fetchWards(order.district));
+    //     }
+    // }, [order, wards, dispatch]);
 
     const handleDeleteOrder = async (id) => {
         try {
@@ -152,6 +251,7 @@ const OrderCRUD = () => {
             id: '',
             order_number: '',
             receiver_name: '',
+            receiver_phone: '',
             receiver_address: '',
             payment_method: 'Banking',
             order_status: 'Wait for Approval',
@@ -484,6 +584,15 @@ const OrderCRUD = () => {
                                            placeholder="Receiver Name" required/>
                                 </div>
                                 <div>
+                                    <label htmlFor="receiver_phone"
+                                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Receiver
+                                        Phone</label>
+                                    <input name="receiver_phone" value={form.receiver_phone} onChange={handleChange}
+                                           type="text" id="receiver_phone"
+                                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                           placeholder="Receiver Phone" required/>
+                                </div>
+                                <div>
                                     <label htmlFor="receiver_address"
                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Receiver
                                         Address</label>
@@ -612,6 +721,22 @@ const OrderCRUD = () => {
                                     id="receiver_name"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Receiver Name"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="receiver_phone"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Receiver Phone
+                                </label>
+                                <input
+                                    name="receiver_phone"
+                                    value={formEdit.receiver_phone}
+                                    onChange={handleEditChange}
+                                    type="text"
+                                    id="receiver_phone"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Receiver Phone"
                                     required
                                 />
                             </div>

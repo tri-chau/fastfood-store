@@ -252,7 +252,7 @@ const Menu = () => {
                             className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === null ? 'font-bold text-title-xsm text-[#6B4226]' : 'text-black'}`}>
                             {t('MENU.ALL')}
                         </li>
-                        {listCategory?.map(category => (
+                        {listCategory?.data.map(category => (
                             <li key={category.id} onClick={() => filterByCategory(category.id)}
                                 className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === category.id ? 'font-bold text-title-xsm text-[#6B4226]' : 'text-black'}`}>
                                 {category.name}

@@ -129,8 +129,8 @@ class ProductController extends BaseController
             'categories.description as category_description')
             ->join('category_product', 'category_product.product_id', '=', 'products.id') // Join with the pivot table
             ->join('categories', 'categories.id', '=', 'category_product.category_id')  // Join with the categories table
-            ->where('products.status', 'active')
-            ->where('products.is_topping', 0);
+            ->where('products.status', 'active');
+//            ->where('products.is_topping', 0);
 
 //        $query = Product::All();
 
@@ -357,6 +357,8 @@ class ProductController extends BaseController
             'categories_id.*' => 'required|string|exists:categories,id',  // Each category must exist in the database
             'toppings_id' => 'nullable|array',
         ]);
+
+        \Log::info('Creating product with validated data', $validated);
 
         try {
             // Create the product with validated data
