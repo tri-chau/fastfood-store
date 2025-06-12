@@ -77,7 +77,7 @@ const Order = () => {
                             {tabs.map((tab) => (
                                 <li key={tab.id} className="me-2 flex justify-end">
                                     <button
-                                        className={`bg-[#fccc00] text-[#002a86] shadow-lg inline-flex items-center px-4 py-3 rounded-lg w-[180px] ${activeTab === tab.id ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-[#ffe77f]'}`}
+                                        className={`text-[#002a86] shadow-lg inline-flex items-center px-4 py-3 rounded-lg w-[180px] ${activeTab === tab.id ? 'bg-[#ffcc66] hover:bg-[#ffe77f]' : 'hover:bg-stone-200'}`}
                                         id={`${tab.id}-tab`}
                                         type="button"
                                         aria-controls={`${tab.id}-content`}
