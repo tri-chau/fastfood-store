@@ -32,7 +32,7 @@ const Home = () => {
     const {t} = useTranslation('translation');
 
     return (
-        <section className="bg-[#fccc00] text-[#002a86]">
+        <section className="bg-gray-100">
             {/* 1. Banner */}
             <Banner/>
 
@@ -60,9 +60,8 @@ const Home = () => {
                 </svg>
 
                 {/* Title */}
-                <p className={`mx-4 inline text-3xl font-extrabold text-[#9f1000] bg-[#fccc00] text-center
-                    px-8 py-2 rounded transition-transform duration-700
-                    ${animate ? "scale-110" : "scale-100"}`}>
+                <p className={`inline text-3xl font-bold bg-[#ffcc66] text-[#002a86] text-center px-6 py-2
+                                    rounded-full shadow-md transition-transform duration-700 ${animate ? "scale-110" : "scale-100"}`}>
                     {t('HOME.ABOUT')}
                 </p>
 
@@ -87,7 +86,7 @@ const Home = () => {
 
             {/* 🔹 Section Separator */}
             <div className="my-12">
-                <hr className="border-t-2 border-[#9f1000] w-3/4 mx-auto"/>
+                <hr className="border-t-2 border-gray-300 w-3/4 mx-auto"/>
             </div>
 
             {/* 🔹 Best Products Section with Title */}
@@ -106,9 +105,9 @@ const Home = () => {
                         fill="none"
                     />
                 </svg>
-                
-                <p className={`inline text-3xl font-bold text-[#9f1000] bg-[#fccc00] text-center mx-8
-                                transition-transform duration-700 ${animate ? "scale-110" : "scale-100"}`}>
+
+                <p className={`inline text-3xl font-bold bg-[#ffcc66] text-[#002a86] text-center px-6 py-2
+                                    rounded-full shadow-md transition-transform duration-700 ${animate ? "scale-110" : "scale-100"}`}>
                     {t('HOME.BEST_PRODUCTS')}
                 </p>
                                     {/*px-5 py-2 border-4 border-[#9f1000] rounded-full*/}

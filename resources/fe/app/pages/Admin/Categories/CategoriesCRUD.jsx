@@ -7,7 +7,7 @@ import {getCategories, createCategory, updateCategory, deleteCategory} from "../
 import { Modal } from 'flowbite';
 import AddCategoryModal from "./models/AddCategoryModal.jsx";
 import EditCategoryModal from "./models/EditCategoryModal.jsx";
-import DeleteCategoryModal from "./models/DeleteCategoryModal.jsx";
+import DeleteCategoryModal from "./DeleteCategoryModal.jsx";
 
 const CategoryCRUD = () => {
     const dispatch = useDispatch();

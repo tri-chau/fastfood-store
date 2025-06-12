@@ -75,7 +75,7 @@ const Header = () => {
     }, [dispatch]);
 
     return (
-        <header className="fixed top-0 w-full z-10 px-2 border-b bg-[#fccc00] border-[#9f1000] shadow-md">
+        <header className="fixed top-0 w-full z-10 px-2 border-b bg-[#ffcc66] border-[#9f1000] shadow-md">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
                     {/* Left: Logo */}
@@ -121,7 +121,7 @@ const Header = () => {
 
                         {/* Center: Search Box */}
                         <div className="flex justify-center flex-1">
-                            <div className="max-w-md w-full">
+                            <div className="max-w-md w-full bg-[#ffcc66]">
                                 <SearchInputElement />
                             </div>
                         </div>
@@ -133,7 +133,7 @@ const Header = () => {
 
                     {/* Right: Menu (hidden for admin) */}
                     <button
-                        className="btn btn-outline-primary whitespace-nowrap"
+                        className="btn btn-outline-primary whitespace-nowrap "
                         onClick={handleSupportClick}
                     >
                         Hỗ trợ khách hàng

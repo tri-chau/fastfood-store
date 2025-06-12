@@ -49,6 +49,10 @@ const OrderCRUD = () => {
         order_status: 'Wait for Approval',
         order_total: 0,
         // team_id: '',
+        street: '',
+        wardId: '',
+        districtId: '',
+        provinceId: '',
     });
 
     const [showDrawer, setShowDrawer] = useState(false);
@@ -126,6 +130,8 @@ const OrderCRUD = () => {
 
     const handleUpdateOrder = async (e) => {
         try {
+            const payload = { ...formEdit };
+            payload.receiver_address = `${formEdit.street}, ${formEdit.wardId}, ${formEdit.districtId}, ${formEdit.provinceId}`;
             await dispatch(adminUpdateOrder(formEdit.id, formEdit)).then(() => {
                 updateDrawerInstance.hide();
                 notify('success', 'Order updated successfully!');
@@ -159,21 +165,72 @@ const OrderCRUD = () => {
         return found ? found.WardName : wardId;
     };
 
+    // const openUpdateModal = (order) => {
+    //     const [street, wardId, districtId, provinceId] = order.receiver_address.split(', ').map(part => part.trim());
+    //
+    //     setSelectedOrder({
+    //         ...order,
+    //         street,
+    //         wardId,
+    //         districtId,
+    //         provinceId
+    //     });
+    //
+    //     // Fetch lại wards nếu district khác với currentWards
+    //     if (!wards || wards.length === 0 || wards[0].district_id !== districtId) {
+    //         console.log('Fetching wards for district:', districtId);
+    //         dispatch(fetchWards(districtId));
+    //     }
+    // };
+
+    //fixing
     const openUpdateModal = (order) => {
-        const [street, wardId, districtId, provinceId] = order.receiver_address.split(', ').map(part => part.trim());
+        const addressParts = order.receiver_address.split(',').map(part => part.trim());
+        const [street, wardInfo, districtInfo, provinceInfo] = addressParts;
 
-        setSelectedOrder({
+        let districtIdToUse;
+        let provinceIdToUse;
+
+        // --- Xử lý District ---
+        if (isNaN(parseInt(districtInfo))) { // Nếu districtInfo là Tên
+            const foundDistrict = Object.values(districtJson).find(d => d.DistrictName === districtInfo);
+            if (foundDistrict) {
+                districtIdToUse = foundDistrict.DistrictID;
+            } else {
+                alert(`Lỗi: Không tìm thấy ID cho quận/huyện "${districtInfo}"`);
+                return;
+            }
+        } else { // Nếu districtInfo là ID
+            districtIdToUse = districtInfo;
+        }
+
+        // --- Xử lý Province ---
+        if (isNaN(parseInt(provinceInfo))) { // Nếu provinceInfo là Tên
+            const foundProvince = provinceJson.find(p => p.ProvinceName === provinceInfo);
+            if (foundProvince) {
+                provinceIdToUse = foundProvince.ProvinceID;
+            } else {
+                alert(`Lỗi: Không tìm thấy ID cho tỉnh/thành phố "${provinceInfo}"`);
+                return;
+            }
+        } else { // Nếu provinceInfo là ID
+            provinceIdToUse = provinceInfo;
+        }
+
+        // Tạo object selectedOrder đã được chuẩn hóa
+        const standardizedOrder = {
             ...order,
-            street,
-            wardId,
-            districtId,
-            provinceId
-        });
+            street: street,
+            wardId: wardInfo, // ward vẫn có thể là Tên, sẽ được xử lý ở useEffect
+            districtId: districtIdToUse, // Luôn là ID
+            provinceId: provinceIdToUse, // Luôn là ID
+        };
 
-        // Fetch lại wards nếu district khác với currentWards
-        if (!wards || wards.length === 0 || wards[0].district_id !== districtId) {
-            console.log('Fetching wards for district:', districtId);
-            dispatch(fetchWards(districtId));
+        setSelectedOrder(standardizedOrder);
+
+        // Fetch wards bằng districtId đã được chuẩn hóa
+        if (!wards || wards.length === 0 || String(wards[0]?.DistrictID) !== String(districtIdToUse)) {
+            dispatch(fetchWards(districtIdToUse));
         }
     };
 
@@ -220,8 +277,7 @@ const OrderCRUD = () => {
 
 
 
-    //gemini
-    // Thay thế toàn bộ useEffect này
+    //working
     useEffect(() => {
         // Guard 1: Nếu một trong các state cần thiết chưa sẵn sàng, không làm gì cả.
         if (!selectedOrder || !wards || wards.length === 0) {
@@ -239,6 +295,26 @@ const OrderCRUD = () => {
             // Tất cả điều kiện đã thỏa mãn, tiến hành tạo địa chỉ và hiển thị form
             const provinceName = getProvinceName(selectedOrder.provinceId);
             const districtName = getDistrictName(selectedOrder.districtId);
+
+            let finalWardId;
+            let finalWardName;
+
+            // Xử lý wardId, vì nó có thể vẫn đang là Tên
+            if (!isNaN(parseInt(selectedOrder.wardId))) {
+                finalWardId = selectedOrder.wardId;
+                finalWardName = getWardName(finalWardId);
+            } else {
+                const foundWard = wards.find(w => w.WardName === selectedOrder.wardId);
+                if (foundWard) {
+                    finalWardId = foundWard.WardCode;
+                    finalWardName = foundWard.WardName;
+                } else {
+                    finalWardId = "Không tìm thấy";
+                    finalWardName = "Không tìm thấy";
+                }
+            }
+
+
             const wardName = getWardName(selectedOrder.wardId);
             const fullAddress = `${selectedOrder.street}, ${wardName}, ${districtName}, ${provinceName}`;
 
@@ -253,6 +329,10 @@ const OrderCRUD = () => {
                 order_status: selectedOrder.order_status,
                 order_total: selectedOrder.order_total,
                 team_id: selectedOrder.team_id,
+                street: selectedOrder.street,
+                wardId: finalWardId,
+                districtId: selectedOrder.districtId,
+                provinceId: selectedOrder.provinceId,
             });
 
             if (updateDrawerInstance) {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {notify} from "notiwind";
 import {useDispatch} from "react-redux";
-import {deleteCategory} from "../../../../redux/action/categoryAction.js";
+import {deleteCategory} from "../../../redux/action/categoryAction.js";
 
 const DeleteCategoryModal = ({ isOpen, onClose, itemID }) => {
     const dispatch = useDispatch();
     const [item_id, setItemID] = useState("");
-    
+
     // console.log("DeleteCategoryModal itemID1:", itemID);
-    
+
     useEffect(() => {
         if (itemID) {
             setItemID(itemID);
