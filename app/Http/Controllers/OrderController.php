@@ -61,6 +61,38 @@ class OrderController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    public function search(Request $request)
+    {
+        \Log::debug('Search request received', ['request' => $request->all()]);
+
+        $query = Order::with(['customers', 'creator']);
+
+        if ($request->has('searchText')) {
+            $searchText = $request->input('searchText');
+            \Log::debug('Raw SearchText:', ['searchText' => $searchText]);
+
+            $query->where(function ($q) use ($searchText) {
+                $q->where('order_number', $searchText) // exact match
+                ->orWhereHas('customers', function ($q2) use ($searchText) {
+                    $q2->where('receiver_name', 'like', "%{$searchText}%");
+                });
+            });
+
+        }
+
+        $data = $query->get();
+        \Log::debug('Search result data:', ['data' => $data]);
+
+        return response()->json([
+            'message' => 'Search completed.',
+            'data' => $query->get()
+        ]);
+    }
+
+
+
+
     public function createCart(Request $request)
     {
         $validated = $request->validate([

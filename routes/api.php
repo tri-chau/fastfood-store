@@ -140,6 +140,7 @@ Route::middleware(['firebase.auth'])->group(function () {
 
         // Order CRUD
         Route::get('/orders/all', [\App\Http\Controllers\OrderController::class, 'index']);
+        Route::get('/orders/search', [\App\Http\Controllers\OrderController::class, 'search']);
         Route::post('/orders/create', [\App\Http\Controllers\OrderController::class, 'adminCreateOrder']);
         Route::post('/orders/update/{id}', [\App\Http\Controllers\OrderController::class, 'update']);
         Route::delete('/orders/delete/{id}', [\App\Http\Controllers\OrderController::class, 'destroy']);

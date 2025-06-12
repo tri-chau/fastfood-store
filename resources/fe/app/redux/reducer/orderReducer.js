@@ -19,9 +19,21 @@ export const orderReducer = (state = orders, action) => {
                 loading: false,
             };
 
+        case 'GET_ORDERS_SEARCH_PROCESS':
+            return { ...state, loading: true };
+
+        case 'GET_ORDERS_SEARCH_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                orders: action.payload
+            };
+
+
         default:
             return state;
     }
+
 }
 
 export const updateOrderReducer = (state = updateOrder, action) => {

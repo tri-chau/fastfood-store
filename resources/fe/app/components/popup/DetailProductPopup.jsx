@@ -266,18 +266,18 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
     }, [selectedProduct]);
 
     // auto change images
-    useEffect(() => {
-        if (images.length > 1) {
-            const interval = setInterval(() => {
-                currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;
-                if (imageRef.current) {
-                    imageRef.current.src = images[currentImageIndexRef.current]; // Cập nhật ảnh trực tiếp
-                }
-            }, 3000); // 3s đổi ảnh một lần nêu có nhiều hơn 1 ảnh
-
-            return () => clearInterval(interval);
-        }
-    }, [images]);
+    // useEffect(() => {
+    //     if (images.length > 1) {
+    //         const interval = setInterval(() => {
+    //             currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;
+    //             if (imageRef.current) {
+    //                 imageRef.current.src = images[currentImageIndexRef.current]; // Cập nhật ảnh trực tiếp
+    //             }
+    //         }, 3000); // 3s đổi ảnh một lần nêu có nhiều hơn 1 ảnh
+    //
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [images]);
 
     if (!isVisible) return null;
 
@@ -291,18 +291,18 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                     style={{ maxHeight: '600px' }} // Optional: ensures max height for scrolling
                 >
                     <div className="shadow-lg h-[580px] h-[600px] overflow-hidden rounded-l-lg flex items-center justify-center relative">
-                        {/* Left Arrow Button */}
-                        <button
-                            onClick={() => {
-                                if (images.length === 1) return;
-                                currentImageIndexRef.current = (currentImageIndexRef.current - 1 + images.length) % images.length;
-                                if (imageRef.current) {
-                                    imageRef.current.src = images[currentImageIndexRef.current];
-                                }
-                            }}
-                            className="absolute left-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
-                            <FaArrowLeft />
-                        </button>
+                        {/*/!* Left Arrow Button *!/*/}
+                        {/*<button*/}
+                        {/*    onClick={() => {*/}
+                        {/*        if (images.length === 1) return;*/}
+                        {/*        currentImageIndexRef.current = (currentImageIndexRef.current - 1 + images.length) % images.length;*/}
+                        {/*        if (imageRef.current) {*/}
+                        {/*            imageRef.current.src = images[currentImageIndexRef.current];*/}
+                        {/*        }*/}
+                        {/*    }}*/}
+                        {/*    className="absolute left-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">*/}
+                        {/*    <FaArrowLeft />*/}
+                        {/*</button>*/}
 
                         {/* Image */}
                         <img
@@ -312,18 +312,18 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                             className="w-[550px] h-[550px] object-cover aspect-square rounded-lg"
                         />
 
-                        {/* Right Arrow Button */}
-                        <button
-                            onClick={() => {
-                                if (images.length === 1) return;
-                                currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;
-                                if (imageRef.current) {
-                                    imageRef.current.src = images[currentImageIndexRef.current];
-                                }
-                            }}
-                            className="absolute right-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">
-                            <FaArrowRight />
-                        </button>
+                        {/*/!* Right Arrow Button *!/*/}
+                        {/*<button*/}
+                        {/*    onClick={() => {*/}
+                        {/*        if (images.length === 1) return;*/}
+                        {/*        currentImageIndexRef.current = (currentImageIndexRef.current + 1) % images.length;*/}
+                        {/*        if (imageRef.current) {*/}
+                        {/*            imageRef.current.src = images[currentImageIndexRef.current];*/}
+                        {/*        }*/}
+                        {/*    }}*/}
+                        {/*    className="absolute right-8 inset-y-1/2 transform -translate-y-1/2 bg-white text-black w-12 h-12 flex items-center justify-center rounded-full shadow-2xl opacity-80 hover:opacity-100 transition-opacity duration-300">*/}
+                        {/*    <FaArrowRight />*/}
+                        {/*</button>*/}
                     </div>
 
                     <div className="flex flex-col px-6 mt-4 w-[600px] rounded-l-lg">
