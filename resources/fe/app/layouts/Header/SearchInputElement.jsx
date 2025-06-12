@@ -75,7 +75,7 @@ const SearchInputElement = () => {
             <form className="flex w-full items-center">
                 <input
                     type="search"
-                    className="block outline-none w-full py-2 px-2 md:px-5 text-sm text-[#002a86] bg-[#fccc00] border border-[#9f1000] rounded-lg placeholder-[#002a86]"
+                    className="block outline-none w-full py-2 px-2 md:px-5 text-sm text-[#002a86] bg-[#ffcc66] border border-[#9f1000] rounded-lg placeholder-[#002a86]"
                     placeholder={t("HEADER.SEARCH_FOR_PRODUCTS")}
                     value={searchParams}
                     onChange={handleInput}
@@ -88,7 +88,7 @@ const SearchInputElement = () => {
             <div
                 className={`${
                     searchParams && closeInput ? "h-auto" : "h-0"
-                } absolute  w-[380px] md:w-[450px] lg:w-[550px] md:max-h-[300px] bg-[#fccc00] rounded-md top-12  shadow-xl transition-all duration-300 overflow-y-auto text-[#002a86]`}
+                } absolute  w-[380px] md:w-[450px] lg:w-[550px] md:max-h-[300px] bg-[#ffcc66] rounded-md top-12  shadow-xl transition-all duration-300 overflow-y-auto text-[#002a86]`}
             >
                 <div className="flex flex-col gap-y-4 py-4 px-4">
                     {loading ? (
