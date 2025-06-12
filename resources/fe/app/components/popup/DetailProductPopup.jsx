@@ -341,8 +341,8 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
 
                         {reviews && reviews.length > 0 ? (
                             reviews.map((review) => (
-                                <div key={review?.id} className="mb-2 p-2 border rounded">
-                                    <span className="font-semibold mr-2">
+                                <div key={review?.id} className="mb-2 p-2 border border-[#002a86] rounded">
+                                    <span className="font-semibold mr-2 text-[#002a86]">
                                         {review.customer_name || "Ẩn danh"}
                                     </span>
                                     <div className="flex flex-row flex-wrap items-center mt-4 w-full">
@@ -360,7 +360,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                 </div>
                             ))
                         ) : (
-                            <div className="text-[20px] py-5">
+                            <div className="text-[20px] py-5 text-[#9f1000]">
                                 { t('DETAIL_PRODUCT.NO_REVIEWS') }
                             </div>
                         )}
@@ -372,8 +372,8 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                     {/*name and price*/}
                     <div className="flex flex-row items-center justify-between h-[16%]">
                         <div className="w-full lg:w-2/3">
-                            <h2 className="text-black text-2xl lg:text-3xl font-semibold mb-2">{selectedProduct?.name}</h2>
-                            <p className="text-gray-600 text-lg lg:text-xl">{formatVietnameseCurrency(selectedProduct?.price)}</p>
+                            <h2 className="text-[#002a86] text-2xl lg:text-3xl font-semibold mb-2">{selectedProduct?.name}</h2>
+                            <p className="text-[#002a86] text-lg lg:text-xl">{formatVietnameseCurrency(selectedProduct?.price)}</p>
                         </div>
                         <div className="h-full">
                             <button onClick={handleClosePopup} className="text-gray-500 hover:text-gray-700">
@@ -392,15 +392,15 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                             {/*Size*/}
                             <div className="mb-4">
                                 <div className="flex justify-between items-center mb-2">
-                                    <p className="text-black font-semibold text-lg">{t('DETAIL_PRODUCT.SIZE')}</p>
+                                    <p className="text-[#002a86] font-semibold text-lg">{t('DETAIL_PRODUCT.SIZE')}</p>
                                 </div>
                                 <div className="flex space-x-4">
                                     {selectedProduct?.size_list.map(size => (
                                         <button
                                             key={size.name}
                                             className={`px-4 py-2 rounded-lg text-xs md:text-[16px] font-medium transition-all
-                                                focus:ring-2 focus:ring-[#f26d78] focus:ring-offset-2
-                                                ${selectedSize.name === size.name ? 'bg-[#f26d78] text-white shadow-md' : 'bg-neutral-100 text-form-strokedark shadow-md'}`}
+                                                focus:ring-2 focus:ring-[#002a86] focus:ring-offset-2
+                                                ${selectedSize.name === size.name ? 'bg-[#fccc00] font-semibold text-[#9f1000] shadow-md' : 'bg-stone-100 text-[#002a86] hover:bg-stone-300 shadow-md'}`}
                                             onClick={() => setSelectedSize(size)}
                                         >
                                             {size.name}
@@ -411,7 +411,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
 
                             {/*Topping */}
                             <div className="mb-5">
-                                <p className="text-black font-bold text-lg mb-2">{t('DETAIL_PRODUCT.TOPPING')}</p>
+                                <p className="text-[#002a86] font-bold text-lg mb-2">{t('DETAIL_PRODUCT.TOPPING')}</p>
                                 <div className="flex space-x-4">
                                     {selectedProduct?.topping_list.length !== 0 ? (
                                         selectedProduct?.topping_list.map((topping) => {
@@ -419,10 +419,10 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                             return (
                                                 <button
                                                     key={topping.id + selectedToppingsKey.current}
-                                                    className={`px-4 py-2 rounded-lg text-xs md:text-[16px] font-medium transition-all focus:ring-2 focus:ring-[#f26d78] focus:ring-offset-2
+                                                    className={`px-4 py-2 rounded-lg text-xs md:text-[16px] font-medium transition-all focus:ring-2 focus:ring-[#002a86] focus:ring-offset-2
                                                     ${isSelected
-                                                            ? "bg-[#f26d78] text-white shadow-md"
-                                                            : "bg-neutral-100 text-form-strokedark shadow-md"
+                                                            ? "bg-[#fccc00] font-semibold text-[#9f1000] shadow-md"
+                                                            : "bg-stone-100 text-[#002a86] hover:bg-stone-300 shadow-md"
                                                         }`}
                                                     onClick={() => handleToppingClick(topping)}>
                                                     {topping.name}
@@ -438,7 +438,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                             {/*Quantity*/}
                             <div className="mb-4 flex items-center space-x-4">
                                 {/* Text "Quantity" */}
-                                <p className="text-black font-bold text-lg">{t('DETAIL_PRODUCT.QUANTITY')}</p>
+                                <p className="text-[#002a86] font-bold text-lg">{t('DETAIL_PRODUCT.QUANTITY')}</p>
 
                                 {/* Buttons and Input in a Row */}
                                 <div className="relative flex items-center space-x-2">
@@ -446,7 +446,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                         type="button"
                                         id="decrement-button"
                                         onClick={decreaseQuantity}
-                                        className="flex items-center justify-center bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-200 border border-gray-300 rounded-lg h-8 w-8 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+                                        className="flex items-center justify-center bg-stone-100 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-stone-300 border border-[#002a86] rounded-lg h-8 w-8 focus:ring-[#002a86] focus:ring-2 focus:outline-none"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -454,7 +454,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="h-4 w-4"
+                                            className="h-4 w-4 text-[#002a86]"
                                         >
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                         </svg>
@@ -473,7 +473,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                         type="button"
                                         id="increment-button"
                                         onClick={increaseQuantity}
-                                        className="flex items-center justify-center bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-lg h-8 w-8 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                                        className="flex items-center justify-center bg-stone-100 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-stone-300 border border-[#002a86] rounded-lg h-8 w-8 focus:ring-[#002a86] focus:ring-2 focus:outline-none"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -481,7 +481,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                                             viewBox="0 0 24 24"
                                             strokeWidth="1.5"
                                             stroke="currentColor"
-                                            className="h-4 w-4"
+                                            className="h-4 w-4 text-[#002a86]"
                                         >
                                             <path strokeLinecap="round" strokeLinejoin="round"
                                                 d="M12 4.5v15m7.5-7.5h-15" />
@@ -493,7 +493,7 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
 
                             {/*Note */}
                             <div className="mb-4">
-                                <p className="text-black font-bold text-lg mb-2">{t('DETAIL_PRODUCT.NOTE')}</p>
+                                <p className="text-[#002a86] font-bold text-lg mb-2">{t('DETAIL_PRODUCT.NOTE')}</p>
                                 <div className="flex flex-wrap grid-cols-4 gap-1">
                                     <textarea
                                         value={note}
@@ -516,13 +516,13 @@ const DetailProductPopup = ({ isVisible, isEdit, productDetailInCart }) => {
                             </span>
                             {!isEdit ? (
                                 <button onClick={addToCart}
-                                    className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
+                                    className="bg-[#fccc00] text-[#002a86] hover:bg-[#ffe77f] px-4 py-2 rounded-full font-bold">
                                     {/*Add to cart*/}
                                     {loading ? <SpinnerLoading /> : t('DETAIL_PRODUCT.ADD_TO_CART')}
                                 </button>
                             ) : (
                                 <button onClick={saveEditing}
-                                    className="bg-[#f26d78] text-white px-4 py-2 rounded-full font-bold">
+                                    className="bg-[#fccc00] text-[#002a86] hover:bg-[#ffe77f] px-4 py-2 rounded-full font-bold">
                                     {loading ? <SpinnerLoading /> : t('DETAIL_PRODUCT.EDIT_CONFIRM')}
                                 </button>
                             )}

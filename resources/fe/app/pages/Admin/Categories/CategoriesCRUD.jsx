@@ -3,18 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/store/actions/categoryActions';
 // import { fetchTeamOptions } from '@/store/actions/teamActions';
 import { notify } from 'notiwind';
-import {getCategories} from "../../../redux/action/categoryAction.js";
+import {getCategories, createCategory, updateCategory, deleteCategory} from "../../../redux/action/categoryAction.js";
 import { Modal } from 'flowbite';
 import AddCategoryModal from "./models/AddCategoryModal.jsx";
+import EditCategoryModal from "./models/EditCategoryModal.jsx";
+import DeleteCategoryModal from "./models/DeleteCategoryModal.jsx";
 
 const CategoryCRUD = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
   const categories = useSelector(state => state.categories.categories);
   // const teams = useSelector(state => state.teams.allTeamsOption);
   const [form, setForm] = useState({ name: '', description: '', type: '', team_id: '' });
   const [formEdit, setFormEdit] = useState({ id: null, name: '', description: '', type: '', team_id: '' });
+  const [idDelete, setIdDelete] = useState("");
   const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -34,6 +39,16 @@ const CategoryCRUD = () => {
         setShowModal(false);
     };
 
+    const handleEditCategoryClick = (item) => {
+        setIsEditModalOpen(true);
+        setFormEdit(item);
+    };
+
+    const handleDeleteCategoryClick = (id) => {
+        setIsDeleteModalOpen(true);
+        setIdDelete(id);
+        // console.log("Delete Category ID:", id);
+    };
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
@@ -102,7 +117,7 @@ const CategoryCRUD = () => {
                         className="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
                         <div className="w-full md:w-1/2">
 
-                            <form className="flex items-center" onSubmit={handleCreateCategory}>
+                            <form className="flex items-center">
                                 <label htmlFor="simple-search" className="sr-only">Search</label>
                                 <div className="relative w-full">
                                     <div
@@ -134,7 +149,16 @@ const CategoryCRUD = () => {
                                 isOpen={isModalOpen}
                                 onClose={() => setIsModalOpen(false)}
                             />
-
+                            <EditCategoryModal
+                                isOpen={isEditModalOpen}
+                                onClose={() => setIsEditModalOpen(false)}
+                                inputItem={formEdit}
+                            />
+                            <DeleteCategoryModal
+                                isOpen={isDeleteModalOpen}
+                                onClose={() => setIsDeleteModalOpen(false)}
+                                itemID={idDelete}
+                            />
                             <button type="button"
                                     className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
@@ -196,7 +220,7 @@ const CategoryCRUD = () => {
                                             <div className="flex items-center space-x-3 justify-end">
                                                 <button
                                                     type="button"
-                                                    onClick={() => setFormEdit(item)}
+                                                    onClick={() => handleEditCategoryClick(item)}
                                                     className="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary dark:focus:ring-primary-800"
                                                 >
                                                     <svg
@@ -216,7 +240,7 @@ const CategoryCRUD = () => {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleDeleteCategory(item.id)}
+                                                    onClick={() => handleDeleteCategoryClick(item.id)}
                                                     className="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                                                 >
                                                     <svg

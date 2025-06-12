@@ -146,22 +146,22 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                 onClick={e => e.stopPropagation()}
             >
                 <div className="drawer-header flex justify-between items-center pl-0 pr-4 pt-0 pb-2">
-                    <h2 className="flex justify-center text-3xl font-semibold text-[#f26d78]">{t('REVIEWS.REVIEW')}</h2>
+                    <h2 className="flex justify-center text-3xl font-semibold text-[#9f1000]">{t('REVIEWS.REVIEW')}</h2>
                     <button onClick={closeReview} className="text-3xl">&times;</button>
                 </div>
                 <div className="flex w-full space-y-4 py-4 bg-white">
                     {/* Product image */}
                     <div className="w-[50%] min-w-[60px]">
-                        <span className="text-[24px] font-semibold text-gray-700">{orderDetail.product_name} ({orderDetail.size})</span>
+                        <span className="text-[24px] font-semibold text-[#002a86]">{orderDetail.product_name} ({orderDetail.size})</span>
                         <img src={orderDetail.image ||'storage_fail/build/assets/Product/empty-image.png'}
                             alt="Product"
-                            className="w-[400px] shadow-md rounded-lg aspect-square" />
+                            className="w-[400px] shadow-md rounded-lg aspect-square text-[#002a86]" />
                     </div>
                     <div className="w-[50%] px-5 pt-3">
                         {showInput ? (
                             <>
                                 <div className="flex flex-wrap">
-                                    <span className="text-[24px] font-semibold px-0 w-[50%]">{t("REVIEWS.RATING")}</span>
+                                    <span className="text-[24px] text-[#002a86] font-semibold px-0 w-[50%]">{t("REVIEWS.RATING")}</span>
                                     <div className="flex space-x-1">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <svg
@@ -180,10 +180,10 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <span className="text-[24px] font-semibold px-0">{t("REVIEWS.COMMENT")}</span>
+                                    <span className="text-[24px] text-[#002a86] font-semibold px-0">{t("REVIEWS.COMMENT")}</span>
                                     <div>
                                         <textarea
-                                            className="block p-2.5 w-full h-[200px] rounded-lg p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f26d78] focus:border-[#f26d78]"
+                                            className="block p-2.5 w-full h-[200px] rounded-lg p-2 border border-[#002a86] focus:outline-none focus:ring-2 focus:ring-[#9f1000] focus:border-[#9f1000]"
                                             placeholder={t("REVIEWS.PLACEHOLDER_COMMENT")}
                                             value={comment}
                                             onChange={e => setComment(e.target.value)}
@@ -210,7 +210,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                                         {t("REVIEWS.CANCEL")}
                                     </button>
                                     <button
-                                        className="bg-[#f26d78] text-white px-6 py-2 rounded-lg shadow-md hover:bg-[#d45560] transition-all"
+                                        className="bg-[#9f1000] text-white px-6 py-2 rounded-lg shadow-md hover:bg-[#d45560] transition-all"
                                         onClick={handleSubmitReview}
                                     >
                                         {editMode ? t("REVIEWS.EDIT") : t("REVIEWS.SUBMIT")}
@@ -220,7 +220,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                         ) : (
                             <>
                                 <div className="flex flex-wrap">
-                                    <span className="text-[24px] font-semibold px-0 w-[50%]">{t("REVIEWS.RATING")}</span>
+                                    <span className="text-[24px] text-[#002a86] font-semibold px-0 w-[50%]">{t("REVIEWS.RATING")}</span>
                                     <div className="flex space-x-1">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <svg
@@ -256,7 +256,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                                 {!deleteClicked ? (
                                     <div className="relative flex justify-between mt-4 pr-10 w-full">
                                         <button
-                                            className="bg-white text-red font-bold px-6 text-[20px] rounded-lg transition-all"
+                                            className="bg-white text-[#9f1000] font-bold px-6 text-[20px] rounded-lg transition-all"
                                             onClick={() => setDeleteClicked(true)}
                                         >
                                             {t("REVIEWS.DELETE")}
@@ -278,7 +278,7 @@ const OrderDetailReviewPopup = ({ isVisible, orderDetail, productId }) => {
                                             {t("REVIEWS.DELETE_CONFIRM")}
                                         </span>
                                         <button
-                                            className="bg-[#f26d78] text-white font-bold px-6 text-[20px] rounded-lg transition-all mr-2"
+                                            className="bg-[#9f1000] text-white font-bold px-6 text-[20px] rounded-lg transition-all mr-2"
                                             onClick={handleDeleteReview}
                                         >
                                             {t("REVIEWS.CONFIRM")}

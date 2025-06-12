@@ -133,17 +133,17 @@ const CartDrawerPopup = ({isVisible}) => {
     return (
         <div onClick={closePopup}>
             <div id="drawer-update-product"
-                 className="fixed top-0 z-99 right-0 w-full h-screen max-w-3xl overflow-y-auto transition-transform-translate-x-full bg-white dark:bg-gray-800 rounded-2xl border"
+                 className="fixed top-0 z-99 right-0 w-full h-screen max-w-3xl overflow-y-auto transition-transform-translate-x-full bg-white dark:bg-gray-800 rounded-2xl border-[#002a86] border-2"
                  onClick={(e) => e.stopPropagation()}>
                 {/*title*/}
                 <div className="drawer-header flex justify-between items-center pl-4 pr-4 pt-4 pb-2">
-                    <h2 className="text-3xl font-semibold text-[#f26d78]">{t('CART.CARTS')}</h2>
+                    <h2 className="text-3xl font-semibold text-[#002a86]">{t('CART.CARTS')}</h2>
                     <button onClick={closeDrawer} className="text-2xl">&times;</button>
                 </div>
 
-                <div className="ml-6 mr-6 mt-4 mb-4 border-[#f26d78] bg-gray-100 flex border-b-2 h-10 justify-between">
+                <div className="ml-6 mr-6 mt-4 mb-4 border-[#9f1000] bg-gray-100 flex border-b-2 h-10 justify-between">
                     <div className="flex">
-                        <button className="mr-[1px] bg-[#f26d78] text-white pl-2 pr-2 font-bold rounded-t-lg"
+                        <button className="mr-[1px] bg-[#9f1000] text-white pl-2 pr-2 font-bold rounded-t-lg"
                                 onClick={() => setIsVisible(true)}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                  className="size-6">

@@ -53,7 +53,7 @@ const UserSetting = ({isVisible}) => {
                 <button
                     // onClick={() => openPopup({popupName: 'profile'})}
                     onClick={() => notify("info", t('NOTIFICATION.NOT_AVAILABLE'))}
-                    className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-stone-300 transition duration-200 shadow-2">
+                    className="flex items-center gap-3 py-2 px-3 rounded-lg text-[#002a86] hover:bg-stone-300 transition duration-200 shadow-2">
                     <MdOutlinePerson className="text-xl text-gray-700"/>
                     <span className="text-gray-800">{t('HEADER.PROFILE')}</span>
                 </button>
@@ -61,7 +61,7 @@ const UserSetting = ({isVisible}) => {
                     {/* Button */}
                     <button
                         onClick={() => setOpen(!open)}
-                        className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-stone-300 transition duration-200 shadow-md bg-white">
+                        className="flex items-center gap-3 py-2 px-3 rounded-lg text-[#002a86] hover:bg-stone-300 transition duration-200 shadow-md bg-white">
                         <MdLanguage className="text-xl"/>
                         <span>{t('HEADER.LANGUAGE')}</span>
                         <MdArrowDropDown className={`text-sm transition-transform ${open ? "rotate-180" : ""}`}/>
@@ -84,7 +84,7 @@ const UserSetting = ({isVisible}) => {
                 </div>
                 <button
                     onClick={handleLogout}
-                    className="flex items-center gap-3 py-2 px-3 rounded-lg bg-[#f26d78] text-white hover:bg-[#d85563] transition duration-200">
+                    className="flex items-center gap-3 py-2 px-3 rounded-lg bg-[#fccc00] text-[#002a86] hover:bg-[#ffe77f] transition duration-200">
                     <MdLogout className="text-xl"/>
                     <span>{t('HEADER.LOGOUT')}</span>
                 </button>

@@ -74,136 +74,8 @@ const Header = () => {
         }
     }, [dispatch]);
 
-    // return (
-    //     <header className="bg-white fixed top-0 w-full z-10 px-2 border-b">
-    //         <div className="container mx-auto">
-    //             <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
-    //                 {/* Left: Logo */}
-    //                 <div
-    //                     className="lg:flex hidden items-center text-xl font-semibold tracking-wider space-x-2 whitespace-nowrap"
-    //                     onClick={() => navigate("/")}>
-    //                     <Link to="/" className="flex items-center space-x-2">
-    //                         <img
-    //                             src="/storage/build/assets/Logo.jpg"
-    //                             alt="logo"
-    //                             className="h-auto max-h-12 w-auto"
-    //                         />
-    //                         <span>Los Pollos Hermanos</span>
-    //                     </Link>
-    //                 </div>
-    //
-    //                 {/* Center: Search box */}
-    //                 <div className="flex-1 flex justify-center px-2">
-    //                     <div className="w-full max-w-md">
-    //                         <SearchInputElement />
-    //                     </div>
-    //                 </div>
-    //
-    //                 {/* Right: Hỗ trợ KH + Menu */}
-    //                 <div className="flex items-center space-x-4 min-w-max">
-    //                     <button
-    //                         className="btn btn-outline-primary whitespace-nowrap"
-    //                         onClick={handleSupportClick}
-    //                     >
-    //                         Hỗ trợ khách hàng
-    //                     </button>
-    //
-    //                     <NavMenuElement
-    //                         handleNavMenu={handleNavMenu}
-    //                         openMenu={openMenu}
-    //                         userLoggedIn={userLoggedIn}
-    //                         switchPopup={switchPopup}
-    //                     />
-    //
-    //                     {/* Buttons (Cart, Profile, Menu) */}
-    //                     <div className="flex flex-row justify-center items-center space-x-3 min-w-max">
-    //                         {/* Cart button */}
-    //                         {!isPremiumUser &&
-    //                             <button className="relative" onClick={handleCartClick}>
-    //                                 <BsCart3 className="text-lg lg:text-xl"/>
-    //                                 {cartQuantity > 0 && (
-    //                                     <span
-    //                                         className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
-    //                                     {cartQuantity}
-    //                                 </span>
-    //                                 )}
-    //                             </button>}
-    //
-    //                         {/* Profile button */}
-    //                         {userLoggedIn && (
-    //                             <div className="relative flex items-center">
-    //                                 <button onClick={() => openPopup({popupName: 'logout'})} className="px-2 text-lg">
-    //                                     <MdSettings/>
-    //                                 </button>
-    //                             </div>
-    //                         )}
-    //
-    //                         {/* Select Profile button popup */}
-    //                         {currentPopup?.popupName === 'logout' && (
-    //                             <UserSetting isVisible={currentPopup?.popupName === 'logout'}/>
-    //                         )}
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //
-    //         {/* ALL pop up*/}
-    //
-    //         {/* login pop up */}
-    //         {currentPopup?.popupName === 'login' &&
-    //             <SignInPasswordPopup isVisible={currentPopup?.popupName === 'login'}
-    //                                  closePopup={closePopup} switchPopup={switchPopup}/>}
-    //
-    //         {/* register popup */}
-    //         {currentPopup?.popupName === 'register' &&
-    //             <RegisterPopup isVisible={currentPopup?.popupName === 'register'}
-    //                            closePopup={closePopup} switchPopup={switchPopup}/>
-    //         }
-    //
-    //         {/* Add phone number when user login by Google first time */}
-    //         {currentPopup?.popupName === 'addPhone' &&
-    //             <AddPhoneNumberPopup isVisible={currentPopup?.popupName === 'addPhone'}
-    //                                  registerData={currentPopup.registerData}/>}
-    //         {/* Select available cart when user add product to cart */}
-    //         {currentPopup?.popupName === 'cartSelection' &&
-    //             <CartSelectionPopup isVisible={currentPopup?.popupName === 'cartSelection'}
-    //                                 cartData={currentPopup?.cartData}
-    //                                 product={currentPopup?.product}
-    //                                 resetState={currentPopup?.resetState}/>}
-    //         {/* cart drawer */}
-    //         {currentPopup?.popupName === 'cartDrawer' &&
-    //             <CartDrawerPopup isVisible={currentPopup?.popupName === 'cartDrawer'}/>}
-    //
-    //         {/* Add Detail product popup opened from Menu */}
-    //         {currentPopup?.popupName === 'details' &&
-    //             <DetailProductPopup isVisible={currentPopup?.popupName === 'details'} isEdit={false}/>}
-    //
-    //         {/* Update Detail product pop up opened from CartDrawer */}
-    //         {currentPopup?.popupName === 'details' && currentPopup?.productDetailInCart && (
-    //             <DetailProductPopup
-    //                 isVisible={currentPopup?.popupName === 'details'}
-    //                 isEdit={true}
-    //                 productDetailInCart={currentPopup?.productDetailInCart}
-    //             />
-    //         )}
-    //         {/* QR payment popup */}
-    //         {currentPopup?.popupName === 'qrPayment' && currentPopup?.paymentLink &&
-    //             <QRPaymentPopup isVisible={currentPopup?.popupName === 'qrPayment'}
-    //                             paymentLink={currentPopup?.paymentLink} cart={currentPopup?.order}/>}
-    //
-    //         {currentPopup?.popupName === "chat" && (
-    //             <ChatPopup
-    //                 isVisible={currentPopup?.popupName === "chat"}
-    //                 closePopup={closePopup}
-    //                 firebaseId={firebaseId}
-    //             />
-    //         )}
-    //
-    //     </header>
-    // );
-
     return (
-        <header className="bg-white fixed top-0 w-full z-10 px-2 border-b">
+        <header className="fixed top-0 w-full z-10 px-2 border-b bg-[#fccc00] border-[#9f1000] shadow-md">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
                     {/* Left: Logo */}
@@ -216,7 +88,7 @@ const Header = () => {
                                 alt="logo"
                                 className="h-auto max-h-12 w-auto"
                             />
-                            <span>Los Pollos</span>
+                            <span className="text-[#002a86]">POLLOS HERMANOS</span>
                         </Link>
                     </div>
 
