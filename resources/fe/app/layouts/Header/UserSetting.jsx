@@ -84,7 +84,7 @@ const UserSetting = ({isVisible}) => {
                 </div>
                 <button
                     onClick={handleLogout}
-                    className="flex items-center gap-3 py-2 px-3 rounded-lg bg-[#fccc00] text-[#002a86] hover:bg-[#ffe77f] transition duration-200">
+                    className="flex items-center gap-3 py-2 px-3 rounded-lg bg-[#ffcc66] text-[#002a86] hover:bg-[#ffe77f] transition duration-200">
                     <MdLogout className="text-xl"/>
                     <span>{t('HEADER.LOGOUT')}</span>
                 </button>
