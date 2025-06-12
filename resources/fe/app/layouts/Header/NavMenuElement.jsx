@@ -38,7 +38,7 @@ const NavMenuElement = ({handleNavMenu, openMenu, userLoggedIn, switchPopup}) =>
 
     return (
         <div
-            className={`${openMenu ? "right-0" : "-right-full"} w-full md:w-auto h-full md:h-auto fixed md:static top-0 md:top-auto bg-white z-20 transition-all duration-300`}>
+            className={`${openMenu ? "right-0" : "-right-full"} w-full md:w-auto h-full md:h-auto fixed md:static top-0 md:top-auto bg-[#fccc00] z-20 transition-all duration-300`}>
 
             <div className="block md:hidden text-black py-6 text-end px-8">
                 <button onClick={handleMobileNavMenu}>
@@ -47,12 +47,12 @@ const NavMenuElement = ({handleNavMenu, openMenu, userLoggedIn, switchPopup}) =>
             </div>
 
             <nav
-                className="flex flex-row justify-center items-center text-2xl md:text-sm">
+                className="flex flex-row justify-center items-center text-2xl md:text-sm text-[#002a86] font-bold">
                 {navMenuName.map((menu, index) => {
                     if (!menu.visible) return null;
                     return (
                         <Link
-                            className={navMenuBtn(menu.path)}
+                            className={navMenuBtn(menu.path) + "text-[#002a86] hover:text-[#9f1000] transition-all duration-300"}
                             to={menu.path}
                             key={index}
                             onClick={menu.onClick || handleMobileNavMenu}>

@@ -7,7 +7,7 @@ import {
 } from "../constant/categoriesType";
 
 const categories = {
-    categories: [],
+    categories: { data: [] },
     loading: false,
     success: false,
     fail: false,
@@ -21,7 +21,7 @@ export const categoriesReducer = (state = categories, action) => {
         case GET_CATEGORIES_SUCCESS:
             return {
                 ...state,
-                categories: action.payload.data,
+                categories: {data: action.payload.data},
                 loading: false,
                 success: true,
             };

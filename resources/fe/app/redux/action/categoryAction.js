@@ -32,6 +32,30 @@ export const createCategory = (category) => async (dispatch) => {
     }
 };
 
+export const updateCategory = (id, formData) => async (dispatch) => {
+    try {
+        dispatch({type: GET_CATEGORIES_PROCESS});
+
+        const {data} = await connectApi.put(`/api/admin/categories/update/${id}`, formData);
+
+        dispatch({type: GET_CATEGORIES_SUCCESS, payload: data});
+    } catch (error) {
+        dispatch({type: GET_CATEGORIES_FAIL, payload: error});
+    }
+};
+
+export const deleteCategory = (id) => async (dispatch) => {
+    try {
+        dispatch({type: GET_CATEGORIES_PROCESS});
+
+        const {data} = await connectApi.delete(`/api/admin/categories/delete/${id}`);
+
+        dispatch({type: GET_CATEGORIES_SUCCESS, payload: data});
+    } catch (error) {
+        dispatch({type: GET_CATEGORIES_FAIL, payload: error});
+    }
+};
+
 export const adminGetAllCategories = () => async (dispatch) => {
     try {
         dispatch({type: ADMIN_GET_CATEGORIES_PROCESS});
@@ -42,4 +66,7 @@ export const adminGetAllCategories = () => async (dispatch) => {
     } catch (error) {
         dispatch({type: ADMIN_GET_CATEGORIES_FAIL, payload: error});
     }
-}
+};
+
+
+

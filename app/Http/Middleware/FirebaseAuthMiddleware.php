@@ -35,6 +35,28 @@ class FirebaseAuthMiddleware
             \Log::info('Token verified successfully:', $verifiedIdToken->claims()->all());
             $firebaseClaims = $verifiedIdToken->claims()->all();
             $firebaseUid = $firebaseClaims['sub'];
+            $iatDateTime = $firebaseClaims['iat'] ?? null;
+            $expDateTime = $firebaseClaims['exp'] ?? null;
+            $currentTimestamp = time();
+
+            $iatTimestamp = $iatDateTime instanceof \DateTimeInterface ? $iatDateTime->getTimestamp() : null;
+            $expTimestamp = $expDateTime instanceof \DateTimeInterface ? $expDateTime->getTimestamp() : null;
+
+            \Log::info('Token timestamps:', [
+                'iat (token issued at)' => $iatTimestamp,
+                'exp (token expires at)' => $expTimestamp,
+                'server_time (now)' => $currentTimestamp,
+                'iat_diff' => $iatTimestamp ? $iatTimestamp - $currentTimestamp : 'N/A',
+                'exp_diff' => $expTimestamp ? $expTimestamp - $currentTimestamp : 'N/A',
+                'iat_human' => $iatTimestamp ? date('Y-m-d H:i:s', $iatTimestamp) : 'N/A',
+                'exp_human' => $expTimestamp ? date('Y-m-d H:i:s', $expTimestamp) : 'N/A',
+                'now_human' => date('Y-m-d H:i:s', $currentTimestamp),
+            ]);
+            \Log::info('Server time check', [
+                'php_time' => now()->toDateTimeString(),
+                'system_time' => date('Y-m-d H:i:s'),
+                'timezone' => config('app.timezone'),
+            ]);
             // Tìm hoặc tạo user trong database
             $user = \App\Models\User::firstOrCreate(
                 ['firebase_uid' => $firebaseUid],

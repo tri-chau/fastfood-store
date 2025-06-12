@@ -1,19 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {formatDateTime} from '../../../locales/dateFormat.js';
 import {formatVietnameseCurrency} from '../../../locales/currencyFormat.js';
 import {Drawer, Modal} from 'flowbite';
 import {useDispatch, useSelector} from "react-redux";
-import {adminDeleteOrder, adminUpdateOrder, getAllOrdersAdmin} from "../../../redux/action/orderAction.js";
+import {
+    adminDeleteOrder,
+    adminUpdateOrder,
+    getAllOrdersAdmin,
+    getSearchOrdersAdmin
+} from "../../../redux/action/orderAction.js";
 import {notify} from "../../../layouts/Notification/notify.jsx";
+import provinceJson from "../../../locales/tinh_tp.json";
+import districtJson from "../../../locales/quan_huyen.json";
+import {fetchWards} from "../../../redux/action/paymentAction.js";
+import order from "../../Order/Order.jsx";
+import debounce from "lodash/debounce";
 
 const OrderCRUD = () => {
     const dispatch = useDispatch();
+    const wards = useSelector(state => state.wards.wards); // Lấy wards từ Redux
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [pendingOrder, setPendingOrder] = useState(null);
+    const [searchText, setSearchText] = useState('');
+
+
 
     const {orders: list, loading: getOrderLoading} = useSelector(state => state.orders);
 
     const [form, setForm] = useState({
         order_number: '',
         receiver_name: '',
+        receiver_phone: '',
         receiver_address: '',
         payment_method: 'Banking',
         order_status: 'Wait for Approval',
@@ -25,12 +42,17 @@ const OrderCRUD = () => {
         id: '',
         order_number: '',
         receiver_name: '',
+        receiver_phone: '',
         receiver_address: '',
         payment_method: 'Banking',
         payment_status: 'pending',
         order_status: 'Wait for Approval',
         order_total: 0,
         // team_id: '',
+        street: '',
+        wardId: '',
+        districtId: '',
+        provinceId: '',
     });
 
     const [showDrawer, setShowDrawer] = useState(false);
@@ -69,11 +91,20 @@ const OrderCRUD = () => {
 
     const fetchData = async () => {
         try {
-            await dispatch(getAllOrdersAdmin());
+            if (searchText.trim() !== '') {
+                await dispatch(getSearchOrdersAdmin(searchText));
+            } else {
+                await dispatch(getAllOrdersAdmin());
+            }
         } catch (error) {
             console.error("Failed to fetch orders:", error);
         }
     };
+    useEffect(() => {
+        fetchData();
+    }, [searchText]); // Mỗi khi searchText thay đổi, gọi lại fetchData
+
+
 
     const handleCreateOrder = async () => {
         try {
@@ -99,6 +130,8 @@ const OrderCRUD = () => {
 
     const handleUpdateOrder = async (e) => {
         try {
+            const payload = { ...formEdit };
+            payload.receiver_address = `${formEdit.street}, ${formEdit.wardId}, ${formEdit.districtId}, ${formEdit.provinceId}`;
             await dispatch(adminUpdateOrder(formEdit.id, formEdit)).then(() => {
                 updateDrawerInstance.hide();
                 notify('success', 'Order updated successfully!');
@@ -110,21 +143,234 @@ const OrderCRUD = () => {
         }
     };
 
+    // Định nghĩa các hàm ánh xạ trong file
+    const getProvinceName = (provinceId) => {
+        const province = provinceJson.find(
+            (p) => p.ProvinceID.toString() === provinceId?.toString()
+        );
+        return province ? province.ProvinceName : provinceId;
+    };
+
+    const getDistrictName = (districtId) => {
+        const district = Object.values(districtJson).find(
+            (d) => d.DistrictID.toString() === districtId?.toString()
+        );
+        return district ? district.DistrictName : districtId;
+    };
+
+    // Hàm lấy tên phường
+    const getWardName = (wardId) => {
+        if (!wards) return wardId; // fallback là ID
+        const found = wards.find(w => w.WardCode === wardId || w.WardCode == wardId);
+        return found ? found.WardName : wardId;
+    };
+
+    // const openUpdateModal = (order) => {
+    //     const [street, wardId, districtId, provinceId] = order.receiver_address.split(', ').map(part => part.trim());
+    //
+    //     setSelectedOrder({
+    //         ...order,
+    //         street,
+    //         wardId,
+    //         districtId,
+    //         provinceId
+    //     });
+    //
+    //     // Fetch lại wards nếu district khác với currentWards
+    //     if (!wards || wards.length === 0 || wards[0].district_id !== districtId) {
+    //         console.log('Fetching wards for district:', districtId);
+    //         dispatch(fetchWards(districtId));
+    //     }
+    // };
+
+    //fixing
     const openUpdateModal = (order) => {
-        setFormEdit({
-            id: order.id,
-            order_number: order.order_number,
-            receiver_name: order.receiver_name,
-            receiver_address: order.receiver_address,
-            payment_method: order.payment_method,
-            order_status: order.order_status,
-            order_total: order.order_total,
-            team_id: order.team_id,
-        });
-        if (updateDrawerInstance) {
-            updateDrawerInstance.show();
+        const addressParts = order.receiver_address.split(',').map(part => part.trim());
+        const [street, wardInfo, districtInfo, provinceInfo] = addressParts;
+
+        let districtIdToUse;
+        let provinceIdToUse;
+
+        // --- Xử lý District ---
+        if (isNaN(parseInt(districtInfo))) { // Nếu districtInfo là Tên
+            const foundDistrict = Object.values(districtJson).find(d => d.DistrictName === districtInfo);
+            if (foundDistrict) {
+                districtIdToUse = foundDistrict.DistrictID;
+            } else {
+                alert(`Lỗi: Không tìm thấy ID cho quận/huyện "${districtInfo}"`);
+                return;
+            }
+        } else { // Nếu districtInfo là ID
+            districtIdToUse = districtInfo;
+        }
+
+        // --- Xử lý Province ---
+        if (isNaN(parseInt(provinceInfo))) { // Nếu provinceInfo là Tên
+            const foundProvince = provinceJson.find(p => p.ProvinceName === provinceInfo);
+            if (foundProvince) {
+                provinceIdToUse = foundProvince.ProvinceID;
+            } else {
+                alert(`Lỗi: Không tìm thấy ID cho tỉnh/thành phố "${provinceInfo}"`);
+                return;
+            }
+        } else { // Nếu provinceInfo là ID
+            provinceIdToUse = provinceInfo;
+        }
+
+        // Tạo object selectedOrder đã được chuẩn hóa
+        const standardizedOrder = {
+            ...order,
+            street: street,
+            wardId: wardInfo, // ward vẫn có thể là Tên, sẽ được xử lý ở useEffect
+            districtId: districtIdToUse, // Luôn là ID
+            provinceId: provinceIdToUse, // Luôn là ID
+        };
+
+        setSelectedOrder(standardizedOrder);
+
+        // Fetch wards bằng districtId đã được chuẩn hóa
+        if (!wards || wards.length === 0 || String(wards[0]?.DistrictID) !== String(districtIdToUse)) {
+            dispatch(fetchWards(districtIdToUse));
         }
     };
+
+
+    // useEffect(() => {
+    //
+    //     // Guard 1: Kiểm tra các state cần thiết
+    //     if (!selectedOrder || !wards || wards.length === 0) {
+    //         return;
+    //     }
+    //     // Lấy ID để so sánh
+    //     const currentWardsDistrictId = wards[0]?.DistrictID;
+    //     const selectedDistrictId = selectedOrder.districtId;
+    //
+    //     // Guard 2: So sánh ID
+    //     if (String(selectedDistrictId) === String(currentWardsDistrictId)) {
+    //         const provinceName = getProvinceName(selectedOrder.provinceId);
+    //         const districtName = getDistrictName(selectedOrder.districtId);
+    //         const wardName = getWardName(selectedOrder.wardId);
+    //         const fullAddress = `${selectedOrder.street}, ${wardName}, ${districtName}, ${provinceName}`;
+    //
+    //         setFormEdit({
+    //             id: selectedOrder.id,
+    //             order_number: selectedOrder.order_number,
+    //             receiver_name: selectedOrder.receiver_name,
+    //             receiver_phone: selectedOrder.receiver_phone,
+    //             receiver_address: fullAddress,
+    //             payment_method: selectedOrder.payment_method,
+    //             order_status: selectedOrder.order_status,
+    //             order_total: selectedOrder.order_total,
+    //             team_id: selectedOrder.team_id,
+    //         });
+    //
+    //         if (updateDrawerInstance) {
+    //             updateDrawerInstance.show();
+    //         } else {
+    //             console.error('LỖI: updateDrawerInstance không tồn tại vào lúc cần gọi!');
+    //         }
+    //     }
+    //     // Đừng quên comment dòng này lại nhé
+    //     // setSelectedOrder(null);
+    //
+    // }, [wards, selectedOrder, updateDrawerInstance]);
+
+
+
+    //working
+    useEffect(() => {
+        // Guard 1: Nếu một trong các state cần thiết chưa sẵn sàng, không làm gì cả.
+        if (!selectedOrder || !wards || wards.length === 0) {
+            return;
+        }
+
+        // Lấy ID từ API (có thể là undefined nếu wards rỗng)
+        const currentWardsDistrictId = wards[0]?.DistrictID;
+        const selectedDistrictId = selectedOrder.districtId;
+
+        // Guard 2: Chỉ thực thi khi dữ liệu wards đã load khớp với order đang được chọn.
+        // Dùng String() để đảm bảo so sánh an toàn giữa các kiểu dữ liệu.
+        if (String(selectedDistrictId) === String(currentWardsDistrictId)) {
+
+            // Tất cả điều kiện đã thỏa mãn, tiến hành tạo địa chỉ và hiển thị form
+            const provinceName = getProvinceName(selectedOrder.provinceId);
+            const districtName = getDistrictName(selectedOrder.districtId);
+
+            let finalWardId;
+            let finalWardName;
+
+            // Xử lý wardId, vì nó có thể vẫn đang là Tên
+            if (!isNaN(parseInt(selectedOrder.wardId))) {
+                finalWardId = selectedOrder.wardId;
+                finalWardName = getWardName(finalWardId);
+            } else {
+                const foundWard = wards.find(w => w.WardName === selectedOrder.wardId);
+                if (foundWard) {
+                    finalWardId = foundWard.WardCode;
+                    finalWardName = foundWard.WardName;
+                } else {
+                    finalWardId = "Không tìm thấy";
+                    finalWardName = "Không tìm thấy";
+                }
+            }
+
+
+            const wardName = getWardName(selectedOrder.wardId);
+            const fullAddress = `${selectedOrder.street}, ${wardName}, ${districtName}, ${provinceName}`;
+
+            setFormEdit({
+                id: selectedOrder.id,
+                order_number: selectedOrder.order_number,
+                receiver_name: selectedOrder.receiver_name,
+                receiver_phone: selectedOrder.receiver_phone,
+                receiver_address: fullAddress,
+                payment_method: selectedOrder.payment_method,
+                payment_status: selectedOrder.payment_status,
+                order_status: selectedOrder.order_status,
+                order_total: selectedOrder.order_total,
+                team_id: selectedOrder.team_id,
+                street: selectedOrder.street,
+                wardId: finalWardId,
+                districtId: selectedOrder.districtId,
+                provinceId: selectedOrder.provinceId,
+            });
+
+            if (updateDrawerInstance) {
+                updateDrawerInstance.show();
+            }
+        }
+
+    }, [wards, selectedOrder, updateDrawerInstance]);
+
+
+    // useEffect(() => {
+    //     if (selectedOrder && wards && wards.length > 0) {
+    //         const provinceName = getProvinceName(selectedOrder.provinceId);
+    //         const districtName = getDistrictName(selectedOrder.districtId);
+    //         const wardName = getWardName(selectedOrder.wardId);
+    //
+    //         const fullAddress = `${selectedOrder.street}, ${wardName}, ${districtName}, ${provinceName}`;
+    //         setFormEdit({
+    //             id: selectedOrder.id,
+    //             order_number: selectedOrder.order_number,
+    //             receiver_name: selectedOrder.receiver_name,
+    //             receiver_phone: selectedOrder.receiver_phone,
+    //             receiver_address: fullAddress,
+    //             payment_method: selectedOrder.payment_method,
+    //             order_status: selectedOrder.order_status,
+    //             order_total: selectedOrder.order_total,
+    //             team_id: selectedOrder.team_id,
+    //         });
+    //
+    //         if (updateDrawerInstance) {
+    //             updateDrawerInstance.show();
+    //         }
+    //
+    //         // Reset selectedOrder sau khi hiển thị modal
+    //         setSelectedOrder(null);
+    //     }
+    // }, [wards, selectedOrder, updateDrawerInstance]);
+
 
     const handleDeleteOrder = async (id) => {
         try {
@@ -147,11 +393,23 @@ const OrderCRUD = () => {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Ngăn reload trang
+        if (searchText.trim() !== '') {
+            dispatch(getSearchOrdersAdmin(searchText));
+            console.log('handle submit with text:', searchText);
+        } else {
+            dispatch({ type: 'GET_ORDERS_SEARCH_SUCCESS', payload: [] });
+        }
+    };
+
+
     const resetForm = () => {
         setForm({
             id: '',
             order_number: '',
             receiver_name: '',
+            receiver_phone: '',
             receiver_address: '',
             payment_method: 'Banking',
             order_status: 'Wait for Approval',
@@ -192,12 +450,11 @@ const OrderCRUD = () => {
                         </div>
                         <div
                             className="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
-                            <div className="w-full md:w-1/2">
-                                <form className="flex items-center">
+                            <div className="w-full md:w-1/2 mb-4 justify-center">
+                                <form className="flex items-center" onSubmit={handleSubmit}>
                                     <label htmlFor="simple-search" className="sr-only">Search</label>
                                     <div className="relative w-full">
-                                        <div
-                                            className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                  fill="currentColor" viewBox="0 0 20 20"
                                                  xmlns="http://www.w3.org/2000/svg">
@@ -205,44 +462,32 @@ const OrderCRUD = () => {
                                                       d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/>
                                             </svg>
                                         </div>
-                                        <input type="text" id="simple-search" placeholder="Search for Orders"
-                                               required=""
-                                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"/>
+                                        <input
+                                            type="text"
+                                            id="simple-search"
+                                            placeholder="Search for Orders"
+                                            value={searchText}
+                                            onChange={(e) => setSearchText(e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        />
                                     </div>
                                 </form>
                             </div>
+
                             <div
                                 className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                                <button
-                                    // v-show="store.getters.hasPermission({'module': moduleName, 'action': 'create'})"
-                                        onClick={() => handleOpenModal()}
-                                        type="button" id="createOrderButton" data-modal-target="create-order-modal"
-                                        data-modal-toggle="create-order-modal"
-                                        className="flex items-center justify-center text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary focus:outline-none dark:focus:ring-primary-800">
-                                    <svg className="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20"
-                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path clipRule="evenodd" fillRule="evenodd"
-                                              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
-                                    </svg>
-                                    Add Order
-                                </button>
-                                {/*<button onClick={triggerNoti} id="filterDropdownButton"*/}
-                                {/*        data-dropdown-toggle="filterDropdown"*/}
-                                {/*        className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"*/}
-                                {/*        type="button">*/}
-                                {/*    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"*/}
-                                {/*         className="h-4 w-4 mr-1.5 -ml-1 text-gray-400" viewBox="0 0 20 20"*/}
-                                {/*         fill="currentColor">*/}
-                                {/*        <path fillRule="evenodd"*/}
-                                {/*              d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"*/}
-                                {/*              clipRule="evenodd"/>*/}
-                                {/*    </svg>*/}
-                                {/*    Filter options*/}
-                                {/*    <svg className="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"*/}
+                                {/*<button*/}
+                                {/*    // v-show="store.getters.hasPermission({'module': moduleName, 'action': 'create'})"*/}
+                                {/*        onClick={() => handleOpenModal()}*/}
+                                {/*        type="button" id="createOrderButton" data-modal-target="create-order-modal"*/}
+                                {/*        data-modal-toggle="create-order-modal"*/}
+                                {/*        className="flex items-center justify-center text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary focus:outline-none dark:focus:ring-primary-800">*/}
+                                {/*    <svg className="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20"*/}
                                 {/*         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">*/}
                                 {/*        <path clipRule="evenodd" fillRule="evenodd"*/}
-                                {/*              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>*/}
+                                {/*              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>*/}
                                 {/*    </svg>*/}
+                                {/*    Add Order*/}
                                 {/*</button>*/}
                                 <div id="filterDropdown"
                                      className="z-10 hidden px-3 pt-1 bg-white rounded-lg shadow w-80 dark:bg-gray-700 right-0">
@@ -277,32 +522,6 @@ const OrderCRUD = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {/*<div className="flex items-center space-x-3 w-full md:w-auto">*/}
-                                {/*    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"*/}
-                                {/*            className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"*/}
-                                {/*            type="button">*/}
-                                {/*        Actions*/}
-                                {/*        <svg className="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"*/}
-                                {/*             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">*/}
-                                {/*            <path clipRule="evenodd" fillRule="evenodd"*/}
-                                {/*                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>*/}
-                                {/*        </svg>*/}
-                                {/*    </button>*/}
-                                {/*    <div id="actionsDropdown"*/}
-                                {/*         className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">*/}
-                                {/*        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"*/}
-                                {/*            aria-labelledby="actionsDropdownButton">*/}
-                                {/*            <li>*/}
-                                {/*                <a href="#"*/}
-                                {/*                   className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass Edit</a>*/}
-                                {/*            </li>*/}
-                                {/*        </ul>*/}
-                                {/*        <div className="py-1">*/}
-                                {/*            <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">*/}
-                                {/*                Delete all</a>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
                             </div>
                         </div>
                         <div className="overflow-x-auto">
@@ -484,6 +703,15 @@ const OrderCRUD = () => {
                                            placeholder="Receiver Name" required/>
                                 </div>
                                 <div>
+                                    <label htmlFor="receiver_phone"
+                                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Receiver
+                                        Phone</label>
+                                    <input name="receiver_phone" value={form.receiver_phone} onChange={handleChange}
+                                           type="text" id="receiver_phone"
+                                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                           placeholder="Receiver Phone" required/>
+                                </div>
+                                <div>
                                     <label htmlFor="receiver_address"
                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Receiver
                                         Address</label>
@@ -515,7 +743,7 @@ const OrderCRUD = () => {
                                         <option value="Wait for Approval">Wait for Approval</option>
                                         <option value="In Progress">In Progress</option>
                                         <option value="Delivering">Delivering</option>
-                                        <option value="Delivered">Delivered</option>
+                                        {/*<option value="Delivered">Delivered</option>*/}
                                         <option value="Completed">Completed</option>
                                         <option value="Cancelled">Cancelled</option>
                                     </select>
@@ -616,6 +844,22 @@ const OrderCRUD = () => {
                                 />
                             </div>
                             <div>
+                                <label htmlFor="receiver_phone"
+                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Receiver Phone
+                                </label>
+                                <input
+                                    name="receiver_phone"
+                                    value={formEdit.receiver_phone}
+                                    onChange={handleEditChange}
+                                    type="text"
+                                    id="receiver_phone"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Receiver Phone"
+                                    required
+                                />
+                            </div>
+                            <div>
                                 <label htmlFor="receiver_address"
                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Receiver Address
@@ -681,7 +925,7 @@ const OrderCRUD = () => {
                                     <option value="Wait for Approval">Wait for Approval</option>
                                     <option value="In Progress">In Progress</option>
                                     <option value="Delivering">Delivering</option>
-                                    <option value="Delivered">Delivered</option>
+                                    {/*<option value="Delivered">Delivered</option>*/}
                                     <option value="Completed">Completed</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>

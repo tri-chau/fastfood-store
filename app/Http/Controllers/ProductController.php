@@ -21,7 +21,7 @@ class ProductController extends BaseController
 //        ], 200);
 
         // Get the number of items to fetch, defaulting to 10
-        $pageSize = $request->input('page_size', 10);
+        $pageSize = $request->input('page_size', 20);
 
         // Initialize the query builder for products
         $query = Product::select('products.id as product_id',
@@ -36,18 +36,7 @@ class ProductController extends BaseController
             'categories.description as category_description')
             ->join('category_product', 'category_product.product_id', '=', 'products.id') // Join with the pivot table
             ->join('categories', 'categories.id', '=', 'category_product.category_id')  // Join with the categories table
-        ;  // Assuming ascending priority
-
-//        $query->orderBy('products.id', 'asc');  // Order products within the category
-
-//        if ($request->input('last_product_id') !== 'undefined') {
-//            $query->where('product_id', '>', $request->input('last_product_id'));
-//                    return response()->json([
-//            'message' => 'Products retrieved successfully.',
-//            'data' => $request->all(),
-//        ], 200);
-//        }
-
+        ;
         // Fetch the products
         $products = $query->get();
         $products_count = $query->count();
@@ -129,8 +118,8 @@ class ProductController extends BaseController
             'categories.description as category_description')
             ->join('category_product', 'category_product.product_id', '=', 'products.id') // Join with the pivot table
             ->join('categories', 'categories.id', '=', 'category_product.category_id')  // Join with the categories table
-            ->where('products.status', 'active')
-            ->where('products.is_topping', 0);
+            ->where('products.status', 'active');
+//            ->where('products.is_topping', 0);
 
 //        $query = Product::All();
 
@@ -198,10 +187,6 @@ class ProductController extends BaseController
             // Order by category priority
             $query->orderBy('categories.priority', 'desc');
 
-//            if ($limit && $limit !== 'undefined') {
-//                // Order by category priority
-//                $query->orderBy('products.priority', 'desc');  // Assuming ascending priority
-//            }
         }
         // Thêm orderBy
         $query->orderBy('categories.priority', 'desc')
@@ -217,26 +202,6 @@ class ProductController extends BaseController
         else
             $products = $query->limit($limit === 'undefined' || is_null($limit) ? $pageSize : $limit)->get();
 
-//        $return_data = [];
-//        $prev_category_id = null;
-//        foreach ($products as $product) {
-//            if ($prev_category_id != $product->category_id) {
-//                $return_data[$product->category_id] = [
-//                    'category_name' => $product->category_name,
-//                    'category_id' => $product->category_id,
-//                    'category_priority' => $product->category_priority,
-//                    'category_description' => $product->category_description,
-//                ];
-//                $prev_category_id = $product->category_id;
-//            }
-//            $return_data[$product->category_id]['product_list'][] = [
-//                'product_id' => $product->product_id,
-//                'product_name' => $product->product_name,
-//                'product_description' => $product->product_description,
-//                'product_price' => $product->product_price,
-//                'product_image' => $product->product_image ? asset('storage/build/assets/Product/' . $product->product_image) : null,
-//            ];
-//        }
         $return_data = [];
         foreach ($products as $product) {
             $category_id = $product->category_id;
@@ -357,6 +322,8 @@ class ProductController extends BaseController
             'categories_id.*' => 'required|string|exists:categories,id',  // Each category must exist in the database
             'toppings_id' => 'nullable|array',
         ]);
+
+        \Log::info('Creating product with validated data', $validated);
 
         try {
             // Create the product with validated data

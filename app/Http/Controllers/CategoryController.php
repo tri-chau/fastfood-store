@@ -85,7 +85,6 @@ class CategoryController extends Controller
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'type' => 'nullable|in:Food,Drink,Topping',
-            'team_id' => 'nullable|uuid|exists:teams,id',
         ]);
 
         $category = Category::findOrFail($id);
@@ -100,6 +99,14 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::findOrFail($id);
+
+        // Check if the category has any associated products
+        if ($category->products()->count() > 0) {
+            return response()->json([
+                'message' => 'Cannot delete category: there are products associated with this category.'
+            ], 400);
+        }
+
         $category->delete();
 
         return response()->json(['message' => 'Category deleted successfully.']);
@@ -129,8 +136,9 @@ class CategoryController extends Controller
 
     public function adminGetCategories(): JsonResponse
     {
+        \Log::debug('Admin get categories');
         $categories = Category::all();
-
+        \Log::debug('categories data: ' . \json_encode($categories));
         return response()->json([
             'success' => true,
             'data' => $categories

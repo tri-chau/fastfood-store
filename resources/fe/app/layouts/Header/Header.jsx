@@ -41,6 +41,10 @@ const Header = () => {
         setOpenMenu(!openMenu);
     };
 
+    const handleAdminNavigation = (route) => {
+        navigate(route);
+    };
+
     const handleCartClick = useCallback((e) => {
         if (!userLoggedIn)
             openPopup({popupName: 'login'});
@@ -71,7 +75,7 @@ const Header = () => {
     }, [dispatch]);
 
     return (
-        <header className="bg-white fixed top-0 w-full z-10 px-2 border-b">
+        <header className="fixed top-0 w-full z-10 px-2 border-b bg-[#ffcc66] border-[#9f1000] shadow-md">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between py-4 max-h-[70px] w-full">
                     {/* Left: Logo */}
@@ -80,99 +84,164 @@ const Header = () => {
                         onClick={() => navigate("/")}>
                         <Link to="/" className="flex items-center space-x-2">
                             <img
-                                src="/storage/build/assets/Logo.png"
+                                src="/storage/build/assets/Logo.jpg"
                                 alt="logo"
                                 className="h-auto max-h-12 w-auto"
                             />
-                            <span>BEPMETAY</span>
+                            <span className="text-[#002a86]">POLLOS HERMANOS</span>
                         </Link>
                     </div>
 
-                    {/* Center: Search box */}
-                    <div className="flex-1 flex justify-center px-2">
-                        <div className="w-full max-w-md">
-                            <SearchInputElement />
+                    <div className="flex items-center justify-between w-full px-4">
+                        {/* Left: Buttons */}
+                        <div className="flex items-center space-x-4">
+                            {userLoggedIn && isPremiumUser && (
+                                <>
+                                    <button
+                                        className="btn btn-outline-primary"
+                                        onClick={() => handleAdminNavigation("/admin/products")}
+                                    >
+                                        Sản phẩm
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-primary"
+                                        onClick={() => handleAdminNavigation("/admin/categories")}
+                                    >
+                                        Danh mục
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-primary"
+                                        onClick={() => handleAdminNavigation("/admin/orders")}
+                                    >
+                                        Hóa đơn
+                                    </button>
+                                </>
+                            )}
                         </div>
+
+                        {/* Center: Search Box */}
+                        <div className="flex justify-center flex-1">
+                            <div className="max-w-md w-full bg-[#ffcc66]">
+                                <SearchInputElement />
+                            </div>
+                        </div>
+
+                        {/* Right: Empty (hoặc user icon, profile, v.v.) */}
+                        <div className="w-[150px]"></div> {/* để giữ cân bằng layout nếu cần */}
                     </div>
 
-                    {/* Right: Hỗ trợ KH + Menu */}
-                    <div className="flex items-center space-x-4 min-w-max">
-                        <button
-                            className="btn btn-outline-primary whitespace-nowrap"
-                            onClick={handleSupportClick}
-                        >
-                            Hỗ trợ khách hàng
-                        </button>
 
-                        <NavMenuElement
-                            handleNavMenu={handleNavMenu}
-                            openMenu={openMenu}
-                            userLoggedIn={userLoggedIn}
-                            switchPopup={switchPopup}
-                        />
+                    {/* Right: Menu (hidden for admin) */}
+                    <button
+                        className="btn btn-outline-primary whitespace-nowrap "
+                        onClick={handleSupportClick}
+                    >
+                        Hỗ trợ khách hàng
+                    </button>
+                    {!userLoggedIn || (userLoggedIn && !isPremiumUser) ? (
+                        <div className="flex items-center space-x-4 min-w-max">
+                            <NavMenuElement
+                                handleNavMenu={handleNavMenu}
+                                openMenu={openMenu}
+                                userLoggedIn={userLoggedIn}
+                                switchPopup={switchPopup}
+                            />
 
-                        {/* Buttons (Cart, Profile, Menu) */}
-                        <div className="flex flex-row justify-center items-center space-x-3 min-w-max">
-                            {/* Cart button */}
-                            {!isPremiumUser &&
-                                <button className="relative" onClick={handleCartClick}>
-                                    <BsCart3 className="text-lg lg:text-xl"/>
-                                    {cartQuantity > 0 && (
-                                        <span
-                                            className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
+                            {/* Buttons (Cart, Profile, Menu) */}
+                            <div className="flex flex-row justify-center items-center space-x-3 min-w-max">
+                                {/* Cart button */}
+                                {!isPremiumUser &&
+                                    <button className="relative" onClick={handleCartClick}>
+                                        <BsCart3 className="text-lg lg:text-xl"/>
+                                        {cartQuantity > 0 && (
+                                            <span
+                                                className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
                                         {cartQuantity}
                                     </span>
-                                    )}
-                                </button>}
+                                        )}
+                                    </button>}
 
-                            {/* Profile button */}
-                            {userLoggedIn && (
-                                <div className="relative flex items-center">
-                                    <button onClick={() => openPopup({popupName: 'logout'})} className="px-2 text-lg">
-                                        <MdSettings/>
-                                    </button>
-                                </div>
-                            )}
+                                {/* Profile button */}
+                                {userLoggedIn && (
+                                    <div className="relative flex items-center">
+                                        <button onClick={() => openPopup({ popupName: 'logout' })} className="px-2 text-lg">
+                                            <MdSettings />
+                                        </button>
+                                    </div>
+                                )}
 
-                            {/* Select Profile button popup */}
-                            {currentPopup?.popupName === 'logout' && (
-                                <UserSetting isVisible={currentPopup?.popupName === 'logout'}/>
-                            )}
+                                {/* Select Profile button popup */}
+                                {currentPopup?.popupName === 'logout' && (
+                                    <UserSetting isVisible={currentPopup?.popupName === 'logout'} />
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="flex items-center space-x-4 min-w-max">
+                            {/* Buttons (Cart, Profile, Menu) for admin */}
+                            <div className="flex flex-row justify-center items-center space-x-3 min-w-max">
+                                {/* Cart button */}
+                                {!isPremiumUser &&
+                                    <button className="relative" onClick={handleCartClick}>
+                                        <BsCart3 className="text-lg lg:text-xl"/>
+                                        {cartQuantity > 0 && (
+                                            <span
+                                                className="absolute -top-2 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#f26d78] rounded-full">
+                                        {cartQuantity}
+                                    </span>
+                                        )}
+                                    </button>}
+
+                                {/* Profile button */}
+                                {userLoggedIn && (
+                                    <div className="relative flex items-center">
+                                        <button onClick={() => openPopup({ popupName: 'logout' })} className="px-2 text-lg">
+                                            <MdSettings />
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Select Profile button popup */}
+                                {currentPopup?.popupName === 'logout' && (
+                                    <UserSetting isVisible={currentPopup?.popupName === 'logout'} />
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* ALL pop up*/}
-
+            {/* ALL pop up */}
             {/* login pop up */}
             {currentPopup?.popupName === 'login' &&
                 <SignInPasswordPopup isVisible={currentPopup?.popupName === 'login'}
-                                     closePopup={closePopup} switchPopup={switchPopup}/>}
+                                     closePopup={closePopup} switchPopup={switchPopup} />}
 
             {/* register popup */}
             {currentPopup?.popupName === 'register' &&
                 <RegisterPopup isVisible={currentPopup?.popupName === 'register'}
-                               closePopup={closePopup} switchPopup={switchPopup}/>
+                               closePopup={closePopup} switchPopup={switchPopup} />
             }
 
             {/* Add phone number when user login by Google first time */}
             {currentPopup?.popupName === 'addPhone' &&
                 <AddPhoneNumberPopup isVisible={currentPopup?.popupName === 'addPhone'}
-                                     registerData={currentPopup.registerData}/>}
+                                     registerData={currentPopup.registerData} />}
+
             {/* Select available cart when user add product to cart */}
             {currentPopup?.popupName === 'cartSelection' &&
                 <CartSelectionPopup isVisible={currentPopup?.popupName === 'cartSelection'}
                                     cartData={currentPopup?.cartData}
                                     product={currentPopup?.product}
-                                    resetState={currentPopup?.resetState}/>}
+                                    resetState={currentPopup?.resetState} />}
+
             {/* cart drawer */}
             {currentPopup?.popupName === 'cartDrawer' &&
-                <CartDrawerPopup isVisible={currentPopup?.popupName === 'cartDrawer'}/>}
+                <CartDrawerPopup isVisible={currentPopup?.popupName === 'cartDrawer'} />}
 
             {/* Add Detail product popup opened from Menu */}
             {currentPopup?.popupName === 'details' &&
-                <DetailProductPopup isVisible={currentPopup?.popupName === 'details'} isEdit={false}/>}
+                <DetailProductPopup isVisible={currentPopup?.popupName === 'details'} isEdit={false} />}
 
             {/* Update Detail product pop up opened from CartDrawer */}
             {currentPopup?.popupName === 'details' && currentPopup?.productDetailInCart && (
@@ -182,10 +251,11 @@ const Header = () => {
                     productDetailInCart={currentPopup?.productDetailInCart}
                 />
             )}
+
             {/* QR payment popup */}
             {currentPopup?.popupName === 'qrPayment' && currentPopup?.paymentLink &&
                 <QRPaymentPopup isVisible={currentPopup?.popupName === 'qrPayment'}
-                                paymentLink={currentPopup?.paymentLink} cart={currentPopup?.order}/>}
+                                paymentLink={currentPopup?.paymentLink} cart={currentPopup?.order} />}
 
             {currentPopup?.popupName === "chat" && (
                 <ChatPopup
@@ -194,7 +264,6 @@ const Header = () => {
                     firebaseId={firebaseId}
                 />
             )}
-
         </header>
     );
 };

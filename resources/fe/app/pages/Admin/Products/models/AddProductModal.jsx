@@ -78,10 +78,14 @@ const AddProductModal = ({isOpen, onClose, categories, topping_data}) => {
         formData.append("priority", form.priority);
         formData.append("thumbnailImage", form.thumbnailImage);
 
-        // Append multiple categories
-        if (form.categoryId) {
+        // Append categoryId
+        if (form.isTopping === "1") {
+            // Set categoryId to the "Topping" category ID
+            formData.append("categories_id[]", "e163219f-abfd-44ea-a3f9-126f19363b89");
+        } else {
+            // Append selected categories
             form.categoryId.forEach((categoryId) => {
-                formData.append('categories_id[]', categoryId);
+                formData.append("categories_id[]", categoryId);
             });
         }
 
@@ -107,6 +111,7 @@ const AddProductModal = ({isOpen, onClose, categories, topping_data}) => {
         // }
 
         try {
+            console.log("Form data:", form); // Kiểm tra giá trị form
             await dispatch(CreateProduct(formData));
 
             notify('success', 'Product created successfully');
@@ -271,24 +276,24 @@ const AddProductModal = ({isOpen, onClose, categories, topping_data}) => {
                             </div>
                         </div>
 
-                        {/* cost */}
-                        <div>
-                            <label htmlFor="cost"
-                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Cost
-                            </label>
-                            <input
-                                type="number"
-                                id="cost"
-                                name="cost"
-                                value={form.cost}
-                                onChange={handleInputChange}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Product Cost"
-                                min={0}
-                                required
-                            />
-                        </div>
+                        {/*/!* cost *!/*/}
+                        {/*<div>*/}
+                        {/*    <label htmlFor="cost"*/}
+                        {/*           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*/}
+                        {/*        Cost*/}
+                        {/*    </label>*/}
+                        {/*    <input*/}
+                        {/*        type="number"*/}
+                        {/*        id="cost"*/}
+                        {/*        name="cost"*/}
+                        {/*        value={form.cost}*/}
+                        {/*        onChange={handleInputChange}*/}
+                        {/*        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"*/}
+                        {/*        placeholder="Product Cost"*/}
+                        {/*        min={0}*/}
+                        {/*        required*/}
+                        {/*    />*/}
+                        {/*</div>*/}
 
                         {/* price */}
                         <div>
@@ -471,23 +476,23 @@ const AddProductModal = ({isOpen, onClose, categories, topping_data}) => {
                             />
                         </div>
 
-                        {/* priority */}
-                        <div>
-                            <label htmlFor="priority"
-                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Priority (from 0 to 10)
-                            </label>
-                            <input
-                                type="number"
-                                id="priority"
-                                name="priority"
-                                value={form.priority}
-                                onChange={handleInputChange}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                placeholder="Priority"
-                                min={0} step={1} max={10}
-                            />
-                        </div>
+                        {/*/!* priority *!/*/}
+                        {/*<div>*/}
+                        {/*    <label htmlFor="priority"*/}
+                        {/*           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*/}
+                        {/*        Priority (from 0 to 10)*/}
+                        {/*    </label>*/}
+                        {/*    <input*/}
+                        {/*        type="number"*/}
+                        {/*        id="priority"*/}
+                        {/*        name="priority"*/}
+                        {/*        value={form.priority}*/}
+                        {/*        onChange={handleInputChange}*/}
+                        {/*        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"*/}
+                        {/*        placeholder="Priority"*/}
+                        {/*        min={0} step={1} max={10}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
 
                     </div>
                     <div className="flex space-x-4 justify-end">

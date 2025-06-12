@@ -96,6 +96,8 @@ export const getProductCategories = (categories) => async (dispatch) => {
 export const CreateProduct = (formData) => async (dispatch) => {
     dispatch({type: CREATE_PRODUCT_PROCESS});
 
+    console.log([...formData]); // In ra tất cả các trường và giá trị trong formData
+
     const {data} = await connectApi.post(`/api/admin/products/add`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",

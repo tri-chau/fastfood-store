@@ -182,10 +182,10 @@ const Menu = () => {
     }, [openPopup]);
 
     const buttonStyle =
-        "btn w-full h-[50px]  text-white text-xs md:text-[16px] bg-[#f26d78] absolute cursor-pointer group-hover:bottom-0 -bottom-14 ";
+        "btn w-full h-[50px]  text-white text-xs md:text-[16px] absolute cursor-pointer group-hover:bottom-0 -bottom-14 ";
 
     return (
-        <div>
+        <div style={{ background: "#fff", color: "#002a86" }}>
             {/* filter pop up */}
             {currentPopup?.popupName === 'filter' &&
                 <FilterPopup isVisible={currentPopup?.popupName === "filter"} onApplyFilters={handleFilterUpdate}
@@ -195,44 +195,52 @@ const Menu = () => {
             <Marketing/>
 
             {/* Filter section */}
-            <div className="flex items-center w-full max-w-[600px] space-x-2 p-2 rounded-2xl mx-auto mt-2">
+            <div
+                className="flex items-center w-full max-w-[600px] space-x-2 p-2 rounded-2xl mx-auto mt-2"
+                style={{ background: "#fff", color: "#002a86"}}
+            >
                 {/* Search */}
                 <TextInput
                     type="text"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     placeholder={t('MENU.SEARCH')}
-                    className="outline-none border-2 border-gray-300 w-[350px] py-2 px-1 text-lg text-gray-900 border-none rounded-2xl h-12 flex items-center justify-center"
+                    className="outline-none w-[350px] py-2 px-1 text-lg border-none rounded-2xl h-12 flex items-center justify-center"
+                    style={{ background: "#fff", borderColor: "#002a86", color: "#002a86", borderWidth: 1, borderStyle: "solid" }}
                     required
                 />
 
                 {/* Filter Button */}
                 <Button pill onClick={() => openPopup({popupName: 'filter'})}
-                        className="outline-none w-auto text-lg text-gray-900 border border-gray-300 rounded-2xl h-12 flex items-center justify-center">
+                        className="outline-none w-auto text-lg border rounded-2xl h-12 flex items-center justify-center"
+                        style={{ background: "#fff", borderColor: "#002a86", color: "#002a86", borderWidth: 1, borderStyle: "solid" }}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"
                          stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round"
                               d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"/>
                     </svg>
-                    <span className="text-base ml-2">{t('MENU.FILTER')}</span>
+                    <span className="text-base ml-2" style={{ color: "#002a86" }}>{t('MENU.FILTER')}</span>
                 </Button>
-
 
                 {/* Sort Button */}
                 <Button pill onClick={() => setIsOpen(!isOpen)}
-                        className="outline-none w-auto text-lg text-gray-900 border border-gray-300 rounded-2xl h-12 flex items-center justify-center" >
-                    <MdSort />
-                    <span className="text-base ml-2">{t('MENU.SORT')}</span>
+                        className="outline-none w-auto text-lg border rounded-2xl h-12 flex items-center justify-center"
+                        style={{ background: "#fff", borderColor: "#002a86", color: "#002a86", borderWidth: 1, borderStyle: "solid" }}>
+                    <MdSort style={{ color: "#002a86" }} />
+                    <span className="text-base ml-2" style={{ color: "#002a86" }}>{t('MENU.SORT')}</span>
                     {isOpen && (
                         <div
-                            className="absolute right-0 top-[120%] bg-white shadow-lg rounded-md w-[140px] py-2 flex flex-col space-y-2 z-50">
+                            className="absolute right-0 top-[120%] shadow-lg rounded-md w-[140px] py-2 flex flex-col space-y-2 z-50"
+                            style={{ background: "#fff", borderColor: "#002a86", color: "#002a86", borderWidth: 1, borderStyle: "solid" }}>
                             <div
                                 className="flex items-center justify-between px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                style={{ color: "#002a86" }}
                                 onClick={() => setFiltersOption({...filtersOption, order: "asc"})}>
                                 <span className="text-sm font-semibold">{t('MENU.ASC')}</span>
                             </div>
                             <div
                                 className="flex items-center justify-between px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                style={{ color: "#002a86" }}
                                 onClick={() => setFiltersOption({...filtersOption, order: "desc"})}>
                                 <span className="text-sm font-semibold">{t('MENU.DESC')}</span>
                             </div>
@@ -241,20 +249,24 @@ const Menu = () => {
                 </Button>
             </div>
 
-
             <div
-                className="container min-h-[1000px] max-w-[1200px] mx-auto px-4 lg:px-4 grid grid-cols-12 gap-4 mt-1 lg:mt-5">
+                className="container min-h-[1000px] max-w-[1200px] mx-auto px-4 lg:px-4 grid grid-cols-12 gap-4 mt-1 lg:mt-5"
+                style={{ background: "#fff", color: "#002a86" }}
+            >
                 {/*Left section : categories */}
-                <div className="hidden md:block col-span-3 lg:border-r lg:border-gray-400 mr-5">
-                    <h2 className="text-2xl font-bold mb-4">{t('MENU.CATALOGUE')}</h2>
+                <div className="hidden md:block col-span-3 lg:border-r lg:border-gray-400 mr-5"
+                     style={{ borderColor: "#002a86", color: "#002a86" }}>
+                    <h2 className="text-2xl font-bold mb-4" style={{ color: "#002a86" }}>{t('MENU.CATALOGUE')}</h2>
                     <ul>
                         <li onClick={() => filterByCategory('all')}
-                            className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === null ? 'font-bold text-title-xsm text-[#6B4226]' : 'text-black'}`}>
+                            className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === null ? 'font-bold text-title-xsm' : ''}`}
+                            style={{ color: selectedCategory === null ? "#002a86" : "#002a86" }}>
                             {t('MENU.ALL')}
                         </li>
-                        {listCategory?.map(category => (
+                        {listCategory?.data.map(category => (
                             <li key={category.id} onClick={() => filterByCategory(category.id)}
-                                className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === category.id ? 'font-bold text-title-xsm text-[#6B4226]' : 'text-black'}`}>
+                                className={`mb-2 hover:text-[#6B4226] hover:translate-x-[3px] duration-300 cursor-pointer ${selectedCategory === category.id ? 'font-bold text-title-xsm' : ''}`}
+                                style={{ color: selectedCategory === category.id ? "#002a86" : "#002a86" }}>
                                 {category.name}
                             </li>
                         ))}
@@ -262,7 +274,8 @@ const Menu = () => {
                 </div>
 
                 {/* Right section : products */}
-                <div className="col-span-12 lg:col-span-9 grid grid-cols-1 lg:grid-cols-1 gap-0 lg:gap-4 mb-4">
+                <div className="col-span-12 lg:col-span-9 grid grid-cols-1 lg:grid-cols-1 gap-0 lg:gap-4 mb-4"
+                     style={{ background: "#fff", color: "#002a86" }}>
                     {loading ? (
                         [...Array(3)].map((_, n) => (
                             <div key={n} className="mb-6">
@@ -290,13 +303,17 @@ const Menu = () => {
                         listProduct?.map(category => (
                             <div key={category.category_id}>
                                 <span
-                                    className="text-3xl font-bold text-black-2 ml-4">{category.category_name}</span>
+                                    className="text-3xl font-bold ml-4"
+                                    style={{ color: "#002a86" }}
+                                >{category.category_name}</span>
                                 <div
                                     className="col-span-12 lg:col-span-9 grid grid-cols-2 lg:grid-cols-3 gap-0 lg:gap-4 mt-4">
                                     {category.product_list.map(product => (
-                                        <div key={product.product_id} className="p-4 cursor-pointer">
+                                        <div key={product.product_id} className="p-4 cursor-pointer"
+                                             style={{ background: "#fff", color: "#002a86" }}>
                                             <div
-                                                className="bg-gray-200/50 rounded-md relative mb-4 max-h-[250px] group overflow-hidden">
+                                                className="bg-gray-200/50 rounded-md relative mb-4 max-h-[250px] group overflow-hidden"
+                                                style={{ background: "#fff"}}>
                                                 <img
                                                     src={product.product_image || "/storage/build/assets/Product/empty-image.png"}
                                                     alt="Product"
@@ -305,19 +322,19 @@ const Menu = () => {
                                                 <ButtonElement
                                                     value={product.product_id}
                                                     action={handleOpenDetailProduct(product.product_id)}
-                                                    style={buttonStyle}
+                                                    style={buttonStyle + " hover:bg-[#fccc00] bg-[#9f1000] transition-all duration-300 text-[#fff] hover:text-[#002a86]"}
                                                     title={t('MENU.ADD_TO_CART')}
                                                 />
                                             </div>
 
                                             <div className="product_content flex flex-row justify-between mt-4 ">
                                                 <div className="product_label">
-                                                <h3 className="font-bold text-black truncate w-52">{product.product_name}</h3>
-                                                    <p className="text-gray-600 text-xs lg:text-sm">{formatVietnameseCurrency(product.product_price)}</p>
+                                                    <h3 className="font-bold truncate w-52" style={{ color: "#002a86" }}>{product.product_name}</h3>
+                                                    <p className="text-xs lg:text-sm" style={{ color: "#002a86" }}>{formatVietnameseCurrency(product.product_price)}</p>
                                                 </div>
                                                 <div className="flex justify-center items-center mb-3 lg:mb-0">
                                                     <button onClick={handleOpenDetailProduct(product.product_id)}
-                                                            className="add_btn flex justify-center items-center p-1 bg-[#f26d78] hover:bg-[#C15760]">
+                                                            className="add_btn flex justify-center items-center p-1 hover:bg-[#fccc00] bg-[#9f1000] transition-all duration-300">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                              viewBox="0 0 24 24" strokeWidth="1.5" stroke="white"
                                                              className="size-6">

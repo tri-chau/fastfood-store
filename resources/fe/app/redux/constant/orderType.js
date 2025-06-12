@@ -4,6 +4,11 @@ export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 
 // get all orders
 export const GET_ORDERS_PROCESS = "GET_ORDERS_PROCESS";
+
+export const GET_ORDERS_SEARCH_PROCESS = "GET_ORDERS_SEARCH_PROCESS";
+
+export const GET_ORDERS_SEARCH_SUCCESS = "GET_ORDERS_SEARCH_SUCCESS";
+
 export const GET_ORDERS_SUCCESS = "GET_ORDERS_SUCCESS";
 
 // admin get all orders

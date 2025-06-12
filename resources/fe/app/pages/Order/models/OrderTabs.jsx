@@ -5,7 +5,7 @@ const OrderTabs = ({ activeTab, onTabChange }) => {
     { id: 'wait-confirmation', label: 'Confirmating' },
     { id: 'in-progress', label: 'In progress' },
     { id: 'delivering', label: 'Delivering' },
-    { id: 'delivered', label: 'Delivered' },
+    // { id: 'delivered', label: 'Delivered' },
     { id: 'completed', label: 'Completed' },
     { id: 'cancelled', label: 'Cancelled' },
   ];
