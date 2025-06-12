@@ -17,10 +17,10 @@ const About = () => {
                             cùng kết cấu dẻo dai, giòn sần sật. Được làm từ bột rau câu thiên nhiên kết hợp với các nguyên
                             liệu phong phú như nước cốt dừa, cà phê, lá dứa, trái cây tươi hay thạch sữa, rau câu không chỉ
                             mang đến sự tươi mát mà còn bổ sung nhiều dưỡng chất có lợi cho sức khỏe. */}
-                            Chào mừng đến với Los Pollos Hermanos. 
-                            Chúng tôi tự hào mang đến cho bạn những món gà rán truyền thống chất lượng cao, 
-                            được chế biến bằng những nguyên liệu hảo hạng nhất và lòng tận tâm tuyệt đối. 
-                            Ở Los Pollos Hermanos, chúng tôi hiểu hương vị của gia đình là như thế nào, 
+                            Chào mừng đến với Los Pollos Hermanos.
+                            Chúng tôi tự hào mang đến cho bạn những món gà rán truyền thống chất lượng cao,
+                            được chế biến bằng những nguyên liệu hảo hạng nhất và lòng tận tâm tuyệt đối.
+                            Ở Los Pollos Hermanos, chúng tôi hiểu hương vị của gia đình là như thế nào,
                             và chúng tôi đem lại hơi ấm và hương vị đó trong từng món ăn mỗi ngày.
                         </p>
                     </div>
@@ -28,7 +28,7 @@ const About = () => {
                     {/* Logo Section */}
                     <div className="md:w-1/3 flex justify-center md:justify-end overflow-hidden">
                         <img
-                            src="/storage/build/assets/Logo.png"
+                            src="/storage/build/assets/Logo.jpg"
                             alt="Los Pollos Hermanos"
                             className="w-[100%] h-auto"
                         />
